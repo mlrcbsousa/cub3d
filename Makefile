@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/04/21 11:04:17 by msousa           ###   ########.fr        #
+#    Updated: 2022/04/21 11:12:45 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LINKS		= -Llibft -lft
 CC			= gcc
 RM			= rm -f
 INC			= -Iinclude -Ilibft/include
-OBJ			= ${SRC:.c=.o}
+OBJ			= ${SRC:%.c=obj/%.o}
 SRC			= cub3d.c
 
 NAME		= cub3d
@@ -24,7 +24,8 @@ ${NAME}:	${OBJ}
 					${MAKE} -C libft
 					${CC} ${CFLAGS} ${OBJ} ${LINKS} -o $@
 
-%.o:%.c
+obj/%.o:%.c
+					@mkdir -p $(dir $@)
 					${CC} ${CFLAGS} ${INC} -c $< -o $@
 
 all:			${NAME}
@@ -42,7 +43,7 @@ check:
 
 clean:
 					${MAKE} clean -C libft
-					${RM} ${OBJ}
+					${RM} -rf obj
 
 fclean:		clean
 					${RM} ${NAME}
