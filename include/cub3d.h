@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/21 11:07:33 by msousa           ###   ########.fr       */
+/*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
+/*   Updated: 2022/04/21 11:06:05 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#ifndef CUB3D_H
+# define CUB3D_H
 
-int	main(int argc, char *argv[], char *env[])
+# include "libft.h"
+
+/* Constants */
+
+/* Enums */
+
+/* Structs & Types */
+typedef struct s_app	t_app;
+
+struct s_app
 {
-	t_app		self;
+	int			status;
+};
 
-	(void)argc;
-	(void)argv;
-	(void)env;
-	(void)self;
+/* Functions */
 
-	ft_printf("Hello world!\n");
 
-	return (0);
-}
+/* helpers */
+
+/* test */
+
+
+#endif
