@@ -42,6 +42,7 @@ cub3d
 *.su
 *.idb
 *.pdb
+.vscode
 
 # Kernel Module Compile Results
 *.mod*
