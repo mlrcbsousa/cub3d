@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/01 18:01:54 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/01 18:16:47 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ endif
 
 ifeq (${UNAME}, Darwin)
 LINKS 	+= -framework OpenGL -framework AppKit
-INC 		+= -DOS_MAC
+CFLAGS 	+= -DOS_MAC
 endif
 
 ${NAME}:	${OBJ}
@@ -46,7 +46,7 @@ style:
 					-norminette $$( find . -type f \( -name "*.c" -or -name "*.h" \) )
 
 test:			${NAME}
-					./${NAME} test/example.cub
+					./test main.sh
 
 check:
 					-cat ${NAME}.c src/*/* | grep TODO

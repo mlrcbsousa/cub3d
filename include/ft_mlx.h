@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:08:07 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 18:06:21 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 18:19:38 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # define SCROLL_DOWN 5
 
 /* Keys */
-# ifndef OS_MAC
-#  define OS_MAC
+# ifdef OS_MAC
 #  define KEY_UP 	126
 #  define KEY_DOWN 	125
 #  define KEY_LEFT 	123
