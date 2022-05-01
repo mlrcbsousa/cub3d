@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 19:56:30 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 20:41:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    print_errno(char* input)
 {
-    ft_putstr_fd("cub3d: ", STDERR_FILENO);
+    ft_putstr_fd("Error\n", STDERR_FILENO);
 	if (input)
 	{
 		ft_putstr_fd(input, STDERR_FILENO);
@@ -25,7 +25,7 @@ void    print_errno(char* input)
 
 void    print_error(char* input, char *msg)
 {
-    ft_putstr_fd("cub3d: ", STDERR_FILENO);
+    ft_putstr_fd("Error\n", STDERR_FILENO);
 	if (input)
 	{
 		ft_putstr_fd(input, STDERR_FILENO);

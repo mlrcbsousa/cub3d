@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 19:56:43 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 20:57:17 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	game_destroy(t_app *self);
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
+
+/* color */
+int		create_trgb(int t, int r, int g, int b);
 
 /* helpers */
 void    print_errno(char* input);

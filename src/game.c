@@ -6,18 +6,29 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 18:38:35 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 20:20:30 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 21:13:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_bool	valid_game_element(char *line)
+{
+	(void)line;
+	return (TRUE);
+}
+
+void	set_game_element(char *line, t_app *self)
+{
+	(void)line;
+	(void)self;
+}
 
 int	set_game_elements(int fd, t_app *self)
 {
 	int		status;
 	char	*line;
 
-	(void)self;
 	status = 1;
 	line = NULL;
 	while (status > 0)
@@ -25,6 +36,13 @@ int	set_game_elements(int fd, t_app *self)
 		status = get_next_line(fd, &line);
 		if (line)
 			printf("%s\n", line);
+
+		// TODO: game elements come first
+		if (valid_game_element(line))
+			set_game_element(line, self);
+
+		// TODO: map comes last
+		// so must have all elements before starting map parsing
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
