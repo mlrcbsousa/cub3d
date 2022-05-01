@@ -6,18 +6,18 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/04/21 11:36:33 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/01 17:49:43 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror
 LINKS		= -lmlx -lm -Llibft -lft
 CC			= gcc
 RM			= rm -f
 INC			= -Iinclude -Ilibft/include
 UNAME 	:= ${shell uname}
 OBJ			= ${SRC:%.c=obj/%.o}
-SRC			= cub3d.c src/draw.c src/hooks.c
+SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c
 
 NAME		= cub3d
 
@@ -47,7 +47,7 @@ style:
 					-norminette $$( find . -type f \( -name "*.c" -or -name "*.h" \) )
 
 test:			${NAME}
-					-./test/main.sh
+					./${NAME} test/example.cub
 
 check:
 					-cat ${NAME}.c src/*/* | grep TODO

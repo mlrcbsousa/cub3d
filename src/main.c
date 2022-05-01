@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/21 11:33:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 17:54:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,38 @@ static void	set_image(t_app *self)
 	self->img = img;
 }
 
-int	main(int argc, char *argv[], char *env[])
+static t_bool	invalid(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		print_error("wrong number of arguments");
+		return (TRUE);
+	}
+	else if (ft_strlen(argv[1]) < 5
+		|| !ft_streq(argv[1] + ft_strlen(argv[1]) - 4, ".cub"))
+	{
+		print_error(argv[1], "file argument must be in *.cub format");
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+static void	usage(void)
+{
+	ft_putendl_fd(NULL, 1);
+	ft_putendl_fd("Usage: ./cub3d <map>", 1);
+	ft_putendl_fd(NULL, 1);
+	ft_putendl_fd("   - map		Path to *.cub file", 1);
+	ft_putendl_fd(NULL, 1);
+	exit(0);
+}
+
+int	main(int argc, char *argv[])
 {
 	t_app		self;
 
-	(void)argc;
-	(void)argv;
-	(void)env;
+	if (invalid(argc, argv))
+		usage();
 
 	self.mlx = mlx_init();
 	self.mlx_window = mlx_new_window(self.mlx,

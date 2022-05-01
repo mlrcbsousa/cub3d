@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/21 11:32:37 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 17:53:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "ft_point.h"
 
 /* Constants */
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 320
+# define HEIGHT 200
 
 /* Enums */
 
@@ -40,6 +40,8 @@ void	draw(t_app *self);
 void	set_hooks(t_app *self);
 
 /* helpers */
+void    print_errno(char* input);
+void    print_error(char* input, char *msg);
 
 /* test */
 
