@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 18:20:35 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 18:22:18 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 /* Constants */
 # define WIDTH	1200
-# define HEIGHT 900
+# define HEIGHT 800
 
 /* Enums */
 
