@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 18:22:18 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 19:56:43 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <errno.h>
 # include <stdio.h>
+# include <fcntl.h>
+
 # include "libft.h"
 # include "ft_mlx.h"
 # include "ft_point.h"
@@ -27,15 +29,32 @@
 
 /* Structs & Types */
 typedef struct s_app	t_app;
+typedef struct s_walls	t_walls;
 
 struct	s_app
 {
 	t_image		*img;
 	void		*mlx_window;
 	void		*mlx;
+	int			color_floor;
+	int			color_ceiling;
+	t_walls		*walls;
+};
+
+struct s_walls
+{
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
 };
 
 /* Functions */
+
+/* game */
+void	game_init(t_app *self, char* cubfile);
+void	game_loop(t_app *self);
+void	game_destroy(t_app *self);
 
 /* mlx */
 void	draw(t_app *self);
@@ -44,6 +63,7 @@ void	set_hooks(t_app *self);
 /* helpers */
 void    print_errno(char* input);
 void    print_error(char* input, char *msg);
+int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 
 /* test */
 
