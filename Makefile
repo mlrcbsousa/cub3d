@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/01 17:49:43 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/01 18:01:54 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,11 @@ NAME		= cub3d
 
 ifeq (${UNAME}, Linux)
 LINKS 	+= -lbsd -lXext -lX11
-INC 		+= -Ilinux
 endif
 
 ifeq (${UNAME}, Darwin)
 LINKS 	+= -framework OpenGL -framework AppKit
-INC 		+= -Imac
+INC 		+= -DOS_MAC
 endif
 
 ${NAME}:	${OBJ}

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 17:53:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 18:07:40 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "ft_point.h"
 
 /* Constants */
-# define WIDTH 320
-# define HEIGHT 200
+# define WIDTH	1600
+# define HEIGHT 1200
 
 /* Enums */
 
