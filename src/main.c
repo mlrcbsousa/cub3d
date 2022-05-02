@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/02 19:27:45 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/02 19:32:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_bool	invalid(int argc, char *argv[])
 	}
 	else if (!ft_isfile(argv[1]))
 	{
-		print_error(argv[1], "file doesn't exist");
+		print_errno(argv[1]);
 		return (TRUE);
 	}
 	return (FALSE);
