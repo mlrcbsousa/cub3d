@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 18:38:35 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/02 17:19:22 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/02 20:00:35 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ void	set_game_element(char *line, t_app *self)
 	(void)self;
 }
 
+t_bool	are_walls_set(t_app *self)
+{
+	t_walls	*walls;
+
+	walls = self->walls;
+	if (walls)
+		return (walls->east && walls->north && walls->south && walls->west);
+	return (FALSE);
+}
+
+int	set_game_map()
+{}
+
+int	set_game_walls()
+{}
+
+int	set_game_colors()
+{}
+
+// ASSUMES already validated
 int	set_game_elements(int fd, t_app *self)
 {
 	int		status;
@@ -31,9 +51,16 @@ int	set_game_elements(int fd, t_app *self)
 
 	status = 1;
 	line = NULL;
-	while (status > 0)
+	while (!are_walls_set(self))
 	{
 		status = get_next_line(fd, &line);
+		// not needed if validated
+		// if (status > 0)
+		// {
+		// 	if (line)
+		// 		free(line);
+		// 	break ;
+		// }
 		if (line)
 			printf("%s\n", line);
 
@@ -43,6 +70,8 @@ int	set_game_elements(int fd, t_app *self)
 
 		// TODO: map comes last
 		// so must have all elements before starting map parsing
+
+		free(line);
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
