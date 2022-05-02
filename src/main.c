@@ -6,11 +6,40 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 20:05:24 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/02 19:27:45 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// TODO: move to libft.h
+// use WITH dot
+t_bool	ft_isfile_ext(char *filename, char *extension)
+{
+	unsigned int	len_filename;
+	unsigned int	len_extension;
+
+	len_filename = ft_strlen(filename);
+	len_extension = ft_strlen(extension);
+
+	// filename smaller then extension length
+	if (len_filename <= len_extension)
+		return (FALSE);
+
+	return (ft_streq(filename + len_filename - len_extension, extension));
+}
+
+t_bool	ft_isfile(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (FALSE);
+	close(fd);
+	return (TRUE);
+}
+// TODO: move to libft.h
 
 static void	set_image(t_app *self)
 {
@@ -37,10 +66,14 @@ static t_bool	invalid(int argc, char *argv[])
 		print_error(NULL, "wrong number of arguments");
 		return (TRUE);
 	}
-	else if (ft_strlen(argv[1]) < 5
-		|| !ft_streq(argv[1] + ft_strlen(argv[1]) - 4, ".cub"))
+	else if (!ft_isfile_ext(argv[1], ".cub"))
 	{
 		print_error(argv[1], "file argument must be in *.cub format");
+		return (TRUE);
+	}
+	else if (!ft_isfile(argv[1]))
+	{
+		print_error(argv[1], "file doesn't exist");
 		return (TRUE);
 	}
 	return (FALSE);

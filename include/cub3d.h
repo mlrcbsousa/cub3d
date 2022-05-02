@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 20:57:17 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/02 19:22:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ struct s_walls
 };
 
 /* Functions */
+
+// TODO: move to libft.h
+t_bool	ft_isfile_ext(char *filename, char *extension);
+t_bool	ft_isfile(char *filename);
+// TODO: move to libft.h
 
 /* game */
 void	game_init(t_app *self, char* cubfile);
