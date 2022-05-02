@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 18:38:35 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/02 20:11:40 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/02 21:10:59 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,42 +34,31 @@ t_bool	are_walls_set(t_app *self)
 	return (FALSE);
 }
 
-int	set_game_map(int fd, t_app *self)
+int	set_game_mapline(int fd, t_app *self)
 {
-	int		status;
-	char	*line;
 
-	status = 1;
-	line = NULL;
-	while (!are_walls_set(self))
-	{
-		status = get_next_line(fd, &line);
-		if (line)
-			printf("%s\n", line);
-
-		// TODO: game elements come first
-		if (valid_game_element(line))
-			set_game_element(line, self);
-
-		// TODO: map comes last
-		// so must have all elements before starting map parsing
-
-		free(line);
-	}
-	if (status < 0)
-		return (EXIT_FAILURE);
-	return (status);
 }
 
-int	set_game_walls(int fd, t_app *self)
-{}
+int	set_game_wall(int fd, t_app *self)
+{
 
-int	set_game_colors(int fd, t_app *self)
-{}
+}
+
+int	set_game_color(int fd, t_app *self)
+{
+
+}
 
 // ASSUMES already validated
 int	set_game_elements(int fd, t_app *self)
 {
+	// if files were huge this would be innefficient because of gnl walking
+	// through file multiple times
+	// might still be with small file, TODO: check
+	// set_game_colors(fd, self);
+	// set_game_walls(fd, self);
+	// set_game_map(fd, self);
+
 	int		status;
 	char	*line;
 
@@ -78,23 +67,20 @@ int	set_game_elements(int fd, t_app *self)
 	while (status > 0)
 	{
 		status = get_next_line(fd, &line);
+
+		// for test
 		if (line)
 			printf("%s\n", line);
-		// not needed if validated
-		// if (status > 0)
-		// {
-		// 	if (line)
-		// 		free(line);
-		// 	break ;
-		// }
 
-		// TODO: game elements come first
-		set_game_element(line, self);
+		if (is_valid_game_color(line, self))
+			set_game_color(line, self);
+		else if (is_valid_game_wall(line, self))
+			set_game_wall(line, self);
+		else if (can_set_maplines(self) && is_valid_game_mapline(line, self))
+			set_game_mapline(line, self);
 
-		// TODO: map comes last
-		// so must have all elements before starting map parsing
-
-		free(line);
+		if (line)
+			free(line);
 	}
 	if (status < 0)
 		return (EXIT_FAILURE);
@@ -103,18 +89,16 @@ int	set_game_elements(int fd, t_app *self)
 
 void	game_init(t_app *self, char* cubfile)
 {
-	// t_walls	*walls;
-	int	status;
+	t_walls	*walls;
 
 	self->img = NULL;
 	self->mlx_window = NULL;
 	self->mlx = NULL;
 	self->color_floor = -1;
 	self->color_ceiling = -1;
-	self->walls = NULL;
-	status = file_open(cubfile, self, set_game_elements);
-	if (status)
-		exit(status);
+	self->walls = (t_walls *)malloc(sizeof(t_walls));
+	if ()
+
 }
 
 void	game_loop(t_app *self)
