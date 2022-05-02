@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/29 16:40:54 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/01 18:16:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 static int	close_app(t_app *self)
 {
@@ -21,37 +20,34 @@ static int	close_app(t_app *self)
 
 static void	view(int key, t_app *self)
 {
-	if (key == ARROW_RIGHT || key == ARROW_LEFT)
+	if (key == KEY_RIGHT || key == KEY_LEFT)
 		;
-	else if (key == ARROW_UP || key == ARROW_DOWN)
+	else if (key == KEY_UP || key == KEY_DOWN)
 		;
 	draw(self);
 }
 
 static void	move(int key, t_app *self)
 {
-	if (key == A_KEY || key == D_KEY)
+	if (key == KEY_A || key == KEY_D)
 		;
-	else if (key == W_KEY  || key == S_KEY)
+	else if (key == KEY_W  || key == KEY_S)
 		;
 	draw(self);
 }
 
 static int	key_hook(int key, t_app *self)
 {
-	printf("%d\n", key);
+	// TODO: remove
+	printf("Test %d\n", key);
 	if (key == KEY_ESC)
 		close_app(self);
-	else if (key == A_KEY || key == D_KEY || key == W_KEY
-		|| key == S_KEY)
+	else if (key == KEY_A || key == KEY_D || key == KEY_W
+		|| key == KEY_S)
 		move(key, self);
-	else if (key == ARROW_RIGHT || key == ARROW_LEFT || key == ARROW_UP
-		|| key == ARROW_DOWN)
+	else if (key == KEY_RIGHT || key == KEY_LEFT || key == KEY_UP
+		|| key == KEY_DOWN)
 		view(key, self);
-	else if (key == KEY_C)
-	{
-		draw(self);
-	}
 	return (0);
 }
 

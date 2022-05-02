@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/21 11:33:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 18:11:10 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	set_image(t_app *self)
 	img = (t_image *)malloc(sizeof(t_image));
 	if (!img)
 	{
-		ft_putendl_fd("Failed to allocate image memory!", 2);
+		ft_putendl_fd("Failed to allocate image memory!", STDERR_FILENO);
 		exit(1);
 	}
 	img->img = mlx_new_image(self->mlx, WIDTH, HEIGHT);
@@ -30,13 +30,38 @@ static void	set_image(t_app *self)
 	self->img = img;
 }
 
-int	main(int argc, char *argv[], char *env[])
+static t_bool	invalid(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		print_error(NULL, "wrong number of arguments");
+		return (TRUE);
+	}
+	else if (ft_strlen(argv[1]) < 5
+		|| !ft_streq(argv[1] + ft_strlen(argv[1]) - 4, ".cub"))
+	{
+		print_error(argv[1], "file argument must be in *.cub format");
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+static void	usage(void)
+{
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	ft_putendl_fd("Usage: ./cub3d <map>", STDOUT_FILENO);
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	ft_putendl_fd("   - map		Path to *.cub file", STDOUT_FILENO);
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	exit(0);
+}
+
+int	main(int argc, char *argv[])
 {
 	t_app		self;
 
-	(void)argc;
-	(void)argv;
-	(void)env;
+	if (invalid(argc, argv))
+		usage();
 
 	self.mlx = mlx_init();
 	self.mlx_window = mlx_new_window(self.mlx,
