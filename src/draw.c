@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/21 11:31:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/01 20:53:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-static int	create_trgb(int t, int r, int g, int b)
+int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
