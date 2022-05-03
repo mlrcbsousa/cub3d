@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/02 20:08:17 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/03 20:34:59 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ t_bool	ft_isfile(char *filename)
 		return (FALSE);
 	close(fd);
 	return (TRUE);
+}
+
+void	ft_splitfree(char **parts)
+{
+	char	**tmp;
+
+	if (!parts)
+		return ;
+	tmp = parts;
+	while (*parts)
+		free(*parts++);
+	free(tmp);
 }
 // TODO: move to libft.h
 
@@ -76,19 +88,6 @@ static t_bool	invalid(int argc, char *argv[])
 		print_errno(argv[1]);
 		return (TRUE);
 	}
-	// TODO: test the whole cubfile from here
-	/*
-	 * On the cubfile elements
-	 * - Textures are a file that doesnt exist or not a xpm file.
-	 * - There are multiple textures for the same wall (north wall texture).
-	 * - RGBs dont have 3 numbers, are separated by an invalid character (not a comma) or have values below 0 or above 255.
-	 * - There are invalid characters in the cub.
-	 *
-	 * On the cubfile map
-	 * - Multiple players or no player.
-	 * - invalid characters !{ ' ', '\t', '0', '1', 'N', 'S', 'E', 'W' }
-	 * - Map not closed, check if each map character has no space character around it
-	 */
 	return (FALSE);
 }
 
@@ -108,7 +107,7 @@ int	main(int argc, char *argv[])
 
 	if (invalid(argc, argv))
 		usage();
-	game_init(&self, argv[1]);
+	parse(&self, argv[1]);
 
 	self.mlx = mlx_init();
 	self.mlx_window = mlx_new_window(self.mlx,
