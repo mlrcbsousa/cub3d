@@ -80,6 +80,7 @@ void	set_game_color(char* line, t_parser *parser)
 {
 	char	**parts;
 	char	**rgb;
+	int		color;
 
 	parts = ft_split(line, SPACE);
 	if (!parts)
@@ -92,12 +93,11 @@ void	set_game_color(char* line, t_parser *parser)
 		parse_exit(line, parser);
 	}
 
+	color = create_trgb(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	if (ft_streq(parts[0], ELEMENT_FLOOR))
-		parser->color_floor =
-			create_trgb(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		parser->color_floor = color;
 	if (ft_streq(parts[0], ELEMENT_CEILING))
-		parser->color_ceiling =
-			create_trgb(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		parser->color_ceiling = color;
 
 	ft_splitfree(rgb);
 	ft_splitfree(parts);
