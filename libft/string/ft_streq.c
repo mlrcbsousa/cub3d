@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_streq.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2021/11/08 14:15:05 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/04 15:33:21 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_bool	ft_streq(char const *s1, char const *s2)
 {
+	if (!s1 || !s2)
+		return false
 	return (s1 && s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
 }
 

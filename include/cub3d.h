@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 21:03:01 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/04 17:42:28 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,23 @@ enum e_map {
 };
 
 /* Structs & Types */
+typedef struct s_validation	t_validation;
 typedef struct s_app		t_app;
 typedef struct s_parser		t_parser;
 typedef struct s_line		t_line;
 typedef struct s_element	t_element;
 typedef struct s_settings	t_settings;
+
+struct	s_validation
+{
+	t_bool north_wall;
+	t_bool south_wall;
+	t_bool east_wall;
+	t_bool west_wall;
+	t_bool ceiling;
+	t_bool floor;
+	t_bool all_valid;
+};
 
 struct	s_app
 {
@@ -114,10 +126,10 @@ void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
 void		parse_exit(char *line, t_parser *parser);
 void		parser_destroy(t_parser *parser);
-t_bool		is_valid_game_element(char *line, t_parser *parser);
-t_bool		is_valid_game_color(char *line, t_parser *parser);
-t_bool		is_valid_game_wall(char *line, t_parser *parser);
-t_bool		is_valid_game_mapline(char *line);
+t_bool		is_valid_game_element(char *line);
+t_bool		is_valid_game_color(char **split_line, t_validation *valid);
+t_bool		is_valid_game_wall(char **split_line, t_validation *valid);
+t_bool		is_valid_game_mapline(char **split_line);
 t_bool		is_valid_game_map(char **map);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);

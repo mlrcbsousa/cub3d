@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 15:20:34 by josantos         ###   ########.fr       */
+/*   Created: 2022/05/04 15:20:24 by josantos          #+#    #+#             */
+/*   Updated: 2022/05/04 15:21:01 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	file_open(char *filename, t_app *self, int (*file_read)(int, t_app*))
+void    print_errno(char* input)
 {
-	int	fd;
-	int	status;
+    ft_putstr_fd("Error\n", STDERR_FILENO);
+	if (input)
+	{
+		ft_putstr_fd(input, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+    perror("");
+}
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+void    print_error(char* input, char *msg)
+{
+    ft_putstr_fd("Error\n", STDERR_FILENO);
+	if (input)
 	{
-		print_errno(filename);
-		return (EXIT_FAILURE);
+		ft_putstr_fd(input, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	status = file_read(fd, self);
-	if (close(fd))
-	{
-		print_errno(filename);
-		return (EXIT_FAILURE);
-	}
-	if (status < 0)
-		return (EXIT_FAILURE);
-	return (status);
+    ft_putendl_fd(msg, STDERR_FILENO);
 }

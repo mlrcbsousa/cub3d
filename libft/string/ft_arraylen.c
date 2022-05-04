@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   ft_arraylen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 15:20:34 by josantos         ###   ########.fr       */
+/*   Created: 2022/05/04 15:14:57 by josantos          #+#    #+#             */
+/*   Updated: 2022/05/04 15:16:30 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	file_open(char *filename, t_app *self, int (*file_read)(int, t_app*))
+int	ft_arraylen(char **str)
 {
-	int	fd;
-	int	status;
+	int i;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		print_errno(filename);
-		return (EXIT_FAILURE);
-	}
-	status = file_read(fd, self);
-	if (close(fd))
-	{
-		print_errno(filename);
-		return (EXIT_FAILURE);
-	}
-	if (status < 0)
-		return (EXIT_FAILURE);
-	return (status);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }

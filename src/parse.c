@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 21:02:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/04 16:19:08 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	parse_elements(int fd, t_app *self)
 		if (line)
 			printf("%s\n", line);
 
-		if (!is_valid_game_element(line, parser))
+		if (!is_valid_game_element(line))
 			parse_exit(line, parser);
 
 		if (is_valid_game_color(line, parser))

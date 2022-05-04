@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
+#    By: josantos <josantos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/03 21:05:14 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/04 14:35:22 by josantos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ LINKS 	+= -lbsd -lXext -lX11
 endif
 
 ifeq (${UNAME}, Darwin)
-LINKS 	+= -framework OpenGL -framework AppKit
-CFLAGS 	+= -DOS_MAC
+LINKS 	+= -Lmlx -lmlx -framework OpenGL -framework AppKit
+CFLAGS 	+= -DOS_MAC -Imlx
 endif
 
 ${NAME}:	${OBJ}
