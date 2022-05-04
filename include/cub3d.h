@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/02 19:22:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/03 21:03:01 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,81 @@
 /* Constants */
 # define WIDTH	1200
 # define HEIGHT 800
+# define SPACE ' '
+# define COMMA ','
+# define ELEMENTS_MAP " \t01NSWE"
+# define ELEMENT_NORTH "NO"
+# define ELEMENT_SOUTH "SO"
+# define ELEMENT_EAST "EA"
+# define ELEMENT_WEST "WE"
+# define ELEMENT_FLOOR "F"
+# define ELEMENT_CEILING "C"
 
 /* Enums */
+enum e_map {
+	MAP_NORTH = 'N',
+	MAP_SOUTH = 'S',
+	MAP_EAST = 'E',
+	MAP_WEST = 'W',
+	MAP_WALL = '1',
+	MAP_SPACE = ' ',
+	MAP_TAB = '\t',
+	MAP_FLOOR = '0',
+};
 
 /* Structs & Types */
-typedef struct s_app	t_app;
-typedef struct s_walls	t_walls;
+typedef struct s_app		t_app;
+typedef struct s_parser		t_parser;
+typedef struct s_line		t_line;
+typedef struct s_element	t_element;
+typedef struct s_settings	t_settings;
 
 struct	s_app
 {
 	t_image		*img;
 	void		*mlx_window;
 	void		*mlx;
-	int			color_floor;
-	int			color_ceiling;
-	t_walls		*walls;
+	t_parser	*parser;
+	t_settings	*settings;
 };
 
-struct s_walls
+// Following the single responsibility principle SRP
+// struct for parse part of program, once passed turned into t_settings in t_app
+struct s_parser
 {
-	char	*north;
-	char	*south;
-	char	*east;
-	char	*west;
+	char	*wall_north;
+	char	*wall_south;
+	char	*wall_east;
+	char	*wall_west;
+	int		color_floor;
+	int		color_ceiling;
+	t_line 	*maplines;
+};
+
+struct s_element
+{
+	char		type;
+	t_element	*next;
+};
+
+struct s_line
+{
+	t_element	*head;
+	int 		n_elements;
+	t_line		*next;
+};
+
+struct s_settings
+{
+	t_image	*wall_north;
+	t_image	*wall_south;
+	t_image	*wall_east;
+	t_image	*wall_west;
+	int		color_floor;
+	int		color_ceiling;
+	int		game_width;
+	int		game_height;
+	char 	**map;
 };
 
 /* Functions */
@@ -54,10 +106,25 @@ struct s_walls
 // TODO: move to libft.h
 t_bool	ft_isfile_ext(char *filename, char *extension);
 t_bool	ft_isfile(char *filename);
+void	ft_splitfree(char **parts);
 // TODO: move to libft.h
 
+/* parse */
+void		parse(t_app *self, char *cubfile);
+t_parser	*parser_create(void);
+void		parse_exit(char *line, t_parser *parser);
+void		parser_destroy(t_parser *parser);
+t_bool		is_valid_game_element(char *line, t_parser *parser);
+t_bool		is_valid_game_color(char *line, t_parser *parser);
+t_bool		is_valid_game_wall(char *line, t_parser *parser);
+t_bool		is_valid_game_mapline(char *line);
+t_bool		is_valid_game_map(char **map);
+void		set_game_mapline(char* line, t_parser *parser);
+void		set_game_wall(char* line, t_parser *parser);
+void		set_game_color(char* line, t_parser *parser);
+void		maplines_destroy(t_line *maplines);
+
 /* game */
-void	game_init(t_app *self, char* cubfile);
 void	game_loop(t_app *self);
 void	game_destroy(t_app *self);
 
@@ -74,6 +141,7 @@ void    print_error(char* input, char *msg);
 int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 
 /* test */
-
+void	print_parser(t_parser *parser);
+void	print_maplines(t_line *maplines);
 
 #endif
