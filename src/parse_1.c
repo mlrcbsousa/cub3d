@@ -6,74 +6,100 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:01:19 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 20:20:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 18:56:06 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
-* On the cubfile elements
-* - Textures are a file that doesnt exist or not a xpm file.
-* - There are multiple textures for the same wall (north wall texture).
-* - RGBs dont have 3 numbers, are separated by an invalid character (not a comma) or have values below 0 or above 255.
-* - There are invalid characters in the cub.
-*/
-
-// use to check everyline from gnl before setting it
-t_bool	is_valid_game_element(char *line, t_parser *parser)
+t_bool	could_be_game_color(char *line)
 {
-	return (is_valid_game_color(line, parser)
-		|| is_valid_game_wall(line, parser)
-		|| is_valid_game_mapline(line));
+	char	**parts;
+	t_bool	result;
+
+	result = FALSE;
+	parts = ft_split(line, ' ');
+	if (ft_strslen(parts) == 2)
+		result = TRUE;
+	if (result)
+		result = ft_streq(parts[0], ELEMENT_FLOOR)
+			|| ft_streq(parts[0], ELEMENT_CEILING);
+	ft_strsfree(parts);
+	return (result);
 }
 
-t_bool	is_valid_game_color(char *line, t_parser *parser)
+t_bool	could_be_game_wall(char *line)
 {
-	// TODO: complete using
-	// - ELEMENT_FLOOR, ELEMENT_CEILING
-	// - ft_streq() (clean version of strcmp)
+	char	**parts;
+	t_bool	result;
 
-	// sudocode
-	// split on space
-	// validate length is 2
-	// check if first is one of consts above
-	// check if this const has already been set
-	// check if second is rgb string
-	//  - split on comma
-	//  - check if each ft_isnumber()
-	//  - check if each in range 0 to 255
-	(void)line;
-	(void)parser;
-	return (TRUE);
+	result = FALSE;
+	parts = ft_split(line, ' ');
+	if (ft_strslen(parts) == 2)
+		result = TRUE;
+	if (result)
+		result = ft_streq(parts[0], ELEMENT_NORTH)
+			|| ft_streq(parts[0], ELEMENT_SOUTH)
+			|| ft_streq(parts[0], ELEMENT_EAST)
+			|| ft_streq(parts[0], ELEMENT_WEST);
+	ft_strsfree(parts);
+	return (result);
 }
 
-t_bool	is_valid_game_wall(char *line, t_parser *parser)
+t_bool	could_be_game_mapline(char *line)
 {
-	// TODO: complete using
-	// - ELEMENT_NORTH, ELEMENT_SOUTH, ELEMENT_EAST, ELEMENT_WEST
-	// - ft_streq() (clean version of strcmp)
-	// - ft_isfile() and ft_isfile_ext()
-
-	// sudocode
-	// split on space
-	// validate length is 2
-	// check if first is one of consts above
-	// check if this const has already been set
-	// check if second is xpm file and is file
-	(void)line;
-	(void)parser;
-	return (TRUE);
-}
-
-t_bool	is_valid_game_mapline(char *line)
-{
-	// * - invalid characters !{ ' ', '\t', '0', '1', 'N', 'S', 'E', 'W' }
 	while (*line)
 		if (!ft_strchr(ELEMENTS_MAP, *line++))
 			return (FALSE);
 	return (TRUE);
 }
+
+// t_bool	legacy_is_valid_game_mapline(char *line)
+// {
+// 	// * - invalid characters !{ ' ', '\t', '0', '1', 'N', 'S', 'E', 'W' }
+// 	int	len;
+// 	int	i;
+// 	int	a;
+// 	char	**parts;
+
+// 	parts = ft_split(line, ' ');
+// 	i = 0;
+// 	a = 0;
+// 	while (parts[i])
+// 	{
+// 		len = ft_strlen(parts[i]);
+// 		if (parts[i][0] != '1' && parts[i][len - 1] != '1')
+// 		{
+// 			print_error(NULL, "Invalid map\n");
+// 			ft_strsfree(parts);
+// 			return (FALSE);
+// 		}
+// 		while (parts[i][a])
+// 		{
+// 			if (parts[i][a] == 'N' || parts[i][a] == 'S' ||
+// 				parts[i][a] == 'E' || parts[i][a] == 'W')
+// 			{
+// 				if (player_ready == FALSE)
+// 					player_ready = TRUE;
+// 				else
+// 				{
+// 					print_error(NULL, "Multiple players are not allowed\n");
+// 					ft_strsfree(parts);
+// 					return (FALSE);
+// 				}
+// 			}
+// 			if (!ft_strchr(ELEMENTS_MAP, parts[i][a]))
+// 			{
+// 				print_error(NULL, "Invalid element inside map\n");
+// 				ft_strsfree(parts);
+// 				return (FALSE);
+// 			}
+// 		}
+// 	}
+// 	return (TRUE);
+// }
+
+// size_t	player_count()
 
 t_bool	is_valid_game_map(char **map)
 {

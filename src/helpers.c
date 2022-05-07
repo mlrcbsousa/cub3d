@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 20:41:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/04 15:20:34 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void    print_errno(char* input)
-{
-    ft_putstr_fd("Error\n", STDERR_FILENO);
-	if (input)
-	{
-		ft_putstr_fd(input, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
-    perror("");
-}
-
-void    print_error(char* input, char *msg)
-{
-    ft_putstr_fd("Error\n", STDERR_FILENO);
-	if (input)
-	{
-		ft_putstr_fd(input, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
-    ft_putendl_fd(msg, STDERR_FILENO);
-}
 
 int	file_open(char *filename, t_app *self, int (*file_read)(int, t_app*))
 {

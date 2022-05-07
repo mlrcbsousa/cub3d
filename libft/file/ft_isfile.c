@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   ft_isfile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 15:35:38 by msousa           ###   ########.fr       */
+/*   Created: 2022/05/07 15:45:16 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 15:45:34 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_bool	ft_streq(char const *s1, char const *s2)
+t_bool	ft_isfile(char *filename)
 {
-	return (!!s1 && !!s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
-}
+	int	fd;
 
-/*
-#include <stdio.h>
-
-int	main(int argc, char *argv[])
-{
-	if (argc == 3)
-		printf("%s == %s : %d\n", argv[1], argv[2], ft_streq(argv[1], argv[2]));
-	else
-		printf("Error: requires 2 string args.\n");
-	return (0);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (FALSE);
+	close(fd);
+	return (TRUE);
 }
-*/

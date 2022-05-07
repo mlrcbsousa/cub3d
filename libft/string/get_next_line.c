@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 22:50:16 by manuel            #+#    #+#             */
-/*   Updated: 2022/05/01 20:19:26 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 16:50:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	gnl_file(int fd, char **str, char *buf)
 	ssize_t	size;
 	char	*tmp;
 
-	printf("DEBUG: gnl_file\n");
 	size = read(fd, buf, BUFFER_SIZE);
 	if (size < 1)
 		return (size);
@@ -116,11 +115,6 @@ int	get_next_line(int fd, char **line)
 	if (!buf)
 		return (-1);
 	status = 1;
-	// printf("DEBUG: get_next_line\n");
-	// printf("DEBUG: str: %s\n", str[fd]);
-	// printf("DEBUG: fd: %d\n", fd);
-	// ft_strchr(str[fd], '\n');
-	// *str[fd] &&
 	while (!ft_strchr(str[fd], '\n') && status == 1)
 		status = gnl_file(fd, str, buf);
 	free(buf);

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 21:02:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 19:34:31 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static t_bool	has_colors_and_walls(t_parser *parser)
 }
 
 // destroy parser, return and exit
-void	parse_exit(char *line, t_parser *parser)
+void	parse_exit(t_parser *parser, char *error)
 {
-	if (line)
-		free(line);
+	if (error)
+		print_error(NULL, error);
 	if (parser)
 		parser_destroy(parser);
 	exit(EXIT_FAILURE);
@@ -50,15 +50,22 @@ static int	parse_elements(int fd, t_app *self)
 		if (line)
 			printf("%s\n", line);
 
-		if (!is_valid_game_element(line, parser))
-			parse_exit(line, parser);
-
-		if (is_valid_game_color(line, parser))
-			set_game_color(line, parser);
-		else if (is_valid_game_wall(line, parser))
-			set_game_wall(line, parser);
-		else if (has_colors_and_walls(parser) && is_valid_game_mapline(line))
-			set_game_mapline(line, parser);
+		// TODO: is an empty line NULL?
+		if (line && !is_empty_line(line))
+		{
+			parser->line = line;
+			if (could_be_game_color(line))
+				set_game_color(line, parser);
+			else if (could_be_game_wall(line))
+				set_game_wall(line, parser);
+			else if (has_colors_and_walls(parser)
+				&& could_be_game_mapline(line))
+				set_game_mapline(line, parser);
+			else
+				parse_exit(parser, "invalid game element");
+			free(parser->line);
+			parser->line = NULL;
+		}
 	}
 	// TODO: maybe useless
 	if (status < 0)
@@ -86,8 +93,7 @@ void	parse(t_app *self, char *cubfile)
 
 	// The only way status could fail here is if something fails with gnl
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
-		parse_exit(NULL, parser);
-		// destroy everything and exit
+		parse_exit(parser, "Invalid cubfile");
 
 	// TODO: (this should probably be next chunk of program, separate file)
 	// - transform maplines to char** and get some data (width and height)

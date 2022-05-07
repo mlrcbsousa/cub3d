@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 21:03:01 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 18:59:27 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ struct s_parser
 	int		color_floor;
 	int		color_ceiling;
 	t_line 	*maplines;
+	char 	**parts;
+	char 	*line;
 };
 
 struct s_element
@@ -104,25 +106,26 @@ struct s_settings
 /* Functions */
 
 // TODO: move to libft.h
-t_bool	ft_isfile_ext(char *filename, char *extension);
-t_bool	ft_isfile(char *filename);
-void	ft_splitfree(char **parts);
+t_bool	is_empty_line(char *line);
+t_bool	is_valid_rgb(char **colors);
 // TODO: move to libft.h
 
 /* parse */
 void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
-void		parse_exit(char *line, t_parser *parser);
+void    	parse_exit(t_parser *parser, char *error);
 void		parser_destroy(t_parser *parser);
-t_bool		is_valid_game_element(char *line, t_parser *parser);
-t_bool		is_valid_game_color(char *line, t_parser *parser);
-t_bool		is_valid_game_wall(char *line, t_parser *parser);
-t_bool		is_valid_game_mapline(char *line);
-t_bool		is_valid_game_map(char **map);
+t_bool		could_be_game_color(char *line);
+t_bool		could_be_game_wall(char *line);
+t_bool		could_be_game_mapline(char *line);
+
+// t_bool		is_valid_game_map(char **map);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);
 void		set_game_color(char* line, t_parser *parser);
 void		maplines_destroy(t_line *maplines);
+
+/* maplines */
 
 /* game */
 void	game_loop(t_app *self);
