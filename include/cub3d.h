@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 22:58:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 00:47:22 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 # define ELEMENT_WEST "WE"
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
-# define NORTH 'N'
-# define SOUTH 'S'
-# define EAST 'E'
-# define WEST 'W'
+// # define NORTH 'N'
+// # define SOUTH 'S'
+// # define EAST 'E'
+// # define WEST 'W'
 
 /* Enums */
 enum e_map {
@@ -56,6 +56,7 @@ typedef struct s_parser		t_parser;
 typedef struct s_line		t_line;
 typedef struct s_element	t_element;
 typedef struct s_settings	t_settings;
+typedef struct s_player		t_player;
 
 struct	s_app
 {
@@ -97,15 +98,25 @@ struct s_line
 
 struct s_settings
 {
-	t_image	*wall_north;
-	t_image	*wall_south;
-	t_image	*wall_east;
-	t_image	*wall_west;
-	int		color_floor;
-	int		color_ceiling;
-	int		game_width;
-	int		game_height;
-	char 	**map;
+	t_image		*wall_north;
+	t_image		*wall_south;
+	t_image		*wall_east;
+	t_image		*wall_west;
+	int			color_floor;
+	int			color_ceiling;
+	int			game_width;
+	int			game_height;
+	t_player	*player;
+	char 		**map;
+};
+
+struct t_player
+{
+	float	a;
+	float	y;
+	float	x;
+	float	dx;
+	float	dy;
 };
 
 /* Functions */

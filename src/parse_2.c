@@ -54,6 +54,14 @@ void	parser_destroy(t_parser *parser)
 	free(parser);
 }
 
+
+// maplines
+// line -> elements list
+// line -> elements list
+// line -> elements list
+// line -> elements list
+// line -> elements list
+
 // struct s_element
 // {
 // 	char		type;
@@ -67,29 +75,113 @@ void	parser_destroy(t_parser *parser)
 // 	t_line		*next;
 // };
 
-// maplines
-// line -> elements list
-// line -> elements list
-// line -> elements list
-// line -> elements list
-// line -> elements list
-
-void	maplineadd_back(t_line **mapline, t_element *new)
+t_element	*elements_new(char type)
 {
-	(void)mapline;
-	(void)new;
+	t_element	*elements;
+
+	elements = (t_element *)malloc(sizeof(t_element));
+	if (!elements)
+		return (NULL);
+	elements->type = type;
+	elements->next = NULL;
+	return (elements);
+}
+
+// if (*lst)
+// 		ft_last(*lst)->next = new;
+// 	else
+// 		*lst = new;
+
+t_element	*elements_last(t_element *elements)
+{
+	while (elements->next)
+		elements = elements->next;
+	return (elements);
+}
+
+void	elements_addback(t_element **elements, t_element *new)
+{
+	if (*elements)
+		elements_last(*elements)->next = new;
+	else
+		*elements = new;
+}
+
+void	elements_convert_tab(t_element **elements)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < 4)
+		elements_addback(elements, elements_new(MAP_SPACE));
+}
+
+t_element	*elements_create(char *line)
+{
+	t_element	*elements;
+
+	elements = NULL;
+	while (*line)
+	{
+		if (*line == MAP_TAB)
+			elements_convert_tab(&elements);
+		else
+			elements_addback(&elements, elements_new(*line));
+		line++;
+	}
+	return (elements);
+}
+
+int	elements_size(t_element *elements)
+{
+	int	size;
+
+	size = 0;
+	while (elements)
+	{
+		elements = elements->next;
+		size++;
+	}
+	return (size);
+}
+
+t_line	*mapline_create(char *line)
+{
+	t_line	*mapline;
+
+	mapline = (t_line *)malloc(sizeof(t_line));
+	if (!mapline)
+		return (NULL);
+	mapline->head = elements_create(line);
+	mapline->n_elements = elements_size(mapline->head);
+	mapline->next = NULL;
+	return (mapline);
+}
+
+t_line	*mapline_last(t_line *mapline)
+{
+	while (mapline->next)
+		mapline = mapline->next;
+	return (mapline);
+}
+
+void	mapline_addback(t_parser *parser, t_line *mapline)
+{
+	if (parser->maplines)
+		mapline_last(parser->maplines)->next = mapline;
+	else
+		parser->maplines = mapline;
 }
 
 void	set_game_mapline(char* line, t_parser *parser)
 {
 	int	a;
 
-	// validate player count
 	a = 0;
 	while (line[a])
 	{
-		if (line[a] == NORTH || line[a] == SOUTH ||
-			line[a] == EAST || line[a] == WEST)
+		if (line[a] == MAP_NORTH || line[a] == MAP_SOUTH ||
+			line[a] == MAP_EAST || line[a] == MAP_WEST)
 		{
 			if (!parser->has_player)
 				parser->has_player = TRUE;
@@ -99,8 +191,7 @@ void	set_game_mapline(char* line, t_parser *parser)
 		a++;
 	}
 
-	// maplineadd_back(parser, elements_create(line));
-	// // maplineadd_back
+	mapline_addback(parser, mapline_create(line));
 }
 
 void	set_game_wall(char* line, t_parser *parser)

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 16:21:46 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 00:39:06 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,26 @@ void	print_parser(t_parser *parser)
 		print_maplines(parser->maplines);
 }
 
+void	print_elements(t_element *elements)
+{
+	if (!elements)
+		return ;
+	while (elements)
+	{
+		printf("%c, ", elements->type);
+		elements = elements->next;
+	}
+	printf("\n");
+}
+
 void	print_maplines(t_line *maplines)
 {
 	if (!maplines)
 		return ;
-	// printf("maplines: %d, data: %s\n", maplines->type, maplines->data);
+	while (maplines)
+	{
+		print_elements(maplines->head);
+		maplines = maplines->next;
+	}
+	printf("========================================= MAPLINES END\n\n");
 }
