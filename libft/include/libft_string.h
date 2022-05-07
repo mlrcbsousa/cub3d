@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_string.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 22:09:51 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 15:17:38 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:42:46 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_strnchr(const char *str, int c);
 int		get_next_line(int fd, char **line);
 int		ft_strcmp(const char *s1, const char *s2);
 t_bool	ft_streq(char const *s1, char const *s2);
-int		ft_arraylen(char **str);
-
+size_t	ft_strslen(char **strs);
+void	ft_strsfree(char **strs);
 
 #endif

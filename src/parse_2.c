@@ -89,7 +89,7 @@ void	set_game_color(char* line, t_parser *parser)
 	rgb = ft_split(parts[1], COMMA);
 	if (!rgb)
 	{
-		ft_splitfree(parts);
+		ft_strsfree(parts);
 		parse_exit(line, parser);
 	}
 
@@ -99,7 +99,7 @@ void	set_game_color(char* line, t_parser *parser)
 	if (ft_streq(parts[0], ELEMENT_CEILING))
 		parser->color_ceiling = color;
 
-	ft_splitfree(rgb);
-	ft_splitfree(parts);
+	ft_strsfree(rgb);
+	ft_strsfree(parts);
 	free(line);
 }

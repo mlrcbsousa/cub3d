@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   ft_strsfree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 15:35:38 by msousa           ###   ########.fr       */
+/*   Created: 2022/05/07 15:41:11 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 15:41:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_bool	ft_streq(char const *s1, char const *s2)
+void	ft_strsfree(char **strs)
 {
-	return (!!s1 && !!s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
-}
+	char	**tmp;
 
-/*
-#include <stdio.h>
-
-int	main(int argc, char *argv[])
-{
-	if (argc == 3)
-		printf("%s == %s : %d\n", argv[1], argv[2], ft_streq(argv[1], argv[2]));
-	else
-		printf("Error: requires 2 string args.\n");
-	return (0);
+	if (!strs)
+		return ;
+	tmp = strs;
+	while (*strs)
+		free(*strs++);
+	free(tmp);
 }
-*/

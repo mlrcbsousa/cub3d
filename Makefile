@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: josantos <josantos@student.42.fr>          +#+  +:+       +#+         #
+#    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/04 14:35:22 by josantos         ###   ########.fr        #
+#    Updated: 2022/05/07 16:10:39 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,9 @@ RM			= rm -f
 INC			= -Iinclude -Ilibft/include
 UNAME 	:= ${shell uname}
 OBJ			= ${SRC:%.c=obj/%.o}
-SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c src/test.c\
-					src/parse.c src/parse_1.c src/parse_2.c src/maplines.c
+SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c src/test.c \
+					src/parse.c src/parse_1.c src/parse_2.c src/maplines.c src/errors.c \
+					src/validation.c
 
 NAME		= cub3d
 
@@ -27,8 +28,8 @@ LINKS 	+= -lbsd -lXext -lX11
 endif
 
 ifeq (${UNAME}, Darwin)
-LINKS 	+= -Lmlx -lmlx -framework OpenGL -framework AppKit
-CFLAGS 	+= -DOS_MAC -Imlx
+LINKS 	+= -framework OpenGL -framework AppKit
+CFLAGS 	+= -DOS_MAC
 endif
 
 ${NAME}:	${OBJ}

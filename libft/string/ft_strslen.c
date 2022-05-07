@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   ft_strslen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 15:35:38 by msousa           ###   ########.fr       */
+/*   Created: 2022/05/07 15:36:09 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 16:42:29 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_bool	ft_streq(char const *s1, char const *s2)
+// Let segfault when str is NULL so we know not to call funciton on NULL
+size_t	ft_strslen(char **strs)
 {
-	return (!!s1 && !!s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
-}
+	size_t	length;
 
-/*
-#include <stdio.h>
-
-int	main(int argc, char *argv[])
-{
-	if (argc == 3)
-		printf("%s == %s : %d\n", argv[1], argv[2], ft_streq(argv[1], argv[2]));
-	else
-		printf("Error: requires 2 string args.\n");
-	return (0);
+	length = 0;
+	while (*strs++)
+		length++;
+	return (length);
 }
-*/

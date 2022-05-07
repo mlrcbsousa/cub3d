@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 16:19:08 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:29:33 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,18 @@ static int	parse_elements(int fd, t_app *self)
 		if (line)
 			printf("%s\n", line);
 
-		if (!is_valid_game_element(line))
-			parse_exit(line, parser);
-
-		if (is_valid_game_color(line, parser))
-			set_game_color(line, parser);
-		else if (is_valid_game_wall(line, parser))
-			set_game_wall(line, parser);
-		else if (has_colors_and_walls(parser) && is_valid_game_mapline(line))
-			set_game_mapline(line, parser);
+		if (!is_empty_line(line))
+		{
+			if (is_valid_game_color(line, parser))
+				set_game_color(line, parser);
+			else if (is_valid_game_wall(line, parser))
+				set_game_wall(line, parser);
+			else if (has_colors_and_walls(parser) && is_valid_game_mapline(line))
+				set_game_mapline(line, parser);
+			else // not valid game element, so fail
+				parse_exit(line, parser);
+			free(line);
+		}
 	}
 	// TODO: maybe useless
 	if (status < 0)

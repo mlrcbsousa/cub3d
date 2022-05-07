@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 17:42:28 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:35:59 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,8 @@ struct s_settings
 /* Functions */
 
 // TODO: move to libft.h
-t_bool	ft_isfile_ext(char *filename, char *extension);
-t_bool	ft_isfile(char *filename);
-void	ft_splitfree(char **parts);
+t_bool	is_empty_line(char *line);
+t_bool	is_valid_rgb(char **colors);
 // TODO: move to libft.h
 
 /* parse */
@@ -126,10 +125,10 @@ void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
 void		parse_exit(char *line, t_parser *parser);
 void		parser_destroy(t_parser *parser);
-t_bool		is_valid_game_element(char *line);
-t_bool		is_valid_game_color(char **split_line, t_validation *valid);
-t_bool		is_valid_game_wall(char **split_line, t_validation *valid);
-t_bool		is_valid_game_mapline(char **split_line);
+// t_bool		is_valid_game_element(char *line);
+t_bool		is_valid_game_color(char *line, t_parser *parser);
+t_bool		is_valid_game_wall(char *line, t_parser *parser);
+t_bool		is_valid_game_mapline(char *line);
 t_bool		is_valid_game_map(char **map);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);

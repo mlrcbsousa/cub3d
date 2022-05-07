@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arraylen.c                                      :+:      :+:    :+:   */
+/*   ft_isfile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 15:14:57 by josantos          #+#    #+#             */
-/*   Updated: 2022/05/04 15:16:30 by josantos         ###   ########.fr       */
+/*   Created: 2022/05/07 15:45:16 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 15:45:34 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_arraylen(char **str)
+t_bool	ft_isfile(char *filename)
 {
-	int i;
+	int	fd;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (FALSE);
+	close(fd);
+	return (TRUE);
 }

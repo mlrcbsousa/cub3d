@@ -6,52 +6,37 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/03 20:34:59 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 16:43:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// TODO: move to libft.h
-// use WITH dot
-t_bool	ft_isfile_ext(char *filename, char *extension)
+/* TODO: move to libft.h via the libft repo and then use the update script */
+
+t_bool	is_empty_line(char *line)
 {
-	unsigned int	len_filename;
-	unsigned int	len_extension;
-
-	len_filename = ft_strlen(filename);
-	len_extension = ft_strlen(extension);
-
-	// filename smaller then extension length
-	if (len_filename <= len_extension)
-		return (FALSE);
-
-	return (ft_streq(filename + len_filename - len_extension, extension));
+	return (line && ft_streq("", line));
 }
 
-t_bool	ft_isfile(char *filename)
+t_bool	is_valid_rgb(char **colors)
 {
-	int	fd;
+	int	color;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+	if (ft_strslen(colors) != 3)
 		return (FALSE);
-	close(fd);
+	while (*colors)
+	{
+		if (!ft_isnumber(*colors))
+			return (FALSE);
+		color = ft_atoi(*colors++);
+		if (color < 0 || color > 255)
+			return (FALSE);
+	}
 	return (TRUE);
 }
 
-void	ft_splitfree(char **parts)
-{
-	char	**tmp;
-
-	if (!parts)
-		return ;
-	tmp = parts;
-	while (*parts)
-		free(*parts++);
-	free(tmp);
-}
-// TODO: move to libft.h
+/* TODO *********** */
 
 static void	set_image(t_app *self)
 {

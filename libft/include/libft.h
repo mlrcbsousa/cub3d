@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <msousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 23:15:21 by manuel            #+#    #+#             */
-/*   Updated: 2022/03/10 00:53:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 15:44:12 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "libft_memory.h"
 # include "libft_print.h"
 # include "libft_string.h"
+# include "libft_file.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
