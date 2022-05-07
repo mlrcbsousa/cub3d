@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 16:29:33 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 16:58:02 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	parse(t_app *self, char *cubfile)
 
 	// The only way status could fail here is if something fails with gnl
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
+	{
+		print_error(NULL, "Invalid cubfile");
 		parse_exit(NULL, parser);
+	}
 		// destroy everything and exit
 
 	// TODO: (this should probably be next chunk of program, separate file)

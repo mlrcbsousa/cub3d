@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/07 16:10:39 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/07 16:59:10 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ INC			= -Iinclude -Ilibft/include
 UNAME 	:= ${shell uname}
 OBJ			= ${SRC:%.c=obj/%.o}
 SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c src/test.c \
-					src/parse.c src/parse_1.c src/parse_2.c src/maplines.c src/errors.c \
-					src/validation.c
+					src/parse.c src/parse_1.c src/parse_2.c src/maplines.c src/errors.c
+# src/validation.c
 
 NAME		= cub3d
 
