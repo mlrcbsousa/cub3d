@@ -26,6 +26,8 @@ t_parser	*parser_create(void)
 	parser->wall_east = NULL;
 	parser->wall_west = NULL;
 	parser->maplines = NULL;
+	parser->line = NULL;
+	parser->parts = NULL;
 	return (parser);
 }
 
@@ -34,6 +36,10 @@ void	parser_destroy(t_parser *parser)
 {
 	if (!parser)
 		return ;
+	if (parser->line)
+		free(parser->line);
+	if (parser->parts)
+		ft_strsfree(parser->parts);
 	if (parser->wall_north)
 		free(parser->wall_north);
 	if (parser->wall_south)
@@ -47,7 +53,6 @@ void	parser_destroy(t_parser *parser)
 	free(parser);
 }
 
-
 void	set_game_mapline(char* line, t_parser *parser)
 {
 	(void)line;
@@ -60,20 +65,28 @@ void	set_game_wall(char* line, t_parser *parser)
 	char	**parts;
 
 	parts = ft_split(line, SPACE);
-	if (!parts)
-		parse_exit(line, parser);
+	parser->parts = parts;
+	if (!parts || ft_strslen(parts) != 2)
+		parse_exit(parser, "Wall element must have 2 parts");
+	else if ((ft_streq(parts[0], ELEMENT_NORTH) && parser->wall_north) ||
+		(ft_streq(parts[0], ELEMENT_SOUTH) && parser->wall_south) ||
+		(ft_streq(parts[0], ELEMENT_EAST) && parser->wall_east) ||
+		(ft_streq(parts[0], ELEMENT_WEST) && parser->wall_west))
+		parse_exit(parser, "Multiple same wall elements");
+	else if (!ft_isfile_ext(parts[1], ".xpm") || !ft_isfile(parts[1]))
+		parse_exit(parser, "Wall file must be .xpm");
 
 	if (ft_streq(parts[0], ELEMENT_NORTH))
-		parser->wall_north = parts[1];
-	if (ft_streq(parts[0], ELEMENT_SOUTH))
-		parser->wall_south = parts[1];
-	if (ft_streq(parts[0], ELEMENT_EAST))
-		parser->wall_east = parts[1];
-	if (ft_streq(parts[0], ELEMENT_WEST))
-		parser->wall_west = parts[1];
+		parser->wall_north = ft_strdup(parts[1]);
+	else if (ft_streq(parts[0], ELEMENT_SOUTH))
+		parser->wall_south = ft_strdup(parts[1]);
+	else if (ft_streq(parts[0], ELEMENT_EAST))
+		parser->wall_east = ft_strdup(parts[1]);
+	else if (ft_streq(parts[0], ELEMENT_WEST))
+		parser->wall_west = ft_strdup(parts[1]);
 
-	free(parts[0]);
-	free(line);
+	ft_strsfree(parser->parts);
+	parser->parts = NULL;
 }
 
 void	set_game_color(char* line, t_parser *parser)
@@ -83,23 +96,27 @@ void	set_game_color(char* line, t_parser *parser)
 	int		color;
 
 	parts = ft_split(line, SPACE);
-	if (!parts)
-		parse_exit(line, parser);
+	parser->parts = parts;
+	if (!parts || ft_strslen(parts) != 2)
+		parse_exit(parser, "Color element must have 2 parts");
+	if ((ft_streq(parts[0], ELEMENT_FLOOR) && parser->color_floor != -1) ||
+		(ft_streq(parts[0], ELEMENT_CEILING) && parser->color_ceiling != -1))
+		parse_exit(parser, "Multiple same color elements");
 
 	rgb = ft_split(parts[1], COMMA);
-	if (!rgb)
+	if (!rgb || !is_valid_rgb(rgb))
 	{
-		ft_strsfree(parts);
-		parse_exit(line, parser);
+		ft_strsfree(rgb);
+		parse_exit(parser, "Invalid RGB code");
 	}
 
 	color = create_trgb(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	if (ft_streq(parts[0], ELEMENT_FLOOR))
 		parser->color_floor = color;
-	if (ft_streq(parts[0], ELEMENT_CEILING))
+	else if (ft_streq(parts[0], ELEMENT_CEILING))
 		parser->color_ceiling = color;
 
 	ft_strsfree(rgb);
-	ft_strsfree(parts);
-	free(line);
+	ft_strsfree(parser->parts);
+	parser->parts = NULL;
 }

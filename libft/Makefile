@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 22:41:56 by msousa            #+#    #+#              #
-#    Updated: 2022/05/07 15:46:38 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/07 19:19:28 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME		= libft.a
 
 INC			= -Iinclude
 
-OBJ			= ${SRC:%.c=obj/%.o}
+OBJ			= ${SRC:%.c=%.o}
 SRC			= boolean/ft_isalnum.c \
 					boolean/ft_isalpha.c \
 					boolean/ft_isascii.c \
@@ -105,8 +105,7 @@ ${NAME}:	${OBJ}
 					${AR} $@ $^
 					ranlib $@
 
-obj/%.o:%.c
-					@mkdir -p $(dir $@)
+%.o:%.c
 					${CC} ${CFLAGS} ${INC} -c $< -o $@
 
 all:			${NAME}
@@ -115,7 +114,7 @@ style:
 					-norminette $$( find . -type f \( -name "*.c" -or -name "*.h" \) )
 
 clean:
-					${RM} -rf obj
+					${RM} ${OBJ}
 
 fclean: 	clean
 					${RM} ${NAME}

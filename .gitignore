@@ -54,8 +54,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# MLX
-mlx
-
 # Other
 *.DS_Store
