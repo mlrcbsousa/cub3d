@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 18:59:27 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/07 22:58:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define ELEMENT_WEST "WE"
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
+# define NORTH 'N'
+# define SOUTH 'S'
+# define EAST 'E'
+# define WEST 'W'
 
 /* Enums */
 enum e_map {
@@ -75,6 +79,7 @@ struct s_parser
 	t_line 	*maplines;
 	char 	**parts;
 	char 	*line;
+	t_bool 	has_player;
 };
 
 struct s_element

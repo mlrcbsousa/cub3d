@@ -1,9 +1,9 @@
 NO ./assets/walls/wall_north.xpm
-WE ./assets/walls/wall_west.xpm
+WE ./no_file.xp
 SO ./assets/walls/wall_south.xpm
 EA ./assets/walls/wall_east.xpm
 
-F 220,100,0
+F 220,256,0
 C 225,30,0
 
     1111111111111111111111111
