@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:28:55 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:41:24 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	close_app(t_app *self)
 {
 	settings_destroy(self->settings);
-	player_destroy(self->player);
+	if (self->player)
+		free(self->player);
 	mlx_destroy_window(self->mlx, self->mlx_window);
 	exit(0);
 }
