@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 17:32:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:05:23 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	settings_init(t_app *self)
 	// TODO: maybe move
 	t_player	*player;
 
-	player = player_create(settings);
+	player = player_create();
 	if (!player)
 	{
 		settings_destroy(settings);
@@ -103,5 +103,4 @@ void	settings_init(t_app *self)
 
 	// find player in map && substitute by MAP_FLOOR
 	map_loop(self, set_player);
-
 }

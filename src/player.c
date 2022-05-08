@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 17:35:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:03:45 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_bool	set_player(t_app *self, int i, int j)
 	return (FALSE);
 }
 
-t_player	*player_create(t_settings *settings)
+t_player	*player_create(void)
 {
 	t_player	*player;
 

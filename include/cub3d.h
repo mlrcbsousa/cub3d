@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 17:35:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:03:55 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ t_bool		is_map_closed(t_settings *settings);
 void		map_loop(t_app *self, t_bool (*f)(t_app *, int, int));
 
 /* player */
-t_bool	set_player(t_app *self, int i, int j);
+t_player	*player_create(void);
+t_bool		set_player(t_app *self, int i, int j);
 
 /* game */
 void	game_loop(t_app *self);
