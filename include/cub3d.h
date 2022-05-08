@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:39:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 16:39:06 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int			elements_size(t_element *elements);
 
 /* maplines */
 t_line	*mapline_create(char *line);
-void	maplines_destroy(t_line *maplines);
+void	maplines_destroy(t_line **maplines);
 t_line	*mapline_last(t_line *mapline);
 void	mapline_addback(t_parser *parser, t_line *mapline);
 int		maplines_size(t_line *mapline);

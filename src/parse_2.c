@@ -50,7 +50,7 @@ void	parser_destroy(t_parser *parser)
 	if (parser->wall_west)
 		free(parser->wall_west);
 	if (parser->maplines)
-		maplines_destroy(parser->maplines);
+		maplines_destroy(&parser->maplines);
 	free(parser);
 }
 
