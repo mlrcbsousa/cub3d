@@ -28,6 +28,7 @@ t_parser	*parser_create(void)
 	parser->maplines = NULL;
 	parser->line = NULL;
 	parser->parts = NULL;
+	parser->has_player = FALSE;
 	return (parser);
 }
 
@@ -55,9 +56,23 @@ void	parser_destroy(t_parser *parser)
 
 void	set_game_mapline(char* line, t_parser *parser)
 {
-	(void)line;
-	(void)parser;
-	// add_back_maplines
+	int	a;
+
+	a = 0;
+	while (line[a])
+	{
+		if (line[a] == MAP_NORTH || line[a] == MAP_SOUTH ||
+			line[a] == MAP_EAST || line[a] == MAP_WEST)
+		{
+			if (!parser->has_player)
+				parser->has_player = TRUE;
+			else
+				parse_exit(parser, "Multiple players are not allowed");
+		}
+		a++;
+	}
+
+	mapline_addback(parser, mapline_create(line));
 }
 
 void	set_game_wall(char* line, t_parser *parser)
@@ -73,8 +88,10 @@ void	set_game_wall(char* line, t_parser *parser)
 		(ft_streq(parts[0], ELEMENT_EAST) && parser->wall_east) ||
 		(ft_streq(parts[0], ELEMENT_WEST) && parser->wall_west))
 		parse_exit(parser, "Multiple same wall elements");
-	else if (!ft_isfile_ext(parts[1], ".xpm") || !ft_isfile(parts[1]))
+	else if (!ft_isfile_ext(parts[1], ".xpm"))
 		parse_exit(parser, "Wall file must be .xpm");
+	else if (!ft_isfile(parts[1]))
+		parse_exit(parser, "invalid .xpm file");
 
 	if (ft_streq(parts[0], ELEMENT_NORTH))
 		parser->wall_north = ft_strdup(parts[1]);

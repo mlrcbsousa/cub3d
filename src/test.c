@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 16:21:46 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:28:30 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_parser(t_parser *parser)
 {
 	if (!parser)
 		return ;
-	printf("\n--Parser--\n");
+	printf("\n--PARSER--\n");
 	if (parser->wall_north)
 		printf("wall_north: %s\n", parser->wall_north);
 	if (parser->wall_south)
@@ -31,9 +31,46 @@ void	print_parser(t_parser *parser)
 		print_maplines(parser->maplines);
 }
 
-void	print_maplines(t_line *maplines)
+void	print_elements(t_element *elements)
 {
-	if (!maplines)
+	if (!elements)
 		return ;
-	// printf("maplines: %d, data: %s\n", maplines->type, maplines->data);
+	while (elements)
+	{
+		printf("%c, ", elements->type);
+		elements = elements->next;
+	}
+}
+
+void	print_maplines(t_line *mapline)
+{
+	if (!mapline)
+		return ;
+	while (mapline)
+	{
+		print_elements(mapline->head);
+		printf("  size: %d\n", mapline->n_elements);
+		mapline = mapline->next;
+	}
+	printf("========================================= PARSER END\n\n");
+}
+
+void	print_map(char **map, int x, int y)
+{
+
+	int			i;
+	int			j;
+
+	if (!map)
+		return ;
+	j = 0;
+	while (j < y)
+	{
+		i = 0;
+		while (i < x)
+			printf("%c, ", map[i++][j]);
+		printf("\n");
+		j++;
+	}
+	printf("========================================= MAP END\n\n");
 }

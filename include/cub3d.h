@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 18:59:27 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:25:58 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_parser		t_parser;
 typedef struct s_line		t_line;
 typedef struct s_element	t_element;
 typedef struct s_settings	t_settings;
+typedef struct s_player		t_player;
 
 struct	s_app
 {
@@ -75,6 +76,7 @@ struct s_parser
 	t_line 	*maplines;
 	char 	**parts;
 	char 	*line;
+	t_bool 	has_player;
 };
 
 struct s_element
@@ -92,15 +94,25 @@ struct s_line
 
 struct s_settings
 {
-	t_image	*wall_north;
-	t_image	*wall_south;
-	t_image	*wall_east;
-	t_image	*wall_west;
-	int		color_floor;
-	int		color_ceiling;
-	int		game_width;
-	int		game_height;
-	char 	**map;
+	t_image		*wall_north;
+	t_image		*wall_south;
+	t_image		*wall_east;
+	t_image		*wall_west;
+	int			color_floor;
+	int			color_ceiling;
+	int			width;
+	int			height;
+	t_player	*player;
+	char 		**map;
+};
+
+struct t_player
+{
+	float	a;
+	float	y;
+	float	x;
+	float	dx;
+	float	dy;
 };
 
 /* Functions */
@@ -123,9 +135,28 @@ t_bool		could_be_game_mapline(char *line);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);
 void		set_game_color(char* line, t_parser *parser);
-void		maplines_destroy(t_line *maplines);
+
+/* elements */
+t_element	*elements_new(char type);
+void		elements_addback(t_element **elements, t_element *new);
+void		elements_convert_tab(t_element **elements);
+t_element	*elements_create(char *line);
+int			elements_size(t_element *elements);
 
 /* maplines */
+t_line	*mapline_create(char *line);
+void	maplines_destroy(t_line *maplines);
+t_line	*mapline_last(t_line *mapline);
+void	mapline_addback(t_parser *parser, t_line *mapline);
+int		maplines_size(t_line *mapline);
+
+/* settings */
+t_settings	*settings_create(void);
+void		settings_destroy(t_settings *settings);
+
+/* map */
+void		map_create(t_line *maplines, t_settings *settings);
+t_bool		is_map_closed(t_settings *settings);
 
 /* game */
 void	game_loop(t_app *self);
@@ -146,5 +177,6 @@ int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 /* test */
 void	print_parser(t_parser *parser);
 void	print_maplines(t_line *maplines);
+void	print_map(char **map, int x, int y);
 
 #endif
