@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 02:00:09 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 02:28:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ struct s_settings
 	t_image		*wall_west;
 	int			color_floor;
 	int			color_ceiling;
-	int			game_width;
-	int			game_height;
+	int			width;
+	int			height;
 	t_player	*player;
 	char 		**map;
 };
@@ -150,8 +150,8 @@ t_settings	*settings_create(void);
 void		settings_destroy(t_settings *settings);
 
 /* map */
-char		**map_create(t_line *maplines);
-t_bool		is_map_closed(char **map);
+void		map_create(t_line *maplines, t_settings *settings);
+t_bool		is_map_closed(t_settings *settings);
 
 /* game */
 void	game_loop(t_app *self);

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 01:00:20 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 02:26:51 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ t_settings	*settings_create(void)
 	settings->wall_south = NULL;
 	settings->wall_east = NULL;
 	settings->wall_west = NULL;
+	settings->player = NULL;
 	settings->map = NULL;
+	settings->width = -1;
+	settings->height = -1;
 	return (settings);
 }
 

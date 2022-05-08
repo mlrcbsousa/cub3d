@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 02:19:34 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 02:50:56 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	print_map(char **map, int x, int y)
 
 	if (!map)
 		return ;
-	i = 0;
 	j = 0;
 	while (j < y)
 	{

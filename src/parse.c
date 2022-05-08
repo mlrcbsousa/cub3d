@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 02:20:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 03:45:25 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	parse(t_app *self, char *cubfile)
 	// The only way status could fail here is if something fails with gnl
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
 		parse_exit(parser, "Invalid cubfile");
+	if (!parser->has_player)
+		parse_exit(parser, "map missing one player");
 
 	settings = settings_create();
 	if (!settings)
@@ -103,13 +105,17 @@ void	parse(t_app *self, char *cubfile)
 		exit(EXIT_FAILURE);
 	}
 	self->settings = settings;
-	settings->map = map_create(parser->maplines);
+	map_create(parser->maplines, settings);
 
-	if (settings->map && is_map_closed(settings->map))
+	if (settings->map && !is_map_closed(settings))
 	{
-		parse_exit(parser, "Map not closed");
 		// TODO: destroy map;
+		// settings_destroy(settings);
+		parse_exit(parser, "Map not closed");
 	}
+	// pass to settings
+	// parser_destroy(parser);
+
 	// TODO: (this should probably be next chunk of program, separate file)
 	// - transform maplines to char** and get some data (width and height)
 	// - validate map after transform because map[i][j] is easier for

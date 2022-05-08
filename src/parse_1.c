@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:01:19 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 23:19:15 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 03:27:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,3 @@ t_bool	could_be_game_mapline(char *line)
 			return (FALSE);
 	return (TRUE);
 }
-
-t_bool	is_valid_game_map(char **map)
-{
-	// These have to be done after having full map
-	// * - Map not closed, check if each map character has no space character
-	// 	   around it
-	(void)map;
-	return (TRUE);
-}
-

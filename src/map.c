@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 02:20:24 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 03:46:55 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	map_from_maplines(char **map, t_line *maplines, int map_x, int map_y)
 	}
 }
 
-char	**map_create(t_line *maplines)
+void	map_create(t_line *maplines, t_settings *settings)
 {
 	int		map_x;
 	int		map_y;
@@ -100,17 +100,82 @@ char	**map_create(t_line *maplines)
 	// map[x][y];
 	map = map_init(map_x, map_y);
 	if (!map)
-		return (NULL);
+		return ;
 
 	map_from_maplines(map, maplines, map_x, map_y);
 
 	// TODO: test remove
 	print_map(map, map_x, map_y);
 
-	return (map);
+	settings->map = map;
+	settings->width = map_x;
+	settings->height = map_y;
 }
 
-t_bool	is_map_closed(char **map)
+t_bool	check_all_sides(char **map, int x, int y)
 {
-	return (!map);
+	int		i;
+	int		j;
+	t_bool	valid;
+
+	j = y - 1;
+	valid = FALSE;
+	while (j <= y + 1)
+	{
+		i = x - 1;
+		while (i <= x + 1)
+		{
+			if (i >= 0 && j >= 0)
+			{
+				if (i == x && j == y)
+				{
+
+				}
+				else if (map[i][j])
+				{
+					valid = (map[i][j] != MAP_SPACE);
+					if (!valid)
+						return (FALSE);
+				}
+				else
+					return (FALSE);
+			}
+			else
+				return (FALSE);
+			if (!valid)
+				return (FALSE);
+			i++;
+		}
+		j++;
+	}
+	return (TRUE);
+}
+
+t_bool	is_map_closed(t_settings *settings)
+{
+	int		i;
+	int		j;
+	t_bool	valid;
+
+	if (!settings->map)
+		return (FALSE);
+	valid = FALSE;
+	j = 0;
+	while (j < settings->height)
+	{
+		i = 0;
+		while (i < settings->width)
+		{
+			if (settings->map[i][j] != MAP_WALL
+				&& settings->map[i][j] != MAP_SPACE)
+			{
+				valid = check_all_sides(settings->map, i, j);
+				if (!valid)
+					return (FALSE);
+			}
+			i++;
+		}
+		j++;
+	}
+	return (TRUE);
 }
