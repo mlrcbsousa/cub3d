@@ -32,7 +32,6 @@ t_parser	*parser_create(void)
 	return (parser);
 }
 
-// if failure in parse call this method before exit
 void	parser_destroy(t_parser *parser)
 {
 	if (!parser)

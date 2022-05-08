@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:48:23 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:36:04 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static char	**map_init(int width, int height)
 	map = (char **)malloc(sizeof(char *) * width + 1);
 	if (!map)
 		return (NULL);
-	map[width] = NULL;
-	// *(map + width) = NULL;
+	map[width] = (char *)ft_calloc(sizeof(char), height + 1);
 	i = 0;
 	while (i < width)
 	{
@@ -91,7 +90,7 @@ void	map_create(t_line *maplines, t_settings *settings)
 	map_from_maplines(map, maplines, width, height);
 
 	// TODO: remove
-	print_map(map, width, height);
+	print_map(settings);
 
 	settings->map = map;
 	settings->width = width;

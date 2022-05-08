@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 16:39:06 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <math.h>
 
 # include "libft.h"
 # include "ft_mlx.h"
@@ -27,12 +28,17 @@
 # define SPACE ' '
 # define COMMA ','
 # define ELEMENTS_MAP " \t01NSWE"
+# define ELEMENTS_PLAYER "NSEW"
 # define ELEMENT_NORTH "NO"
 # define ELEMENT_SOUTH "SO"
 # define ELEMENT_EAST "EA"
 # define ELEMENT_WEST "WE"
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
+
+# define TILE_SIZE 64
+# define PI 3.14159265359
+# define DR 0.00087266666
 
 /* Enums */
 enum e_map {
@@ -61,6 +67,7 @@ struct	s_app
 	void		*mlx;
 	t_parser	*parser;
 	t_settings	*settings;
+	t_player	*player;
 };
 
 // Following the single responsibility principle SRP
@@ -102,11 +109,10 @@ struct s_settings
 	int			color_ceiling;
 	int			width;
 	int			height;
-	t_player	*player;
 	char 		**map;
 };
 
-struct t_player
+struct s_player
 {
 	float	a;
 	float	y;
@@ -158,6 +164,12 @@ void		settings_destroy(t_settings *settings);
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);
 t_bool		is_map_closed(t_settings *settings);
+void		map_loop(t_app *self, t_bool (*f)(t_app *, int, int));
+
+/* player */
+void		player_init(t_app *self);
+t_player	*player_create(void);
+t_bool		set_player(t_app *self, int i, int j);
 
 /* game */
 void	game_loop(t_app *self);
@@ -166,6 +178,8 @@ void	game_destroy(t_app *self);
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
+void	draw_rays(t_app *self);
+void	draw_line(t_app *self, int ray, float line_height, float line_offset);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);
@@ -178,6 +192,7 @@ int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 /* test */
 void	print_parser(t_parser *parser);
 void	print_maplines(t_line *maplines);
-void	print_map(char **map, int x, int y);
+void	print_map(t_settings *settings);
+void	print_player(t_player *player);
 
 #endif

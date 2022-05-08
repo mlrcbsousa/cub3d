@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 15:19:36 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:27:16 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:29:25 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@ t_element	*elements_last(t_element *elements)
 void	elements_addback(t_element **elements, t_element *new)
 {
 	if (*elements)
-	{
-		// while (elements->next)
-		// 	elements = elements->next;
-		// elements->next
 		elements_last(*elements)->next = new;
-	}
 	else
 		*elements = new;
 }
@@ -67,17 +62,4 @@ t_element	*elements_create(char *line)
 		line++;
 	}
 	return (elements);
-}
-
-int	elements_size(t_element *elements)
-{
-	int	size;
-
-	size = 0;
-	while (elements)
-	{
-		elements = elements->next;
-		size++;
-	}
-	return (size);
 }

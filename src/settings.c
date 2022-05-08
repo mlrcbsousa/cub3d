@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 16:44:10 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:39:48 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_settings	*settings_create(void)
 	settings->wall_south = NULL;
 	settings->wall_east = NULL;
 	settings->wall_west = NULL;
-	settings->player = NULL;
 	settings->map = NULL;
 	settings->width = -1;
 	settings->height = -1;
@@ -44,8 +43,6 @@ void	settings_destroy(t_settings *settings)
 		free(settings->wall_east);
 	if (settings->wall_west)
 		free(settings->wall_west);
-	if (settings->player)
-		free(settings->player);
 	if (settings->map)
 		ft_strsfree(settings->map);
 	free(settings);
@@ -61,9 +58,6 @@ void	settings_from_parser(t_settings *settings, t_parser *parser)
 	// settings->wall_south = image_create(parser->wall_south);
 	// settings->wall_east = image_create(parser->wall_east);
 	// settings->wall_west = image_create(parser->wall_west);
-
-	// TODO:
-	// settings->player = NULL;
 }
 
 void	settings_init(t_app *self)
@@ -74,14 +68,14 @@ void	settings_init(t_app *self)
 	parser = self->parser;
 	settings = settings_create();
 	if (!settings)
-		parse_exit(parser, strerror(errno)); // bad alloc
+		parse_exit(parser, strerror(errno));
 
 	self->settings = settings;
 	map_create(parser->maplines, settings);
 	if (!settings->map)
 	{
 		settings_destroy(settings);
-		parse_exit(parser, strerror(errno)); // bad alloc
+		parse_exit(parser, strerror(errno));
 	}
 
 	if (!is_map_closed(settings))
