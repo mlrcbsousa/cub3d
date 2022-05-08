@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:36:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
 
-# define MAP_SIZE 64
+# define TILE_SIZE 64
 # define PI 3.14159265359
+# define DR 0.00087266666
 
 /* Enums */
 enum e_map {
@@ -177,6 +178,8 @@ void	game_destroy(t_app *self);
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
+void	draw_rays(t_app *self);
+void	draw_line(t_app *self, int ray, float line_height, float line_offset);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);

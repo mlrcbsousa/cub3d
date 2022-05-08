@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 19:12:55 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_bool	set_player(t_app *self, int i, int j)
 	p = self->player;
 	if (ft_strchr(ELEMENTS_PLAYER, map[i][j]))
 	{
-		p->x = i; // TODO: turn into units (relative to pixels)
-		p->y = j;
+		p->x = i * TILE_SIZE; // TODO: turn into units (relative to pixels)
+		p->y = j * TILE_SIZE;
 
 		// set angle based on player (map[i][j])
 		p->a = get_initial_angle(map[i][j]);
