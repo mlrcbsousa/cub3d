@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:25:58 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:39:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	mapline_addback(t_parser *parser, t_line *mapline);
 int		maplines_size(t_line *mapline);
 
 /* settings */
+void		settings_init(t_app *self);
 t_settings	*settings_create(void);
 void		settings_destroy(t_settings *settings);
 
