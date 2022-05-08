@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 16:39:06 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 17:35:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SPACE ' '
 # define COMMA ','
 # define ELEMENTS_MAP " \t01NSWE"
+# define ELEMENTS_PLAYER "NSEW"
 # define ELEMENT_NORTH "NO"
 # define ELEMENT_SOUTH "SO"
 # define ELEMENT_EAST "EA"
@@ -61,6 +62,7 @@ struct	s_app
 	void		*mlx;
 	t_parser	*parser;
 	t_settings	*settings;
+	t_player	*player;
 };
 
 // Following the single responsibility principle SRP
@@ -102,11 +104,10 @@ struct s_settings
 	int			color_ceiling;
 	int			width;
 	int			height;
-	t_player	*player;
 	char 		**map;
 };
 
-struct t_player
+struct s_player
 {
 	float	a;
 	float	y;
@@ -158,6 +159,10 @@ void		settings_destroy(t_settings *settings);
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);
 t_bool		is_map_closed(t_settings *settings);
+void		map_loop(t_app *self, t_bool (*f)(t_app *, int, int));
+
+/* player */
+t_bool	set_player(t_app *self, int i, int j);
 
 /* game */
 void	game_loop(t_app *self);

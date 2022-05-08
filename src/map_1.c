@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:24:04 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:11:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 17:33:09 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,25 @@ t_bool	is_map_closed(t_settings *settings)
 		j++;
 	}
 	return (TRUE);
+}
+
+void	map_loop(t_app *self, t_bool (*f)(t_app *, int, int))
+{
+	int			i;
+	int			j;
+
+	if (!self->settings->map)
+		return ;
+	j = 0;
+	while (j < self->settings->height)
+	{
+		i = 0;
+		while (i < self->settings->width)
+		{
+			if (f(self, i, j))
+				return ;
+			i++;
+		}
+		j++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 16:44:10 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 17:32:13 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_settings	*settings_create(void)
 	settings->wall_south = NULL;
 	settings->wall_east = NULL;
 	settings->wall_west = NULL;
-	settings->player = NULL;
 	settings->map = NULL;
 	settings->width = -1;
 	settings->height = -1;
@@ -44,8 +43,6 @@ void	settings_destroy(t_settings *settings)
 		free(settings->wall_east);
 	if (settings->wall_west)
 		free(settings->wall_west);
-	if (settings->player)
-		free(settings->player);
 	if (settings->map)
 		ft_strsfree(settings->map);
 	free(settings);
@@ -92,4 +89,19 @@ void	settings_init(t_app *self)
 
 	settings_from_parser(settings, parser);
 	parser_destroy(parser); // the one
+
+	// TODO: maybe move
+	t_player	*player;
+
+	player = player_create(settings);
+	if (!player)
+	{
+		settings_destroy(settings);
+		parse_exit(parser, strerror(errno)); // bad alloc
+	}
+	self->player = player;
+
+	// find player in map && substitute by MAP_FLOOR
+	map_loop(self, set_player);
+
 }
