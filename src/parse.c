@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 03:45:25 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 14:18:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,4 @@ void	parse(t_app *self, char *cubfile)
 	}
 	// pass to settings
 	// parser_destroy(parser);
-
-	// TODO: (this should probably be next chunk of program, separate file)
-	// - transform maplines to char** and get some data (width and height)
-	// - validate map after transform because map[i][j] is easier for
-	// 	 closed-map validation
-	// - destroy maplines
 }

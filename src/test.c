@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 02:50:56 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 14:21:10 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ void	print_map(char **map, int x, int y)
 	{
 		i = 0;
 		while (i < x)
-		{
-			// printf("%c, ", map[i][j]);
-			printf("%c, ", map[i][j]);
-			i++;
-		}
+			printf("%c, ", map[i++][j]);
 		printf("\n");
 		j++;
 	}
