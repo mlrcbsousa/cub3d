@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:28:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:36:00 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	parse(t_app *self, char *cubfile)
 {
 	int			status;
 	t_parser	*parser;
-	t_settings	*settings;
 
 	parser = parser_create();
 	if (!parser)
@@ -93,29 +92,4 @@ void	parse(t_app *self, char *cubfile)
 		parse_exit(parser, "Invalid cubfile");
 	else if (!parser->has_player)
 		parse_exit(parser, "map missing one player");
-
-	// TODO: move whats under here out
-	settings = settings_create();
-	if (!settings)
-	{
-		print_errno(NULL); // bad alloc
-		exit(EXIT_FAILURE);
-	}
-	self->settings = settings;
-
-	map_create(parser->maplines, settings);
-	if (!settings->map)
-	{
-		print_errno(NULL); // bad alloc
-		exit(EXIT_FAILURE);
-	}
-
-	if (!is_map_closed(settings))
-	{
-		// TODO: destroy map;
-		// settings_destroy(settings);
-		parse_exit(parser, "Map not closed");
-	}
-	// pass to settings
-	// parser_destroy(parser);
 }

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:20:28 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:25:38 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 16:41:14 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ int	maplines_size(t_line *mapline)
 		size++;
 	}
 	return (size);
-}
-
-void	maplines_destroy(t_line *maplines)
-{
-	// TODO: linked list of linked lists destroy
-	(void)maplines;
 }
 
 t_line	*mapline_create(char *line)
