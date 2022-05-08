@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 14:51:12 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:28:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@ static int	parse_elements(int fd, t_app *self)
 	{
 		status = get_next_line(fd, &line);
 
-		// for test TODO: remove
-		if (line)
-			printf("%s\n", line);
-
 		// TODO: is an empty line NULL?
 		if (line && !is_empty_line(line))
 		{
@@ -82,7 +78,7 @@ void	parse(t_app *self, char *cubfile)
 	parser = parser_create();
 	if (!parser)
 	{
-		print_errno(NULL); // bad alloc should be in errno
+		print_errno(NULL); // bad alloc
 		exit(EXIT_FAILURE);
 	}
 
@@ -90,18 +86,19 @@ void	parse(t_app *self, char *cubfile)
 	status = file_open(cubfile, self, parse_elements);
 
 	// TEST TODO: remove
-	print_parser(parser);
+	// print_parser(parser);
 
 	// The only way status could fail here is if something fails with gnl
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
 		parse_exit(parser, "Invalid cubfile");
-	if (!parser->has_player)
+	else if (!parser->has_player)
 		parse_exit(parser, "map missing one player");
 
+	// TODO: move whats under here out
 	settings = settings_create();
 	if (!settings)
 	{
-		print_errno(NULL); // bad alloc should be in errno
+		print_errno(NULL); // bad alloc
 		exit(EXIT_FAILURE);
 	}
 	self->settings = settings;
@@ -109,7 +106,7 @@ void	parse(t_app *self, char *cubfile)
 	map_create(parser->maplines, settings);
 	if (!settings->map)
 	{
-		print_errno(NULL); // bad alloc should be in errno
+		print_errno(NULL); // bad alloc
 		exit(EXIT_FAILURE);
 	}
 

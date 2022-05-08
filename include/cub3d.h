@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 14:25:43 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:25:58 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,20 @@ t_bool		could_be_game_mapline(char *line);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);
 void		set_game_color(char* line, t_parser *parser);
-void		maplines_destroy(t_line *maplines);
-
-/* maplines */
-int			maplines_size(t_line *mapline);
 
 /* elements */
+t_element	*elements_new(char type);
+void		elements_addback(t_element **elements, t_element *new);
+void		elements_convert_tab(t_element **elements);
+t_element	*elements_create(char *line);
+int			elements_size(t_element *elements);
+
+/* maplines */
+t_line	*mapline_create(char *line);
+void	maplines_destroy(t_line *maplines);
+t_line	*mapline_last(t_line *mapline);
+void	mapline_addback(t_parser *parser, t_line *mapline);
+int		maplines_size(t_line *mapline);
 
 /* settings */
 t_settings	*settings_create(void);

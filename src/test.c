@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 14:21:10 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 15:28:30 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_parser(t_parser *parser)
 {
 	if (!parser)
 		return ;
-	printf("\n--Parser--\n");
+	printf("\n--PARSER--\n");
 	if (parser->wall_north)
 		printf("wall_north: %s\n", parser->wall_north);
 	if (parser->wall_south)
@@ -52,7 +52,7 @@ void	print_maplines(t_line *mapline)
 		printf("  size: %d\n", mapline->n_elements);
 		mapline = mapline->next;
 	}
-	printf("========================================= MAPLINES END\n\n");
+	printf("========================================= PARSER END\n\n");
 }
 
 void	print_map(char **map, int x, int y)
