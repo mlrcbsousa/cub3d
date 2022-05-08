@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:28:30 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:20:01 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ void	print_parser(t_parser *parser)
 	printf("color_ceiling: %d\n", parser->color_ceiling);
 	if (parser->maplines)
 		print_maplines(parser->maplines);
+}
+
+void	print_player(t_player *player)
+{
+	if (!player)
+		return ;
+	printf("\n--PLAYER--\n");
+	printf("x: %f\n", player->x);
+	printf("y: %f\n", player->y);
 }
 
 void	print_elements(t_element *elements)
@@ -55,20 +64,19 @@ void	print_maplines(t_line *mapline)
 	printf("========================================= PARSER END\n\n");
 }
 
-void	print_map(char **map, int x, int y)
+void	print_map(t_settings *settings)
 {
-
 	int			i;
 	int			j;
 
-	if (!map)
+	if (!settings->map)
 		return ;
 	j = 0;
-	while (j < y)
+	while (j < settings->height)
 	{
 		i = 0;
-		while (i < x)
-			printf("%c, ", map[i++][j]);
+		while (i < settings->width)
+			printf("%c, ", settings->map[i++][j]);
 		printf("\n");
 		j++;
 	}

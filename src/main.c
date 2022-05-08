@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:40:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:11:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	main(int argc, char *argv[])
 		usage();
 	parse(&self, argv[1]);
 	settings_init(&self);
+	player_init(&self);
 
 	self.mlx = mlx_init();
 	self.mlx_window = mlx_new_window(self.mlx,

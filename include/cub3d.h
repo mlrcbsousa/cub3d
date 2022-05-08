@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:03:55 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:19:45 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ t_bool		is_map_closed(t_settings *settings);
 void		map_loop(t_app *self, t_bool (*f)(t_app *, int, int));
 
 /* player */
+void		player_init(t_app *self);
 t_player	*player_create(void);
 t_bool		set_player(t_app *self, int i, int j);
 
@@ -184,6 +185,7 @@ int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 /* test */
 void	print_parser(t_parser *parser);
 void	print_maplines(t_line *maplines);
-void	print_map(char **map, int x, int y);
+void	print_map(t_settings *settings);
+void	print_player(t_player *player);
 
 #endif

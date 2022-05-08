@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 15:48:23 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:17:56 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	map_create(t_line *maplines, t_settings *settings)
 	map_from_maplines(map, maplines, width, height);
 
 	// TODO: remove
-	print_map(map, width, height);
+	print_map(settings);
 
 	settings->map = map;
 	settings->width = width;
