@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:24:04 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 17:33:09 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:33:00 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ t_bool	check_all_sides(char **map, int x, int y)
 				i++;
 				continue;
 			}
-			// if (!(i >= 0 && j >= 0))
-			// 	return (FALSE);
-			// else if (!map[i])
-			// 	return (FALSE);
-			// else if (!map[i][j])
-			// 	return (FALSE);
-			// else if (map[i][j] == MAP_SPACE)
-			// 	return (FALSE);
 			if (!(i >= 0 && j >= 0) || !map[i] || !map[i][j]
 				|| map[i][j] == MAP_SPACE)
 				return (FALSE);

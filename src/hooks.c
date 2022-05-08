@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 22:27:55 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:28:55 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 static int	close_app(t_app *self)
 {
+	settings_destroy(self->settings);
+	player_destroy(self->player);
 	mlx_destroy_window(self->mlx, self->mlx_window);
 	exit(0);
 }
 
-static void	view(int key, t_app *self)
+static void	rotate(int key, t_app *self)
 {
 	t_player *p;
 
@@ -40,7 +42,7 @@ static void	view(int key, t_app *self)
 		p->dy = sin(p->a) * 5;
 	}
 
-	print_player(p);
+	// print_player(p);
 
 	draw(self);
 }
@@ -73,8 +75,6 @@ static void	move(int key, t_app *self)
 
 static int	key_hook(int key, t_app *self)
 {
-	// TODO: remove
-	printf("\nTest %d", key);
 	if (key == KEY_ESC)
 		close_app(self);
 	else if (key == KEY_A || key == KEY_D || key == KEY_W
@@ -82,7 +82,7 @@ static int	key_hook(int key, t_app *self)
 		move(key, self);
 	else if (key == KEY_RIGHT || key == KEY_LEFT || key == KEY_UP
 		|| key == KEY_DOWN)
-		view(key, self);
+		rotate(key, self);
 	return (0);
 }
 

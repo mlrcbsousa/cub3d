@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:29:05 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:20:51 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 struct	s_point
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 };
 
 typedef struct s_point	t_point;

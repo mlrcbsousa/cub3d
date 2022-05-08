@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:25:41 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	draw(t_app *self)
 
 void	draw_line(t_app *self, int ray, float line_height, float line_offset)
 {
-	printf("drawing line\n");
-	printf("ray: %d, line_height: %f, line_offset: %f\n", ray, line_height, line_offset);
+	// printf("drawing line\n");
+	// printf("ray: %d, line_height: %f, line_offset: %f\n", ray, line_height, line_offset);
 
 	int	j;
 	int	color;

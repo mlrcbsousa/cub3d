@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/04 15:20:34 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/09 00:31:04 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,26 @@ int	file_open(char *filename, t_app *self, int (*file_read)(int, t_app*))
 	if (status < 0)
 		return (EXIT_FAILURE);
 	return (status);
+}
+
+void    print_errno(char* input)
+{
+    ft_putendl_fd("Error", STDERR_FILENO);
+	if (input)
+	{
+		ft_putstr_fd(input, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+    perror("");
+}
+
+void    print_error(char* input, char *msg)
+{
+    ft_putendl_fd("Error", STDERR_FILENO);
+	if (input)
+	{
+		ft_putstr_fd(input, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+    ft_putendl_fd(msg, STDERR_FILENO);
 }

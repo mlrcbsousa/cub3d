@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:39:17 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,11 @@ t_bool	set_player(t_app *self, int i, int j)
 	p = self->player;
 	if (ft_strchr(ELEMENTS_PLAYER, map[i][j]))
 	{
-		p->x = i * TILE_SIZE; // TODO: turn into units (relative to pixels)
+		p->x = i * TILE_SIZE;
 		p->y = j * TILE_SIZE;
-
-		// set angle based on player (map[i][j])
 		p->a = get_initial_angle(map[i][j]);
-
-		// set pdy, pdx
 		p->dx = cos(p->a) * 5;
 		p->dy = sin(p->a) * 5;
-
-		// change in map
 		map[i][j] = MAP_FLOOR;
 		return (TRUE);
 	}
@@ -66,7 +60,6 @@ t_player	*player_create(void)
 	return (player);
 }
 
-// destroy settings, return and exit
 void	settings_exit(t_settings *settings, char *error)
 {
 	if (error)
@@ -84,7 +77,7 @@ void	player_init(t_app *self)
 	settings = self->settings;
 	player = player_create();
 	if (!player)
-		settings_exit(settings, strerror(errno)); // bad alloc
+		settings_exit(settings, strerror(errno));
 
 	self->player = player;
 	map_loop(self, set_player);

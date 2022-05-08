@@ -6,13 +6,12 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:10:46 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:38:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// colors and walls must be set already at this point
 static t_bool	has_colors_and_walls(t_parser *parser)
 {
 	return (parser->wall_north
@@ -23,7 +22,6 @@ static t_bool	has_colors_and_walls(t_parser *parser)
 		&& parser->color_ceiling != -1);
 }
 
-// destroy parser, return and exit
 void	parse_exit(t_parser *parser, char *error)
 {
 	if (error)
@@ -45,8 +43,6 @@ static int	parse_elements(int fd, t_app *self)
 	while (status > 0)
 	{
 		status = get_next_line(fd, &line);
-
-		// TODO: is an empty line NULL?
 		if (line && !is_empty_line(line))
 		{
 			parser->line = line;
@@ -63,7 +59,6 @@ static int	parse_elements(int fd, t_app *self)
 			parser->line = NULL;
 		}
 	}
-	// TODO: maybe useless
 	if (status < 0)
 		return (EXIT_FAILURE);
 	return (status);
@@ -77,17 +72,11 @@ void	parse(t_app *self, char *cubfile)
 	parser = parser_create();
 	if (!parser)
 	{
-		print_errno(NULL); // bad alloc
+		print_errno(NULL);
 		exit(EXIT_FAILURE);
 	}
-
 	self->parser = parser;
 	status = file_open(cubfile, self, parse_elements);
-
-	// TEST TODO: remove
-	// print_parser(parser);
-
-	// The only way status could fail here is if something fails with gnl
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
 		parse_exit(parser, "Invalid cubfile");
 	else if (!parser->has_player)

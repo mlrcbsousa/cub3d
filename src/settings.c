@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:25:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:39:48 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ void	settings_init(t_app *self)
 	parser = self->parser;
 	settings = settings_create();
 	if (!settings)
-		parse_exit(parser, strerror(errno)); // bad alloc
+		parse_exit(parser, strerror(errno));
 
 	self->settings = settings;
 	map_create(parser->maplines, settings);
 	if (!settings->map)
 	{
 		settings_destroy(settings);
-		parse_exit(parser, strerror(errno)); // bad alloc
+		parse_exit(parser, strerror(errno));
 	}
 
 	if (!is_map_closed(settings))
