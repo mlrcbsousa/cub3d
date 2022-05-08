@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 22:38:55 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 02:20:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	parse(t_app *self, char *cubfile)
 {
 	int			status;
 	t_parser	*parser;
+	t_settings	*settings;
 
 	parser = parser_create();
 	if (!parser)
@@ -95,6 +96,20 @@ void	parse(t_app *self, char *cubfile)
 	if (status || !parser->maplines || !has_colors_and_walls(parser))
 		parse_exit(parser, "Invalid cubfile");
 
+	settings = settings_create();
+	if (!settings)
+	{
+		print_errno(NULL); // bad alloc should be in errno
+		exit(EXIT_FAILURE);
+	}
+	self->settings = settings;
+	settings->map = map_create(parser->maplines);
+
+	if (settings->map && is_map_closed(settings->map))
+	{
+		parse_exit(parser, "Map not closed");
+		// TODO: destroy map;
+	}
 	// TODO: (this should probably be next chunk of program, separate file)
 	// - transform maplines to char** and get some data (width and height)
 	// - validate map after transform because map[i][j] is easier for

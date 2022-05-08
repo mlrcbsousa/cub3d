@@ -54,27 +54,6 @@ void	parser_destroy(t_parser *parser)
 	free(parser);
 }
 
-
-// maplines
-// line -> elements list
-// line -> elements list
-// line -> elements list
-// line -> elements list
-// line -> elements list
-
-// struct s_element
-// {
-// 	char		type;
-// 	t_element	*next;
-// };
-
-// struct s_line
-// {
-// 	t_element	*head;
-// 	int 		n_elements;
-// 	t_line		*next;
-// };
-
 t_element	*elements_new(char type)
 {
 	t_element	*elements;
@@ -86,11 +65,6 @@ t_element	*elements_new(char type)
 	elements->next = NULL;
 	return (elements);
 }
-
-// if (*lst)
-// 		ft_last(*lst)->next = new;
-// 	else
-// 		*lst = new;
 
 t_element	*elements_last(t_element *elements)
 {

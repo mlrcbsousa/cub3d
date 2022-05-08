@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 00:47:22 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 02:00:09 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,16 @@ void		maplines_destroy(t_line *maplines);
 
 /* maplines */
 
+/* elements */
+
+/* settings */
+t_settings	*settings_create(void);
+void		settings_destroy(t_settings *settings);
+
+/* map */
+char		**map_create(t_line *maplines);
+t_bool		is_map_closed(char **map);
+
 /* game */
 void	game_loop(t_app *self);
 void	game_destroy(t_app *self);
@@ -162,5 +172,6 @@ int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
 /* test */
 void	print_parser(t_parser *parser);
 void	print_maplines(t_line *maplines);
+void	print_map(char **map, int x, int y);
 
 #endif
