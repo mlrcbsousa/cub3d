@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:19:45 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 18:36:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <math.h>
 
 # include "libft.h"
 # include "ft_mlx.h"
@@ -34,6 +35,9 @@
 # define ELEMENT_WEST "WE"
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
+
+# define MAP_SIZE 64
+# define PI 3.14159265359
 
 /* Enums */
 enum e_map {

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 18:20:01 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 19:11:22 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	print_player(t_player *player)
 	printf("\n--PLAYER--\n");
 	printf("x: %f\n", player->x);
 	printf("y: %f\n", player->y);
+	printf("dx: %f\n", player->dx);
+	printf("dy: %f\n", player->dy);
+	printf("a: %f\n", player->a);
 }
 
 void	print_elements(t_element *elements)
