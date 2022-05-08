@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 14:18:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 14:51:12 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,15 @@ void	parse(t_app *self, char *cubfile)
 		exit(EXIT_FAILURE);
 	}
 	self->settings = settings;
-	map_create(parser->maplines, settings);
 
-	if (settings->map && !is_map_closed(settings))
+	map_create(parser->maplines, settings);
+	if (!settings->map)
+	{
+		print_errno(NULL); // bad alloc should be in errno
+		exit(EXIT_FAILURE);
+	}
+
+	if (!is_map_closed(settings))
 	{
 		// TODO: destroy map;
 		// settings_destroy(settings);

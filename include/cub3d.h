@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 14:13:23 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/08 14:25:43 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void		set_game_color(char* line, t_parser *parser);
 void		maplines_destroy(t_line *maplines);
 
 /* maplines */
+int			maplines_size(t_line *mapline);
 
 /* elements */
 
