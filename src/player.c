@@ -6,14 +6,15 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:51:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:13:47 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	get_initial_angle(char direction)
+static double	get_initial_angle(char direction)
 {
+	printf("direction: %c\n", direction);
 	if (direction == MAP_NORTH)
 		return (3 * PI / 2);
 	else if (direction == MAP_SOUTH)
@@ -28,17 +29,16 @@ float	get_initial_angle(char direction)
 t_bool	set_player(t_app *self, int i, int j)
 {
 	char		**map;
-	t_player	*p;
+	t_player	*player;
 
 	map = self->settings->map;
-	p = self->player;
+	player = self->player;
 	if (ft_strchr(ELEMENTS_PLAYER, map[i][j]))
 	{
-		p->x = i * TILE_SIZE;
-		p->y = j * TILE_SIZE;
-		p->a = get_initial_angle(map[i][j]);
-		p->dx = cos(p->a) * 5;
-		p->dy = sin(p->a) * 5;
+		player->p = point((i << BITS) + SIZE / 2, (j << BITS) + SIZE / 2);
+		player->a = get_initial_angle(map[i][j]);
+		player->dx = cos(player->a) * 5;
+		player->dy = sin(player->a) * 5;
 		map[i][j] = MAP_FLOOR;
 		return (TRUE);
 	}
@@ -53,8 +53,7 @@ t_player	*player_create(void)
 	if (!player)
 		return (NULL);
 	player->a = -1;
-	player->y = -1;
-	player->x = -1;
+	player->p = point(-1, -1);
 	player->dx = -1;
 	player->dy = -1;
 	return (player);

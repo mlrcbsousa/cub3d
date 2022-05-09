@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:30:49 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 21:35:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	print_player(t_player *player)
 	if (!player)
 		return ;
 	printf("\n--PLAYER--\n");
-	printf("x: %f\n", player->x);
-	printf("y: %f\n", player->y);
+	printf("x: %f\n", player->p.x);
+	printf("y: %f\n", player->p.y);
 	printf("dx: %f\n", player->dx);
 	printf("dy: %f\n", player->dy);
 	printf("a: %f\n", player->a);
@@ -67,6 +67,7 @@ void	print_maplines(t_line *mapline)
 	printf("========================================= PARSER END\n\n");
 }
 
+// TODO: use map_loop
 void	print_map(t_settings *settings)
 {
 	int			i;

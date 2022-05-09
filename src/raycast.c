@@ -6,182 +6,205 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 01:23:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:26:09 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	distance(t_point p, t_point q, float a)
+// length to wall
+double	point_distance(t_point p, t_point q, double a)
 {
-	// return (cos(a) * (bx - ax) - sin(a) * (by - ay));
-	(void)a;
-	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
+	return ((q.x - p.x) / cos(a));
 }
 
-void	draw_rays(t_app *self)
+double	trim(double a)
 {
-	int r, mx, my, dof; // depth of field
-	// mx: map x, my: map y
-	float rx, ry, ra, xo, yo, distT;
-	t_player	*p;
-	t_settings	*settings;
-	char**		map;
+	if (a < 0)
+		a += 2 * PI;
+	if (a > 2 * PI)
+		a -= 2 * PI;
+	return (a);
+}
 
-	p = self->player;
-	settings = self->settings;
-	map = settings->map;
-	ra = p->a - DR * (WIDTH / 2);
-	if (ra < 0)
-		ra += 2 * PI;
-	if (ra > 2 * PI)
-		ra -= 2 * PI;
+// void	raycasting3d(t_config *conf)
+// {
+// 	t_ray	ray;
+// 	int		column;
 
-	r = 0;
-	while (r < WIDTH)
+// 	ray.angle = r_angle(30);
+// 	column = 0;
+// 	while (ray.angle > -r_angle(30) && column < WIN_W)
+// 	{
+// 		ray.dist_wall = magic_length(conf, ray.angle);
+// 		ray.end = add_vec(conf->pov->p,
+// 				vec((ray.angle + conf->pov->angle), ray.dist_wall));
+// 		ray.color = set_wall_color(ray.dist_wall,
+// 				conf->pov->angle + ray.angle, conf);
+// 		ray.height = ray.dist_wall * fcos(abs(ray.angle));
+// 		ray.height = ((double)TILE_SIZE / ray.height) * conf->pov->dtp;
+// 		draw_line(conf, ray, column);
+// 		column++;
+// 		ray.angle--;
+// 	}
+// }
+
+// struct	s_ray
+// {
+// 	double	length;
+// 	t_point	p;
+// 	t_wall	wall;
+// 	int		height;
+// 	double	angle;
+// };
+
+int	nearest_tile(double	pixel)
+{
+	return (((int)pixel >> BITS) << BITS);
+}
+
+double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
+	t_point offset, double ray_angle)
+{
+	int			i;
+	int			map_x;
+	int			map_y;
+	t_point		player;
+	t_settings	*s;
+
+	player = self->player->p;
+	s = self->settings;
+	i = 0;
+	while (i < max)
 	{
-		// check horizontal lines
-		dof = 0;
-		float	distH = 1000000, hx = p->x, hy = p->y;
-		float	aTan = -1 / tan(ra);
+		map_x = (int)(ray.x) >> BITS;
+		map_y = (int)(ray.y) >> BITS;
+		if (map_x >= 0 && map_y >= 0 && map_x < s->width && map_y < s->height
+			&& s->map[map_x][map_y] == MAP_WALL)
+		{
+			// TODO: add ray x,y to ray struct with length
+			return (point_distance(player, ray, ray_angle));
+		}
+		ray = point_add(ray, offset);
+		i++;
+	}
 
+	return (BIG_LENGTH);
+}
+
+double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
+{
+	double		aTan;
+	t_point		offset;
+	t_point		ray;
+	t_point		player;
+
+	player = self->player->p;
+	aTan = -1 / tan(ray_angle);
+
+	if (ray_angle == 0 || ray_angle == PI)
+		return (BIG_LENGTH);
+
+	if (ray_angle > PI) // looking up
+	{
 		// First intersection
-
-		// check direction up or down
-		if (ra > PI) // looking up
-		{
-			ry = (((int)p->y >> 6) << 6) - 0.0001;
-			rx = (p->y - ry) * aTan + p->x;
-			yo = -TILE_SIZE;
-			xo = -yo * aTan;
-		}
-		if (ra < PI) // looking down
-		{
-			ry = (((int)p->y >> 6) << 6) + TILE_SIZE;
-			rx = (p->y - ry) * aTan + p->x;
-			yo = TILE_SIZE;
-			xo = -yo * aTan;
-		}
-		if (ra == 0 || ra == PI) // straight looking left or right
-		{
-			ry = p->y;
-			rx = p->x;
-			distT = 1000000;
-			dof = settings->height; // to not loop
-		}
-
-		// loop to find next
-		while(dof < settings->height)
-		{
-			mx = (int)(rx) >> 6;
-			my = (int)(ry) >> 6;
-			if (mx > 0 && my > 0 && mx < settings->width
-				&& my < settings->height
-				&& map[mx][my] == MAP_WALL)
-			{
-				hx = rx;
-				hy = ry;
-				distH = distance((t_point){p->x, p->y}, (t_point){hx, hy}, ra);
-				dof = settings->height; // end loop
-			}
-			else
-			{
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
-		}
-
-
-		// check vertical lines
-		dof = 0;
-		float	distV = 1000000, vx = p->x, vy = p->y;
-		float	nTan = -tan(ra);
-
+		ray.y = nearest_tile(player.y) - 0.0001;
+		ray.x = (player.y - ray.y) * aTan + player.x;
+		offset = point(SIZE * aTan, -SIZE);
+	}
+	else // if (ray_angle < PI) // looking down
+	{
 		// First intersection
+		ray.y = nearest_tile(player.y) + SIZE;
+		ray.x = (player.y - ray.y) * aTan + player.x;
+		offset = point(-SIZE * aTan, SIZE);
+	}
 
-		// check direction left or right
-		if (ra > PI / 2 && ra < 3 * PI / 2) // looking left
-		{
-			rx = (((int)p->x >> 6) << 6) - 0.0001;
-			ry = (p->x - rx) * nTan + p->y;
-			xo = -TILE_SIZE;
-			yo = -xo * nTan;
-		}
-		if (ra < PI / 2 || ra > 3 * PI / 2) // looking right
-		{
-			rx = (((int)p->x >> 6) << 6) + TILE_SIZE;
-			ry = (p->x - rx) * nTan + p->y;
-			xo = TILE_SIZE;
-			yo = -xo * nTan;
-		}
-		if (ra == 0 || ra == PI) // straight looking up or down
-		{
-			ry = p->y;
-			rx = p->x;
-			distT = 1000000;
-			dof = settings->width;
-		}
+	return (get_ray_length_to_wall(self, self->settings->height, ray, offset,
+		ray_angle));
+}
 
-		// loop to find next
-		while(dof < settings->width)
-		{
-			mx = (int)(rx) >> 6;
-			my = (int)(ry) >> 6;
-			if (mx > 0 && my > 0 && mx < settings->width
-				&& my < settings->height
-				&& map[mx][my] == MAP_WALL)
-			{
-				vx = rx;
-				vy = ry;
-				distV = distance((t_point){p->x, p->y}, (t_point){vx, vy}, ra);
-				dof = settings->width; // end loop
-			}
-			else
-			{
-				rx += xo; // next line
-				ry += yo;
-				dof++;
-			}
-		}
 
-		if (distV < distH)
-		{
-			rx = vx;
-			ry = vy;
-			distT = distV;
-			g_wall_color = create_trgb(0, 100, 100, 100);
-		}
-		if (distV > distH)
-		{
-			rx = hx;
-			ry = hy;
-			distT = distH;
-			g_wall_color = create_trgb(0, 120, 100, 100);
-		}
+double	get_ray_length_to_vertical(t_app *self, double ray_angle)
+{
+	t_point		offset;
+	t_point		ray;
+	t_point		player;
+	double		nTan;
 
-		// Draw 3d rays
+	player = self->player->p;
+	nTan = -tan(ray_angle);
 
-		// fish bowl
-		float	ca = p->a - ra;
-		if (ca < 0)
-			ca += 2 * PI;
-		if (ca > 2 * PI)
-			ca -= 2 * PI;
-		distT = distT * cos(ca);
+	if (ray_angle == PI / 2 || ray_angle == 3 * PI / 2)
+		return (BIG_LENGTH);
 
-		float	lineH = (TILE_SIZE * HEIGHT) / distT; // line height
-		if (lineH > HEIGHT)
-			lineH = HEIGHT;
-		float	lineO = (HEIGHT / 2) - (lineH / 2); // line offset
+	if (ray_angle > PI / 2 && ray_angle < 3 * PI / 2) // looking left
+	{
+		// First intersection
+		ray.x = nearest_tile(player.x) - 0.0001;
+		ray.y = (player.x - ray.x) * nTan + player.y;
+		offset = point(-SIZE, SIZE * nTan);
+	}
+	else // if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
+	{
+		// First intersection
+		ray.x = nearest_tile(player.x) + SIZE;
+		ray.y = (player.x - ray.x) * nTan + player.y;
+		offset = point(SIZE, -SIZE * nTan);
+	}
 
-		draw_line(self, r, lineH, lineO);
+	return (get_ray_length_to_wall(self, self->settings->width, ray, offset,
+		ray_angle));
+}
 
-		ra += DR;
-		if (ra < 0)
-			ra += 2 * PI;
-		if (ra > 2 * PI)
-			ra -= 2 * PI;
-		r++;
+double	get_ray_length(t_app *self, double ray_angle)
+{
+	double	length_v;
+	double	length_h;
+
+	length_h = get_ray_length_to_horizontal(self, ray_angle);
+	length_v = get_ray_length_to_vertical(self, ray_angle);
+
+	if (length_v < length_h)
+	{
+		// TODO: to find out which wall to display
+		// ray.x = vx;
+		// ray.y = vy;
+		g_wall_color = create_trgb(0, 100, 100, 100);
+		return (length_v);
+	}
+	else if (length_v > length_h)
+	{
+		// ray.x = hx;
+		// ray.y = hy;
+		g_wall_color = create_trgb(0, 120, 100, 100);
+		return (length_h);
+	}
+	else
+		return (length_v); // return (HEIGHT);
+}
+
+double	fish_bowl(double length, double angle)
+{
+	return (length * cos(angle));
+}
+
+void	raycast(t_app *self)
+{
+	double		length;
+	int			i;
+	double		ray_angle;
+	t_player	*player;
+
+	player = self->player;
+	ray_angle = trim(player->a - (DR * WIDTH2));
+	i = 0;
+	while (i < WIDTH)
+	{
+		length = get_ray_length(self, ray_angle);
+		length = fish_bowl(length, player->a - ray_angle);
+		draw_line(self, i, length);
+		ray_angle = trim(ray_angle + DR);
+		i++;
 	}
 }

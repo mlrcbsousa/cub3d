@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 01:23:41 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:20:00 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include "ft_point.h"
 
 /* Constants */
-# define WIDTH	1200
-# define HEIGHT 800
 # define SPACE ' '
 # define COMMA ','
 # define ELEMENTS_MAP " \t01NSWE"
@@ -36,9 +34,15 @@
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
 
-# define TILE_SIZE 64
+# define WIDTH	1200
+# define WIDTH2	600
+# define HEIGHT 800
+# define HEIGHT2 400
+# define SIZE 64
+# define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define PI 3.14159265359
 # define DR 0.00087266666
+# define BIG_LENGTH 1000000
 
 /* Enums */
 enum e_map {
@@ -101,25 +105,31 @@ struct s_line
 
 struct s_settings
 {
-	t_image		*wall_north;
-	t_image		*wall_south;
-	t_image		*wall_east;
-	t_image		*wall_west;
-	int			color_floor;
-	int			color_ceiling;
-	int			width;
-	int			height;
-	char 		**map;
+	t_image	*wall_north;
+	t_image	*wall_south;
+	t_image	*wall_east;
+	t_image	*wall_west;
+	int		color_floor;
+	int		color_ceiling;
+	int		width;
+	int		height;
+	char 	**map;
 };
 
 struct s_player
 {
-	float	a;
-	float	y;
-	float	x;
-	float	dx;
-	float	dy;
+	double	a;
+	t_point	p;
+	double	dx;
+	double	dy;
+	// t_vector	v;
 };
+
+// struct s_vector
+// {
+// 	double	angle;
+// 	double	size;
+// };
 
 /* Functions */
 
@@ -173,15 +183,14 @@ void		player_init(t_app *self);
 t_player	*player_create(void);
 t_bool		set_player(t_app *self, int i, int j);
 
-/* game */
-void	game_loop(t_app *self);
-void	game_destroy(t_app *self);
-
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
-void	draw_rays(t_app *self);
-void	draw_line(t_app *self, int ray, float line_height, float line_offset);
+void	raycast(t_app *self);
+void	draw_line(t_app *self, int ray, double length);
+
+/* angle */
+double	trim(double a);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);
