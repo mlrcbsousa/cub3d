@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 21:28:18 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 21:58:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ float	trim(float a)
 // - pick wall
 // - fish bowl
 // - draw line
-
 
 int	nearest_tile(double	pixel)
 {
@@ -230,12 +229,10 @@ double	fish_bowl(double length, double angle)
 
 void	raycast(t_app *self)
 {
-	float		length;
+	double		length;
 	int			i;
 	float		ray_angle;
 	t_player	*player;
-	int			wall_height;
-	int			wall_offset;
 
 	player = self->player;
 	ray_angle = trim(player->a - (DR * WIDTH / 2));
@@ -244,15 +241,7 @@ void	raycast(t_app *self)
 	{
 		length = get_ray_length(self, ray_angle);
 		length = fish_bowl(length, player->a - ray_angle);
-
-		wall_height = (int)((SIZE * HEIGHT) / length); // line height
-		if (wall_height > HEIGHT)
-			wall_height = HEIGHT;
-		wall_offset = (int)((HEIGHT / 2) - (wall_height / 2)); // line offset
-
-		draw_line(self, i, wall_height, wall_offset);
-
-		// increment
+		draw_line(self, i, length);
 		ray_angle = trim(ray_angle + DR);
 		i++;
 	}
