@@ -6,17 +6,27 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 13:34:56 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 14:06:31 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// distance to wall
 float	distance(t_point p, t_point q, float a)
 {
 	(void)a;
 	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
 	// return ((q.x - p.x) / cos(a));
+}
+
+float	trim(float a)
+{
+	if (a < 0)
+		a += 2 * PI;
+	if (a > 2 * PI)
+		a -= 2 * PI;
+	return (a);
 }
 
 void	draw_rays(t_app *self)
@@ -31,11 +41,7 @@ void	draw_rays(t_app *self)
 	p = self->player;
 	settings = self->settings;
 	map = settings->map;
-	ra = p->a - DR * (WIDTH / 2);
-	if (ra < 0)
-		ra += 2 * PI;
-	if (ra > 2 * PI)
-		ra -= 2 * PI;
+	ra = trim(p->a - DR * (WIDTH / 2));
 
 	r = 0;
 	while (r < WIDTH)
@@ -71,7 +77,7 @@ void	draw_rays(t_app *self)
 		}
 
 		// loop to find next
-		while(dof < settings->height)
+		while (dof < settings->height)
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
@@ -91,7 +97,6 @@ void	draw_rays(t_app *self)
 				dof++;
 			}
 		}
-
 
 		// check vertical lines
 		dof = 0;
@@ -124,7 +129,7 @@ void	draw_rays(t_app *self)
 		}
 
 		// loop to find next
-		while(dof < settings->width)
+		while (dof < settings->width)
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
@@ -163,11 +168,8 @@ void	draw_rays(t_app *self)
 		// Draw 3d rays
 
 		// fish bowl
-		float	ca = p->a - ra;
-		if (ca < 0)
-			ca += 2 * PI;
-		if (ca > 2 * PI)
-			ca -= 2 * PI;
+		float	ca;
+		ca = trim(p->a - ra);
 		distT = distT * cos(ca);
 
 		float	lineH = (TILE_SIZE * HEIGHT) / distT; // line height
@@ -177,11 +179,7 @@ void	draw_rays(t_app *self)
 
 		draw_line(self, r, lineH, lineO);
 
-		ra += DR;
-		if (ra < 0)
-			ra += 2 * PI;
-		if (ra > 2 * PI)
-			ra -= 2 * PI;
+		ra = trim(ra + DR);
 		r++;
 	}
 }

@@ -6,13 +6,21 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/08 22:52:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 13:52:40 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* TODO: move to libft.h via the libft repo and then use the update script */
+t_point	point_add(t_point a, t_point b)
+{
+	t_point	result;
+
+	result.x = a.x + b.x;
+	result.y = a.y + b.y;
+	return (result);
+}
 
 t_bool	is_empty_line(char *line)
 {
