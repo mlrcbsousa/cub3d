@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:05:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 00:11:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ t_bool		set_player(t_app *self, int i, int j);
 void	draw(t_app *self);
 void	raycast(t_app *self);
 void	draw_line(t_app *self, int ray, double length);
+int		key_hook(int key, t_app *self);
+void	move(int key, t_app *self);
+int		close_app(t_app *self);
 
 /* angle */
 double	trim(double a);

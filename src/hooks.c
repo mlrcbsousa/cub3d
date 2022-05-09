@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:04:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 00:12:52 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	close_app(t_app *self)
+int	close_app(t_app *self)
 {
 	settings_destroy(self->settings);
 	if (self->player)
@@ -39,25 +39,7 @@ static void	rotate(int key, t_app *self)
 	draw(self);
 }
 
-static void	move(int key, t_app *self)
-{
-	t_player	*player;
-	t_point		p;
-
-	player = self->player;
-	p = player->p;
-	if (key == KEY_A)
-		;
-	if (key == KEY_D)
-		;
-	if (key == KEY_W)
-		player->p = point_add(p, player->delta);
-	if (key == KEY_S)
-		player->p = point_subtract(p, player->delta);
-	draw(self);
-}
-
-static int	key_hook(int key, t_app *self)
+int	key_hook(int key, t_app *self)
 {
 	if (key == KEY_ESC)
 		close_app(self);
