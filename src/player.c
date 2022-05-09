@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:51:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 16:11:17 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_bool	set_player(t_app *self, int i, int j)
 	p = self->player;
 	if (ft_strchr(ELEMENTS_PLAYER, map[i][j]))
 	{
-		p->x = i * TILE_SIZE;
-		p->y = j * TILE_SIZE;
+		p->x = i * SIZE;
+		p->y = j * SIZE;
 		p->a = get_initial_angle(map[i][j]);
 		p->dx = cos(p->a) * 5;
 		p->dy = sin(p->a) * 5;

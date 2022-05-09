@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:24:04 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 13:20:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 15:54:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ t_bool	check_all_sides(char **map, int x, int y)
 	return (TRUE);
 }
 
-t_bool	is_map_closed(t_settings *settings)
+t_bool	is_map_closed(t_settings *s)
 {
 	int		i;
 	int		j;
 	t_bool	valid;
 
-	if (!settings->map)
+	if (!s->map)
 		return (FALSE);
 	valid = FALSE;
 	j = 0;
-	while (j < settings->height)
+	while (j < s->height)
 	{
 		i = 0;
-		while (i < settings->width)
+		while (i < s->width)
 		{
-			if (settings->map[i][j] != MAP_WALL
-				&& settings->map[i][j] != MAP_SPACE)
+			if (s->map[i][j] != MAP_WALL
+				&& s->map[i][j] != MAP_SPACE)
 			{
-				valid = check_all_sides(settings->map, i, j);
+				valid = check_all_sides(s->map, i, j);
 				if (!valid)
 					return (FALSE);
 			}
@@ -71,14 +71,16 @@ void	map_loop(t_app *self, t_bool (*f)(t_app *, int, int))
 {
 	int			i;
 	int			j;
+	t_settings	*s;
 
-	if (!self->settings->map)
+	s = self->settings;
+	if (!s->map)
 		return ;
 	j = 0;
-	while (j < self->settings->height)
+	while (j < s->height)
 	{
 		i = 0;
-		while (i < self->settings->width)
+		while (i < s->width)
 		{
 			if (f(self, i, j))
 				return ;

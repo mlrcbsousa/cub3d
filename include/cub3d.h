@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 01:23:41 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 16:10:42 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
 
-# define TILE_SIZE 64
+# define SIZE 64
+# define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define PI 3.14159265359
 # define DR 0.00087266666
 
@@ -173,15 +174,14 @@ void		player_init(t_app *self);
 t_player	*player_create(void);
 t_bool		set_player(t_app *self, int i, int j);
 
-/* game */
-void	game_loop(t_app *self);
-void	game_destroy(t_app *self);
-
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
 void	draw_rays(t_app *self);
-void	draw_line(t_app *self, int ray, float line_height, float line_offset);
+void	draw_line(t_app *self, int ray, int line_height, int line_offset);
+
+/* angle */
+float	trim(float a);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);

@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:36:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 15:54:08 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	get_map_width(t_line *mapline)
+static int	get_width(t_line *mapline)
 {
 	int	width;
 
@@ -80,7 +80,7 @@ void	map_create(t_line *maplines, t_settings *settings)
 	int		height;
 	char	**map;
 
-	width = get_map_width(maplines);
+	width = get_width(maplines);
 	height = maplines_size(maplines);
 
 	map = map_init(width, height);

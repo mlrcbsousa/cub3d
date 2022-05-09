@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 13:33:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 15:17:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,13 @@ static void	rotate(int key, t_app *self)
 	p = self->player;
 	if (key == KEY_LEFT)
 	{
-		p->a -= 0.1;
-		if (p->a < 0)
-			p->a += 2 * PI;
+		p->a = trim(p->a - 0.1);
 		p->dx = cos(p->a) * 5;
 		p->dy = sin(p->a) * 5;
 	}
 	if (key == KEY_RIGHT)
 	{
-		p->a += 0.1;
-		if (p->a > 2 * PI)
-			p->a -= 2 * PI;
+		p->a = trim(p->a + 0.1);
 		p->dx = cos(p->a) * 5;
 		p->dy = sin(p->a) * 5;
 	}
@@ -57,7 +53,10 @@ static void	move(int key, t_app *self)
 	// if (key == KEY_A)
 	// 	p->x -= 5;
 	// if (key == KEY_D)
-	// 	p->x += 5;
+	// {
+	// 	p->x = p->y + p->dy;
+	// 	p->y = -(p->x + p->dx);
+	// }
 	if (key == KEY_W)
 	{
 		p->x += p->dx;
@@ -69,7 +68,7 @@ static void	move(int key, t_app *self)
 		p->y -= p->dy;
 	}
 
-	print_player(p);
+	// print_player(p);
 
 	draw(self);
 }

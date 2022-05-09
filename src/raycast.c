@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 14:06:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 16:10:16 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	draw_rays(t_app *self)
 	// mx: map x, my: map y
 	float rx, ry, ra, xo, yo, distT;
 	t_player	*p;
-	t_settings	*settings;
+	t_settings	*s;
 	char**		map;
 
 	p = self->player;
-	settings = self->settings;
-	map = settings->map;
-	ra = trim(p->a - DR * (WIDTH / 2));
+	s = self->settings;
+	map = s->map;
+	ra = trim(p->a - (DR * WIDTH / 2));
 
 	r = 0;
 	while (r < WIDTH)
@@ -56,16 +56,16 @@ void	draw_rays(t_app *self)
 		// check direction up or down
 		if (ra > PI) // looking up
 		{
-			ry = (((int)p->y >> 6) << 6) - 0.0001;
+			ry = (((int)p->y >> BITS) << BITS) - 0.0001;
 			rx = (p->y - ry) * aTan + p->x;
-			yo = -TILE_SIZE;
+			yo = -SIZE;
 			xo = -yo * aTan;
 		}
 		if (ra < PI) // looking down
 		{
-			ry = (((int)p->y >> 6) << 6) + TILE_SIZE;
+			ry = (((int)p->y >> BITS) << BITS) + SIZE;
 			rx = (p->y - ry) * aTan + p->x;
-			yo = TILE_SIZE;
+			yo = SIZE;
 			xo = -yo * aTan;
 		}
 		if (ra == 0 || ra == PI) // straight looking left or right
@@ -73,22 +73,22 @@ void	draw_rays(t_app *self)
 			ry = p->y;
 			rx = p->x;
 			distT = 1000000;
-			dof = settings->height; // to not loop
+			dof = s->height; // to not loop
 		}
 
 		// loop to find next
-		while (dof < settings->height)
+		while (dof < s->height)
 		{
-			mx = (int)(rx) >> 6;
-			my = (int)(ry) >> 6;
-			if (mx > 0 && my > 0 && mx < settings->width
-				&& my < settings->height
+			mx = (int)(rx) >> BITS;
+			my = (int)(ry) >> BITS;
+			if (mx > 0 && my > 0 && mx < s->width
+				&& my < s->height
 				&& map[mx][my] == MAP_WALL)
 			{
 				hx = rx;
 				hy = ry;
 				distH = distance((t_point){p->x, p->y}, (t_point){hx, hy}, ra);
-				dof = settings->height; // end loop
+				dof = s->height; // end loop
 			}
 			else
 			{
@@ -108,16 +108,16 @@ void	draw_rays(t_app *self)
 		// check direction left or right
 		if (ra > PI / 2 && ra < 3 * PI / 2) // looking left
 		{
-			rx = (((int)p->x >> 6) << 6) - 0.0001;
+			rx = (((int)p->x >> BITS) << BITS) - 0.0001;
 			ry = (p->x - rx) * nTan + p->y;
-			xo = -TILE_SIZE;
+			xo = -SIZE;
 			yo = -xo * nTan;
 		}
 		if (ra < PI / 2 || ra > 3 * PI / 2) // looking right
 		{
-			rx = (((int)p->x >> 6) << 6) + TILE_SIZE;
+			rx = (((int)p->x >> BITS) << BITS) + SIZE;
 			ry = (p->x - rx) * nTan + p->y;
-			xo = TILE_SIZE;
+			xo = SIZE;
 			yo = -xo * nTan;
 		}
 		if (ra == 0 || ra == PI) // straight looking up or down
@@ -125,22 +125,22 @@ void	draw_rays(t_app *self)
 			ry = p->y;
 			rx = p->x;
 			distT = 1000000;
-			dof = settings->width;
+			dof = s->width;
 		}
 
 		// loop to find next
-		while (dof < settings->width)
+		while (dof < s->width)
 		{
-			mx = (int)(rx) >> 6;
-			my = (int)(ry) >> 6;
-			if (mx > 0 && my > 0 && mx < settings->width
-				&& my < settings->height
+			mx = (int)(rx) >> BITS;
+			my = (int)(ry) >> BITS;
+			if (mx > 0 && my > 0 && mx < s->width
+				&& my < s->height
 				&& map[mx][my] == MAP_WALL)
 			{
 				vx = rx;
 				vy = ry;
 				distV = distance((t_point){p->x, p->y}, (t_point){vx, vy}, ra);
-				dof = settings->width; // end loop
+				dof = s->width; // end loop
 			}
 			else
 			{
@@ -172,10 +172,10 @@ void	draw_rays(t_app *self)
 		ca = trim(p->a - ra);
 		distT = distT * cos(ca);
 
-		float	lineH = (TILE_SIZE * HEIGHT) / distT; // line height
+		int	lineH = (int)((SIZE * HEIGHT) / distT); // line height
 		if (lineH > HEIGHT)
 			lineH = HEIGHT;
-		float	lineO = (HEIGHT / 2) - (lineH / 2); // line offset
+		int	lineO = (int)((HEIGHT / 2) - (lineH / 2)); // line offset
 
 		draw_line(self, r, lineH, lineO);
 

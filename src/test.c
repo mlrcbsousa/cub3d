@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:30:49 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 16:11:26 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	print_maplines(t_line *mapline)
 	printf("========================================= PARSER END\n\n");
 }
 
+// TODO: use map_loop
 void	print_map(t_settings *settings)
 {
 	int			i;
