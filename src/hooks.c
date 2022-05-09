@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:55:12 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 00:04:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,4 @@ static int	key_hook(int key, t_app *self)
 		|| key == KEY_DOWN)
 		rotate(key, self);
 	return (0);
-}
-
-void	set_hooks(t_app *self)
-{
-	mlx_hook(self->mlx_window, ON_KEYDOWN, 1, key_hook, self);
-	mlx_hook(self->mlx_window, ON_DESTROY, 0, close_app, self);
 }

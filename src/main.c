@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:53:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 00:04:38 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	main(int argc, char *argv[])
 			HEIGHT,
 			"cub3d!");
 	set_image(&self);
-	set_hooks(&self);
+	mlx_hook(self->mlx_window, ON_KEYDOWN, 1, key_hook, &self);
+	mlx_hook(self->mlx_window, ON_DESTROY, 0, close_app, &self);
 	draw(&self);
 	mlx_loop(self.mlx);
 
