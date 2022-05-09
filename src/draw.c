@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 21:49:48 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:20:13 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_line(t_app *self, int ray, double length)
 	line_height = (int)((SIZE * HEIGHT) / length); // line height
 	if (line_height > HEIGHT)
 		line_height = HEIGHT;
-	line_offset = (int)((HEIGHT / 2) - (line_height / 2)); // line offset
+	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
 
 	j = 0;
 	while (j < line_offset)

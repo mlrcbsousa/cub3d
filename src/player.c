@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 20:54:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:13:47 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	get_initial_angle(char direction)
+static double	get_initial_angle(char direction)
 {
 	printf("direction: %c\n", direction);
 	if (direction == MAP_NORTH)

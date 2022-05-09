@@ -6,21 +6,21 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 22:59:57 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:20:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // length to wall
-float	point_distance(t_point p, t_point q, float a)
+double	point_distance(t_point p, t_point q, double a)
 {
 	(void)a;
 	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
 	// return ((q.x - p.x) / cos(a));
 }
 
-float	trim(float a)
+double	trim(double a)
 {
 	if (a < 0)
 		a += 2 * PI;
@@ -59,16 +59,6 @@ float	trim(float a)
 // 	int		height;
 // 	double	angle;
 // };
-
-// sudo
-// - find length
-// 	- vertical distance
-// 	- horizontal distance
-//	- turn into length
-// 	- pick
-// - pick wall
-// - fish bowl
-// - draw line
 
 int	nearest_tile(double	pixel)
 {
@@ -169,10 +159,10 @@ double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 		ray_angle));
 }
 
-float	get_ray_length(t_app *self, float ray_angle)
+double	get_ray_length(t_app *self, double ray_angle)
 {
-	float	length_v;
-	float	length_h;
+	double	length_v;
+	double	length_h;
 
 	length_h = get_ray_length_to_horizontal(self, ray_angle);
 	length_v = get_ray_length_to_vertical(self, ray_angle);
@@ -205,11 +195,11 @@ void	raycast(t_app *self)
 {
 	double		length;
 	int			i;
-	float		ray_angle;
+	double		ray_angle;
 	t_player	*player;
 
 	player = self->player;
-	ray_angle = trim(player->a - (DR * WIDTH / 2));
+	ray_angle = trim(player->a - (DR * WIDTH2));
 	i = 0;
 	while (i < WIDTH)
 	{

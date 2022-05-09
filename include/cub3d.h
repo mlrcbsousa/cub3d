@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 21:49:01 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:20:00 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include "ft_point.h"
 
 /* Constants */
-# define WIDTH	1200
-# define HEIGHT 800
 # define SPACE ' '
 # define COMMA ','
 # define ELEMENTS_MAP " \t01NSWE"
@@ -36,6 +34,10 @@
 # define ELEMENT_FLOOR "F"
 # define ELEMENT_CEILING "C"
 
+# define WIDTH	1200
+# define WIDTH2	600
+# define HEIGHT 800
+# define HEIGHT2 400
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define PI 3.14159265359
@@ -103,29 +105,29 @@ struct s_line
 
 struct s_settings
 {
-	t_image		*wall_north;
-	t_image		*wall_south;
-	t_image		*wall_east;
-	t_image		*wall_west;
-	int			color_floor;
-	int			color_ceiling;
-	int			width;
-	int			height;
-	char 		**map;
+	t_image	*wall_north;
+	t_image	*wall_south;
+	t_image	*wall_east;
+	t_image	*wall_west;
+	int		color_floor;
+	int		color_ceiling;
+	int		width;
+	int		height;
+	char 	**map;
 };
 
 struct s_player
 {
-	float	a;
+	double	a;
 	t_point	p;
-	float	dx;
-	float	dy;
+	double	dx;
+	double	dy;
 	// t_vector	v;
 };
 
 // struct s_vector
 // {
-// 	float	angle;
+// 	double	angle;
 // 	double	size;
 // };
 
@@ -188,7 +190,7 @@ void	raycast(t_app *self);
 void	draw_line(t_app *self, int ray, double length);
 
 /* angle */
-float	trim(float a);
+double	trim(double a);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);
