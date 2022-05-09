@@ -6,16 +6,31 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 20:52:58 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:53:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* TODO: move to libft.h via the libft repo and then use the update script */
+t_point	point(double x, double y)
+{
+	return ((t_point) {x, y});
+}
+
 t_point	point_add(t_point a, t_point b)
 {
 	return (point(a.x + b.x, a.y + b.y));
+}
+
+t_point	point_subtract(t_point a, t_point b)
+{
+	return (point(a.x - b.x, a.y - b.y));
+}
+
+t_point	point_multiply(int multiplier, t_point p)
+{
+	return (point(multiplier * p.x, multiplier * p.y));
 }
 
 t_bool	is_empty_line(char *line)
@@ -38,11 +53,6 @@ t_bool	is_valid_rgb(char **colors)
 			return (FALSE);
 	}
 	return (TRUE);
-}
-
-t_point	point(double x, double y)
-{
-	return ((t_point) {x, y});
 }
 
 /* TODO *********** */

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:20:00 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:44:15 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,9 @@ struct s_settings
 
 struct s_player
 {
-	double	a;
+	double	angle;
 	t_point	p;
-	double	dx;
-	double	dy;
+	t_point	delta;
 	// t_vector	v;
 };
 
