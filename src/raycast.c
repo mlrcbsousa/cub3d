@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:20:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 23:26:09 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 // length to wall
 double	point_distance(t_point p, t_point q, double a)
 {
-	(void)a;
-	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
-	// return ((q.x - p.x) / cos(a));
+	return ((q.x - p.x) / cos(a));
 }
 
 double	trim(double a)
@@ -54,7 +52,7 @@ double	trim(double a)
 // struct	s_ray
 // {
 // 	double	length;
-// 	t_point	end;
+// 	t_point	p;
 // 	t_wall	wall;
 // 	int		height;
 // 	double	angle;
