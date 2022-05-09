@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 01:23:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 13:20:01 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 float	distance(t_point p, t_point q, float a)
 {
-	// return (cos(a) * (bx - ax) - sin(a) * (by - ay));
-	(void)a;
-	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
+	// (void)a;
+	// return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
+	return ((q.x - p.x) / cos(a));
 }
 
 void	draw_rays(t_app *self)

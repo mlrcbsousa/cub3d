@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:24:04 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:33:00 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 13:20:28 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ t_bool	check_all_sides(char **map, int x, int y)
 {
 	int		i;
 	int		j;
-	t_bool	valid;
 
 	j = y - 1;
-	valid = FALSE;
 	while (j <= y + 1)
 	{
 		i = x - 1;
