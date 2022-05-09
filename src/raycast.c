@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 01:23:31 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 float	distance(t_point p, t_point q, float a)
 {
+	// return (cos(a) * (bx - ax) - sin(a) * (by - ay));
 	(void)a;
 	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
 }
@@ -65,6 +66,7 @@ void	draw_rays(t_app *self)
 		{
 			ry = p->y;
 			rx = p->x;
+			distT = 1000000;
 			dof = settings->height; // to not loop
 		}
 
@@ -117,6 +119,7 @@ void	draw_rays(t_app *self)
 		{
 			ry = p->y;
 			rx = p->x;
+			distT = 1000000;
 			dof = settings->width;
 		}
 
@@ -147,21 +150,31 @@ void	draw_rays(t_app *self)
 			rx = vx;
 			ry = vy;
 			distT = distV;
+			g_wall_color = create_trgb(0, 100, 100, 100);
 		}
 		if (distV > distH)
 		{
 			rx = hx;
 			ry = hy;
 			distT = distH;
+			g_wall_color = create_trgb(0, 120, 100, 100);
 		}
 
-		// Draw 3d scene
+		// Draw 3d rays
+
+		// fish bowl
+		float	ca = p->a - ra;
+		if (ca < 0)
+			ca += 2 * PI;
+		if (ca > 2 * PI)
+			ca -= 2 * PI;
+		distT = distT * cos(ca);
+
 		float	lineH = (TILE_SIZE * HEIGHT) / distT; // line height
 		if (lineH > HEIGHT)
 			lineH = HEIGHT;
-		float	lineO = HEIGHT / 2 - lineH / 2; // line offset
+		float	lineO = (HEIGHT / 2) - (lineH / 2); // line offset
 
-		// draw y line mlx
 		draw_line(self, r, lineH, lineO);
 
 		ra += DR;

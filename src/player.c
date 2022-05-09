@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:39:17 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 00:51:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 float	get_initial_angle(char direction)
 {
 	if (direction == MAP_NORTH)
-		return (PI / 2);
-	else if (direction == MAP_SOUTH)
 		return (3 * PI / 2);
+	else if (direction == MAP_SOUTH)
+		return (PI / 2);
 	else if (direction == MAP_EAST)
 		return (0);
 	else if (direction == MAP_WEST)

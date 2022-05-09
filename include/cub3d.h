@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:14:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 01:23:41 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ struct s_player
 // TODO: move to libft.h
 t_bool	is_empty_line(char *line);
 t_bool	is_valid_rgb(char **colors);
+int g_wall_color;
+
 // TODO: move to libft.h
 
 /* parse */
