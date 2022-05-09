@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:56:07 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 21:32:29 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ static void	rotate(int key, t_app *self)
 		p->dy = sin(p->a) * 5;
 	}
 
-	// print_player(p);
-
 	draw(self);
 }
 
 static void	move(int key, t_app *self)
 {
-	t_player *p;
+	t_player	*player;
+	t_point		p;
 
-	p = self->player;
+	player = self->player;
+	p = player->p;
 	// 5 to change for useful constant
 	// if (key == KEY_A)
 	// 	p->x -= 5;
@@ -58,17 +58,9 @@ static void	move(int key, t_app *self)
 	// 	p->y = -(p->x + p->dx);
 	// }
 	if (key == KEY_W)
-	{
-		p->x += p->dx;
-		p->y += p->dy;
-	}
+		player->p = point(p.x + player->dx, p.y + player->dy);
 	if (key == KEY_S)
-	{
-		p->x -= p->dx;
-		p->y -= p->dy;
-	}
-
-	// print_player(p);
+		player->p = point(p.x - player->dx, p.y - player->dy);
 
 	draw(self);
 }

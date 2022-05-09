@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 19:33:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 21:28:18 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,77 +79,59 @@ int	nearest_tile(double	pixel)
 float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
 {
 	// check horizontal lines
-	int 	dof;
-	float	hx;
-	float	hy;
-	float	aTan;
-	int		map_x;
-	int		map_y;
-	float	ray_x;
-	float	ray_y;
-	float	offset_x;
-	float	offset_y;
-	float 	length;
-
-	t_player	*p;
+	int 		i;
+	float		aTan;
+	int			map_x;
+	int			map_y;
+	float 		length;
+	t_point		offset;
+	t_point		ray;
+	t_point		wall;
+	t_point		player;
 	t_settings	*s;
 	char**		map;
 
-	p = self->player;
+	player = self->player->p;
 	s = self->settings;
 	map = s->map;
-
-	dof = 0;
-	length = 1000000;
-	hx = p->x;
-	hy = p->y;
+	length = BIG_LENGTH;
+	wall = player;
 	aTan = -1 / tan(ray_angle);
 
-	// First intersection
+	if (ray_angle == 0 || ray_angle == PI)
+		return (length);
 
-	// check direction up or down
 	if (ray_angle > PI) // looking up
 	{
-		ray_y = nearest_tile(p->y) - 0.0001;
-		ray_x = (p->y - ray_y) * aTan + p->x;
-		offset_y = -SIZE;
-		offset_x = -offset_y * aTan;
+		// First intersection
+		ray.y = nearest_tile(player.y) - 0.0001;
+		ray.x = (player.y - ray.y) * aTan + player.x;
+		offset = point(SIZE * aTan, -SIZE);
 	}
-	if (ray_angle < PI) // looking down
+	else if (ray_angle < PI) // looking down
 	{
-		ray_y = nearest_tile(p->y) + SIZE;
-		ray_x = (p->y - ray_y) * aTan + p->x;
-		offset_y = SIZE;
-		offset_x = -offset_y * aTan;
-	}
-	if (ray_angle == 0 || ray_angle == PI) // straight looking left or right
-	{
-		ray_y = p->y;
-		ray_x = p->x;
-		length = 1000000;
-		dof = s->height; // to not loop
+		// First intersection
+		ray.y = nearest_tile(player.y) + SIZE;
+		ray.x = (player.y - ray.y) * aTan + player.x;
+		offset = point(-SIZE * aTan, SIZE);
 	}
 
-	// loop to find next
-	while (dof < s->height)
+	i = 0;
+	while (i < s->height)
 	{
-		map_x = (int)(ray_x) >> BITS;
-		map_y = (int)(ray_y) >> BITS;
+		map_x = (int)(ray.x) >> BITS;
+		map_y = (int)(ray.y) >> BITS;
 		if (map_x > 0 && map_y > 0 && map_x < s->width
 			&& map_y < s->height
 			&& map[map_x][map_y] == MAP_WALL)
 		{
-			hx = ray_x;
-			hy = ray_y;
-			length = point_distance((t_point){p->x, p->y}, (t_point){hx, hy}, ray_angle);
-			dof = s->height; // end loop
+			wall = ray;
+			length = point_distance(player, wall, ray_angle);
+			break ;
 		}
-		else
-		{
-			ray_x += offset_x;
-			ray_y += offset_y;
-			dof++;
-		}
+
+		ray = point_add(ray, offset);
+		i++;
 	}
 	return (length);
 }
@@ -157,78 +139,59 @@ float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
 
 float	get_ray_length_to_vertical(t_app *self, float ray_angle)
 {
-	float	vx;
-	float	vy;
-	float	nTan;
-	int		map_x;
-	int		map_y;
-	float	ray_x;
-	float	ray_y;
-	float	offset_x;
-	float	offset_y;
-	int 	dof;
-	float 	length;
-
-	t_player	*p;
+	int 		i;
+	int			map_x;
+	int			map_y;
+	float 		length;
+	t_point		offset;
+	t_point		ray;
+	t_point		wall;
+	t_point		player;
 	t_settings	*s;
 	char**		map;
+	float		nTan;
 
-	p = self->player;
+	player = self->player->p;
 	s = self->settings;
 	map = s->map;
-
-	// check vertical lines
-	dof = 0;
-	length = 1000000;
-	vx = p->x;
-	vy = p->y;
+	length = BIG_LENGTH;
+	wall = player;
 	nTan = -tan(ray_angle);
 
-	// First intersection
+	if (ray_angle == PI / 2 || ray_angle == 3 * PI / 2) // straight looking up or down
+		return (length);
 
 	// check direction left or right
 	if (ray_angle > PI / 2 && ray_angle < 3 * PI / 2) // looking left
 	{
-		ray_x = nearest_tile(p->x) - 0.0001;
-		ray_y = (p->x - ray_x) * nTan + p->y;
-		offset_x = -SIZE;
-		offset_y = -offset_x * nTan;
+		// First intersection
+		ray.x = nearest_tile(player.x) - 0.0001;
+		ray.y = (player.x - ray.x) * nTan + player.y;
+		offset = point(-SIZE, SIZE * nTan);
 	}
-	if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
+	else if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
 	{
-		ray_x = nearest_tile(p->x) + SIZE;
-		ray_y = (p->x - ray_x) * nTan + p->y;
-		offset_x = SIZE;
-		offset_y = -offset_x * nTan;
-	}
-	if (ray_angle == 0 || ray_angle == PI) // straight looking up or down
-	{
-		ray_y = p->y;
-		ray_x = p->x;
-		length = 1000000;
-		dof = s->width;
+		// First intersection
+		ray.x = nearest_tile(player.x) + SIZE;
+		ray.y = (player.x - ray.x) * nTan + player.y;
+		offset = point(SIZE, -SIZE * nTan);
 	}
 
-	// loop to find next
-	while (dof < s->width)
+	i = 0;
+	while (i < s->width)
 	{
-		map_x = (int)(ray_x) >> BITS;
-		map_y = (int)(ray_y) >> BITS;
+		map_x = (int)(ray.x) >> BITS;
+		map_y = (int)(ray.y) >> BITS;
 		if (map_x > 0 && map_y > 0 && map_x < s->width
 			&& map_y < s->height
 			&& map[map_x][map_y] == MAP_WALL)
 		{
-			vx = ray_x;
-			vy = ray_y;
-			length = point_distance((t_point){p->x, p->y}, (t_point){vx, vy}, ray_angle);
-			dof = s->width; // end loop
+			wall = ray;
+			length = point_distance(player, wall, ray_angle);
+			break ;
 		}
-		else
-		{
-			ray_x += offset_x; // next line
-			ray_y += offset_y;
-			dof++;
-		}
+		ray = point_add(ray, offset);
+		i++;
 	}
 	return (length);
 }
@@ -243,21 +206,21 @@ float	get_ray_length(t_app *self, float ray_angle)
 
 	if (length_v < length_h)
 	{
-		// TODO: to find out which wall
-		// ray_x = vx;
-		// ray_y = vy;
+		// TODO: to find out which wall to display
+		// ray.x = vx;
+		// ray.y = vy;
 		g_wall_color = create_trgb(0, 100, 100, 100);
 		return (length_v);
 	}
 	else if (length_v > length_h)
 	{
-		// ray_x = hx;
-		// ray_y = hy;
+		// ray.x = hx;
+		// ray.y = hy;
 		g_wall_color = create_trgb(0, 120, 100, 100);
 		return (length_h);
 	}
 	else
-		return (HEIGHT);
+		return (length_v); // return (HEIGHT);
 }
 
 double	fish_bowl(double length, double angle)
@@ -270,17 +233,17 @@ void	raycast(t_app *self)
 	float		length;
 	int			i;
 	float		ray_angle;
-	t_player	*p;
+	t_player	*player;
 	int			wall_height;
 	int			wall_offset;
 
-	p = self->player;
-	ray_angle = trim(p->a - (DR * WIDTH / 2));
+	player = self->player;
+	ray_angle = trim(player->a - (DR * WIDTH / 2));
 	i = 0;
 	while (i < WIDTH)
 	{
 		length = get_ray_length(self, ray_angle);
-		length = fish_bowl(length, p->a - ray_angle);
+		length = fish_bowl(length, player->a - ray_angle);
 
 		wall_height = (int)((SIZE * HEIGHT) / length); // line height
 		if (wall_height > HEIGHT)

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 17:19:07 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 20:59:15 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define PI 3.14159265359
 # define DR 0.00087266666
+# define BIG_LENGTH 1000000
 
 /* Enums */
 enum e_map {
@@ -116,11 +117,17 @@ struct s_settings
 struct s_player
 {
 	float	a;
-	float	y;
-	float	x;
+	t_point	p;
 	float	dx;
 	float	dy;
+	// t_vector	v;
 };
+
+// struct s_vector
+// {
+// 	float	angle;
+// 	double	size;
+// };
 
 /* Functions */
 

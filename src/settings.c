@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:22:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 19:51:08 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	settings_destroy(t_settings *settings)
 	if (settings->wall_west)
 		free(settings->wall_west);
 	if (settings->map)
-		// ft_strsfree(settings->map); // TODO fix, this causes
+		ft_strsfree(settings->map); // TODO fix, this causes
 		// pointer being freed was not allocated error
 	free(settings);
 }
