@@ -6,15 +6,22 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:08:07 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/01 18:19:38 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 16:55:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MLX_H
 # define FT_MLX_H
 
-# define BUTTON_PRESS 4
-# define DESTROY_NOTIFY 17
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
 
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
