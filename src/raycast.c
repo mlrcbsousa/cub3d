@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 21:58:28 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 22:59:57 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,47 @@ int	nearest_tile(double	pixel)
 	return (((int)pixel >> BITS) << BITS);
 }
 
-float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
+double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
+	t_point offset, double ray_angle)
 {
-	// check horizontal lines
-	int 		i;
-	float		aTan;
+	int			i;
 	int			map_x;
 	int			map_y;
-	float 		length;
-	t_point		offset;
-	t_point		ray;
-	t_point		wall;
 	t_point		player;
 	t_settings	*s;
-	char**		map;
 
 	player = self->player->p;
 	s = self->settings;
-	map = s->map;
-	length = BIG_LENGTH;
-	wall = player;
+	i = 0;
+	while (i < max)
+	{
+		map_x = (int)(ray.x) >> BITS;
+		map_y = (int)(ray.y) >> BITS;
+		if (map_x >= 0 && map_y >= 0 && map_x < s->width && map_y < s->height
+			&& s->map[map_x][map_y] == MAP_WALL)
+		{
+			// TODO: add ray x,y to ray struct with length
+			return (point_distance(player, ray, ray_angle));
+		}
+		ray = point_add(ray, offset);
+		i++;
+	}
+
+	return (BIG_LENGTH);
+}
+
+double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
+{
+	double		aTan;
+	t_point		offset;
+	t_point		ray;
+	t_point		player;
+
+	player = self->player->p;
 	aTan = -1 / tan(ray_angle);
 
 	if (ray_angle == 0 || ray_angle == PI)
-		return (length);
+		return (BIG_LENGTH);
 
 	if (ray_angle > PI) // looking up
 	{
@@ -107,7 +124,7 @@ float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
 		ray.x = (player.y - ray.y) * aTan + player.x;
 		offset = point(SIZE * aTan, -SIZE);
 	}
-	else if (ray_angle < PI) // looking down
+	else // if (ray_angle < PI) // looking down
 	{
 		// First intersection
 		ray.y = nearest_tile(player.y) + SIZE;
@@ -115,52 +132,24 @@ float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
 		offset = point(-SIZE * aTan, SIZE);
 	}
 
-	i = 0;
-	while (i < s->height)
-	{
-		map_x = (int)(ray.x) >> BITS;
-		map_y = (int)(ray.y) >> BITS;
-		if (map_x > 0 && map_y > 0 && map_x < s->width
-			&& map_y < s->height
-			&& map[map_x][map_y] == MAP_WALL)
-		{
-			wall = ray;
-			length = point_distance(player, wall, ray_angle);
-			break ;
-		}
-
-		ray = point_add(ray, offset);
-		i++;
-	}
-	return (length);
+	return (get_ray_length_to_wall(self, self->settings->height, ray, offset,
+		ray_angle));
 }
 
 
-float	get_ray_length_to_vertical(t_app *self, float ray_angle)
+double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 {
-	int 		i;
-	int			map_x;
-	int			map_y;
-	float 		length;
 	t_point		offset;
 	t_point		ray;
-	t_point		wall;
 	t_point		player;
-	t_settings	*s;
-	char**		map;
-	float		nTan;
+	double		nTan;
 
 	player = self->player->p;
-	s = self->settings;
-	map = s->map;
-	length = BIG_LENGTH;
-	wall = player;
 	nTan = -tan(ray_angle);
 
-	if (ray_angle == PI / 2 || ray_angle == 3 * PI / 2) // straight looking up or down
-		return (length);
+	if (ray_angle == PI / 2 || ray_angle == 3 * PI / 2)
+		return (BIG_LENGTH);
 
-	// check direction left or right
 	if (ray_angle > PI / 2 && ray_angle < 3 * PI / 2) // looking left
 	{
 		// First intersection
@@ -168,7 +157,7 @@ float	get_ray_length_to_vertical(t_app *self, float ray_angle)
 		ray.y = (player.x - ray.x) * nTan + player.y;
 		offset = point(-SIZE, SIZE * nTan);
 	}
-	else if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
+	else // if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
 	{
 		// First intersection
 		ray.x = nearest_tile(player.x) + SIZE;
@@ -176,23 +165,8 @@ float	get_ray_length_to_vertical(t_app *self, float ray_angle)
 		offset = point(SIZE, -SIZE * nTan);
 	}
 
-	i = 0;
-	while (i < s->width)
-	{
-		map_x = (int)(ray.x) >> BITS;
-		map_y = (int)(ray.y) >> BITS;
-		if (map_x > 0 && map_y > 0 && map_x < s->width
-			&& map_y < s->height
-			&& map[map_x][map_y] == MAP_WALL)
-		{
-			wall = ray;
-			length = point_distance(player, wall, ray_angle);
-			break ;
-		}
-		ray = point_add(ray, offset);
-		i++;
-	}
-	return (length);
+	return (get_ray_length_to_wall(self, self->settings->width, ray, offset,
+		ray_angle));
 }
 
 float	get_ray_length(t_app *self, float ray_angle)
