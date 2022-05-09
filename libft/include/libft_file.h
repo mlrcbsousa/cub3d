@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   libft_file.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 15:35:38 by msousa           ###   ########.fr       */
+/*   Created: 2022/02/10 22:09:51 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 15:47:38 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LIBFT_FILE_H
+# define LIBFT_FILE_H
 
-t_bool	ft_streq(char const *s1, char const *s2)
-{
-	return (!!s1 && !!s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
-}
+# include <fcntl.h>
 
-/*
-#include <stdio.h>
+# include "libft.h"
 
-int	main(int argc, char *argv[])
-{
-	if (argc == 3)
-		printf("%s == %s : %d\n", argv[1], argv[2], ft_streq(argv[1], argv[2]));
-	else
-		printf("Error: requires 2 string args.\n");
-	return (0);
-}
-*/
+t_bool	ft_isfile_ext(char *filename, char *extension);
+t_bool	ft_isfile(char *filename);
+
+#endif

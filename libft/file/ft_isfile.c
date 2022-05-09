@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   ft_isfile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 21:56:11 by msousa            #+#    #+#             */
-/*   Updated: 2021/11/08 22:05:40 by msousa           ###   ########.fr       */
+/*   Created: 2022/05/07 15:45:16 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/07 15:45:34 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "libft.h"
 
-# define ARROW_UP	65362
-# define ARROW_DOWN 65364
-# define ARROW_LEFT 65361
-# define ARROW_RIGHT 65363
+t_bool	ft_isfile(char *filename)
+{
+	int	fd;
 
-# define KEY_ESC 65307
-# define KEY_C 99
-
-#endif
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (FALSE);
+	close(fd);
+	return (TRUE);
+}

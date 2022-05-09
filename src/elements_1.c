@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   elements_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:51:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/07 15:35:38 by msousa           ###   ########.fr       */
+/*   Created: 2022/05/09 00:29:41 by msousa            #+#    #+#             */
+/*   Updated: 2022/05/09 00:29:52 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-t_bool	ft_streq(char const *s1, char const *s2)
+int	elements_size(t_element *elements)
 {
-	return (!!s1 && !!s2 && ft_ternary(ft_strcmp(s1, s2), FALSE, TRUE));
-}
+	int	size;
 
-/*
-#include <stdio.h>
-
-int	main(int argc, char *argv[])
-{
-	if (argc == 3)
-		printf("%s == %s : %d\n", argv[1], argv[2], ft_streq(argv[1], argv[2]));
-	else
-		printf("Error: requires 2 string args.\n");
-	return (0);
+	size = 0;
+	while (elements)
+	{
+		elements = elements->next;
+		size++;
+	}
+	return (size);
 }
-*/

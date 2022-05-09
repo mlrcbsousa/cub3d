@@ -3,55 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/04/29 16:40:54 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/09 00:41:24 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 static int	close_app(t_app *self)
 {
+	settings_destroy(self->settings);
+	if (self->player)
+		free(self->player);
 	mlx_destroy_window(self->mlx, self->mlx_window);
 	exit(0);
 }
 
-static void	view(int key, t_app *self)
+static void	rotate(int key, t_app *self)
 {
-	if (key == ARROW_RIGHT || key == ARROW_LEFT)
-		;
-	else if (key == ARROW_UP || key == ARROW_DOWN)
-		;
+	t_player *p;
+
+	p = self->player;
+	if (key == KEY_LEFT)
+	{
+		p->a -= 0.1;
+		if (p->a < 0)
+			p->a += 2 * PI;
+		p->dx = cos(p->a) * 5;
+		p->dy = sin(p->a) * 5;
+	}
+	if (key == KEY_RIGHT)
+	{
+		p->a += 0.1;
+		if (p->a > 2 * PI)
+			p->a -= 2 * PI;
+		p->dx = cos(p->a) * 5;
+		p->dy = sin(p->a) * 5;
+	}
+
+	// print_player(p);
+
 	draw(self);
 }
 
 static void	move(int key, t_app *self)
 {
-	if (key == A_KEY || key == D_KEY)
-		;
-	else if (key == W_KEY  || key == S_KEY)
-		;
+	t_player *p;
+
+	p = self->player;
+	// 5 to change for useful constant
+	// if (key == KEY_A)
+	// 	p->x -= 5;
+	// if (key == KEY_D)
+	// 	p->x += 5;
+	if (key == KEY_W)
+	{
+		p->x += p->dx;
+		p->y += p->dy;
+	}
+	if (key == KEY_S)
+	{
+		p->x -= p->dx;
+		p->y -= p->dy;
+	}
+
+	print_player(p);
+
 	draw(self);
 }
 
 static int	key_hook(int key, t_app *self)
 {
-	printf("%d\n", key);
 	if (key == KEY_ESC)
 		close_app(self);
-	else if (key == A_KEY || key == D_KEY || key == W_KEY
-		|| key == S_KEY)
+	else if (key == KEY_A || key == KEY_D || key == KEY_W
+		|| key == KEY_S)
 		move(key, self);
-	else if (key == ARROW_RIGHT || key == ARROW_LEFT || key == ARROW_UP
-		|| key == ARROW_DOWN)
-		view(key, self);
-	else if (key == KEY_C)
-	{
-		draw(self);
-	}
+	else if (key == KEY_RIGHT || key == KEY_LEFT || key == KEY_UP
+		|| key == KEY_DOWN)
+		rotate(key, self);
 	return (0);
 }
 

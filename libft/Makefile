@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 22:41:56 by msousa            #+#    #+#              #
-#    Updated: 2022/04/21 10:36:25 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/07 19:19:28 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME		= libft.a
 
 INC			= -Iinclude
 
-OBJ			= ${SRC:%.c=obj/%.o}
+OBJ			= ${SRC:%.c=%.o}
 SRC			= boolean/ft_isalnum.c \
 					boolean/ft_isalpha.c \
 					boolean/ft_isascii.c \
@@ -95,14 +95,17 @@ SRC			= boolean/ft_isalnum.c \
 					string/ft_substr.c \
 					string/ft_tolower.c \
 					string/ft_toupper.c \
-					string/get_next_line.c
+					string/get_next_line.c \
+					string/ft_strsfree.c \
+					string/ft_strslen.c \
+					file/ft_isfile_ext.c \
+					file/ft_isfile.c
 
 ${NAME}:	${OBJ}
 					${AR} $@ $^
 					ranlib $@
 
-obj/%.o:%.c
-					@mkdir -p $(dir $@)
+%.o:%.c
 					${CC} ${CFLAGS} ${INC} -c $< -o $@
 
 all:			${NAME}
@@ -111,7 +114,7 @@ style:
 					-norminette $$( find . -type f \( -name "*.c" -or -name "*.h" \) )
 
 clean:
-					${RM} -rf obj
+					${RM} ${OBJ}
 
 fclean: 	clean
 					${RM} ${NAME}
