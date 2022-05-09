@@ -6,14 +6,14 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 17:31:36 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 19:33:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// distance to wall
-float	distance(t_point p, t_point q, float a)
+// length to wall
+float	point_distance(t_point p, t_point q, float a)
 {
 	(void)a;
 	return (sqrt((q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y)));
@@ -38,7 +38,7 @@ float	trim(float a)
 // 	column = 0;
 // 	while (ray.angle > -r_angle(30) && column < WIN_W)
 // 	{
-// 		ray.dist_wall = magic_distance(conf, ray.angle);
+// 		ray.dist_wall = magic_length(conf, ray.angle);
 // 		ray.end = add_vec(conf->pov->p,
 // 				vec((ray.angle + conf->pov->angle), ray.dist_wall));
 // 		ray.color = set_wall_color(ray.dist_wall,
@@ -53,7 +53,7 @@ float	trim(float a)
 
 // struct	s_ray
 // {
-// 	double	distance;
+// 	double	length;
 // 	t_point	end;
 // 	t_wall	wall;
 // 	int		height;
@@ -61,18 +61,36 @@ float	trim(float a)
 // };
 
 // sudo
-// - vertical distance
-// - horizontal distance
-// - pick
+// - find length
+// 	- vertical distance
+// 	- horizontal distance
+//	- turn into length
+// 	- pick
 // - pick wall
 // - fish bowl
 // - draw line
 
-void	raycast(t_app *self)
+
+int	nearest_tile(double	pixel)
 {
-	int r, mx, my, dof; // depth of field
-	// mx: map x, my: map y
-	float rx, ry, ra, xo, yo, distT;
+	return (((int)pixel >> BITS) << BITS);
+}
+
+float	get_ray_length_to_horizontal(t_app *self, float ray_angle)
+{
+	// check horizontal lines
+	int 	dof;
+	float	hx;
+	float	hy;
+	float	aTan;
+	int		map_x;
+	int		map_y;
+	float	ray_x;
+	float	ray_y;
+	float	offset_x;
+	float	offset_y;
+	float 	length;
+
 	t_player	*p;
 	t_settings	*s;
 	char**		map;
@@ -80,145 +98,199 @@ void	raycast(t_app *self)
 	p = self->player;
 	s = self->settings;
 	map = s->map;
-	ra = trim(p->a - (DR * WIDTH / 2));
 
-	r = 0;
-	while (r < WIDTH)
+	dof = 0;
+	length = 1000000;
+	hx = p->x;
+	hy = p->y;
+	aTan = -1 / tan(ray_angle);
+
+	// First intersection
+
+	// check direction up or down
+	if (ray_angle > PI) // looking up
 	{
-		// check horizontal lines
-		dof = 0;
-		float	distH = 1000000, hx = p->x, hy = p->y;
-		float	aTan = -1 / tan(ra);
+		ray_y = nearest_tile(p->y) - 0.0001;
+		ray_x = (p->y - ray_y) * aTan + p->x;
+		offset_y = -SIZE;
+		offset_x = -offset_y * aTan;
+	}
+	if (ray_angle < PI) // looking down
+	{
+		ray_y = nearest_tile(p->y) + SIZE;
+		ray_x = (p->y - ray_y) * aTan + p->x;
+		offset_y = SIZE;
+		offset_x = -offset_y * aTan;
+	}
+	if (ray_angle == 0 || ray_angle == PI) // straight looking left or right
+	{
+		ray_y = p->y;
+		ray_x = p->x;
+		length = 1000000;
+		dof = s->height; // to not loop
+	}
 
-		// First intersection
-
-		// check direction up or down
-		if (ra > PI) // looking up
+	// loop to find next
+	while (dof < s->height)
+	{
+		map_x = (int)(ray_x) >> BITS;
+		map_y = (int)(ray_y) >> BITS;
+		if (map_x > 0 && map_y > 0 && map_x < s->width
+			&& map_y < s->height
+			&& map[map_x][map_y] == MAP_WALL)
 		{
-			ry = (((int)p->y >> BITS) << BITS) - 0.0001;
-			rx = (p->y - ry) * aTan + p->x;
-			yo = -SIZE;
-			xo = -yo * aTan;
+			hx = ray_x;
+			hy = ray_y;
+			length = point_distance((t_point){p->x, p->y}, (t_point){hx, hy}, ray_angle);
+			dof = s->height; // end loop
 		}
-		if (ra < PI) // looking down
+		else
 		{
-			ry = (((int)p->y >> BITS) << BITS) + SIZE;
-			rx = (p->y - ry) * aTan + p->x;
-			yo = SIZE;
-			xo = -yo * aTan;
+			ray_x += offset_x;
+			ray_y += offset_y;
+			dof++;
 		}
-		if (ra == 0 || ra == PI) // straight looking left or right
+	}
+	return (length);
+}
+
+
+float	get_ray_length_to_vertical(t_app *self, float ray_angle)
+{
+	float	vx;
+	float	vy;
+	float	nTan;
+	int		map_x;
+	int		map_y;
+	float	ray_x;
+	float	ray_y;
+	float	offset_x;
+	float	offset_y;
+	int 	dof;
+	float 	length;
+
+	t_player	*p;
+	t_settings	*s;
+	char**		map;
+
+	p = self->player;
+	s = self->settings;
+	map = s->map;
+
+	// check vertical lines
+	dof = 0;
+	length = 1000000;
+	vx = p->x;
+	vy = p->y;
+	nTan = -tan(ray_angle);
+
+	// First intersection
+
+	// check direction left or right
+	if (ray_angle > PI / 2 && ray_angle < 3 * PI / 2) // looking left
+	{
+		ray_x = nearest_tile(p->x) - 0.0001;
+		ray_y = (p->x - ray_x) * nTan + p->y;
+		offset_x = -SIZE;
+		offset_y = -offset_x * nTan;
+	}
+	if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
+	{
+		ray_x = nearest_tile(p->x) + SIZE;
+		ray_y = (p->x - ray_x) * nTan + p->y;
+		offset_x = SIZE;
+		offset_y = -offset_x * nTan;
+	}
+	if (ray_angle == 0 || ray_angle == PI) // straight looking up or down
+	{
+		ray_y = p->y;
+		ray_x = p->x;
+		length = 1000000;
+		dof = s->width;
+	}
+
+	// loop to find next
+	while (dof < s->width)
+	{
+		map_x = (int)(ray_x) >> BITS;
+		map_y = (int)(ray_y) >> BITS;
+		if (map_x > 0 && map_y > 0 && map_x < s->width
+			&& map_y < s->height
+			&& map[map_x][map_y] == MAP_WALL)
 		{
-			ry = p->y;
-			rx = p->x;
-			distT = 1000000;
-			dof = s->height; // to not loop
+			vx = ray_x;
+			vy = ray_y;
+			length = point_distance((t_point){p->x, p->y}, (t_point){vx, vy}, ray_angle);
+			dof = s->width; // end loop
 		}
-
-		// loop to find next
-		while (dof < s->height)
+		else
 		{
-			mx = (int)(rx) >> BITS;
-			my = (int)(ry) >> BITS;
-			if (mx > 0 && my > 0 && mx < s->width
-				&& my < s->height
-				&& map[mx][my] == MAP_WALL)
-			{
-				hx = rx;
-				hy = ry;
-				distH = distance((t_point){p->x, p->y}, (t_point){hx, hy}, ra);
-				dof = s->height; // end loop
-			}
-			else
-			{
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
+			ray_x += offset_x; // next line
+			ray_y += offset_y;
+			dof++;
 		}
+	}
+	return (length);
+}
 
-		// check vertical lines
-		dof = 0;
-		float	distV = 1000000, vx = p->x, vy = p->y;
-		float	nTan = -tan(ra);
+float	get_ray_length(t_app *self, float ray_angle)
+{
+	float	length_v;
+	float	length_h;
 
-		// First intersection
+	length_h = get_ray_length_to_horizontal(self, ray_angle);
+	length_v = get_ray_length_to_vertical(self, ray_angle);
 
-		// check direction left or right
-		if (ra > PI / 2 && ra < 3 * PI / 2) // looking left
-		{
-			rx = (((int)p->x >> BITS) << BITS) - 0.0001;
-			ry = (p->x - rx) * nTan + p->y;
-			xo = -SIZE;
-			yo = -xo * nTan;
-		}
-		if (ra < PI / 2 || ra > 3 * PI / 2) // looking right
-		{
-			rx = (((int)p->x >> BITS) << BITS) + SIZE;
-			ry = (p->x - rx) * nTan + p->y;
-			xo = SIZE;
-			yo = -xo * nTan;
-		}
-		if (ra == 0 || ra == PI) // straight looking up or down
-		{
-			ry = p->y;
-			rx = p->x;
-			distT = 1000000;
-			dof = s->width;
-		}
+	if (length_v < length_h)
+	{
+		// TODO: to find out which wall
+		// ray_x = vx;
+		// ray_y = vy;
+		g_wall_color = create_trgb(0, 100, 100, 100);
+		return (length_v);
+	}
+	else if (length_v > length_h)
+	{
+		// ray_x = hx;
+		// ray_y = hy;
+		g_wall_color = create_trgb(0, 120, 100, 100);
+		return (length_h);
+	}
+	else
+		return (HEIGHT);
+}
 
-		// loop to find next
-		while (dof < s->width)
-		{
-			mx = (int)(rx) >> BITS;
-			my = (int)(ry) >> BITS;
-			if (mx > 0 && my > 0 && mx < s->width
-				&& my < s->height
-				&& map[mx][my] == MAP_WALL)
-			{
-				vx = rx;
-				vy = ry;
-				distV = distance((t_point){p->x, p->y}, (t_point){vx, vy}, ra);
-				dof = s->width; // end loop
-			}
-			else
-			{
-				rx += xo; // next line
-				ry += yo;
-				dof++;
-			}
-		}
+double	fish_bowl(double length, double angle)
+{
+	return (length * cos(angle));
+}
 
-		if (distV < distH)
-		{
-			rx = vx;
-			ry = vy;
-			distT = distV;
-			g_wall_color = create_trgb(0, 100, 100, 100);
-		}
-		if (distV > distH)
-		{
-			rx = hx;
-			ry = hy;
-			distT = distH;
-			g_wall_color = create_trgb(0, 120, 100, 100);
-		}
+void	raycast(t_app *self)
+{
+	float		length;
+	int			i;
+	float		ray_angle;
+	t_player	*p;
+	int			wall_height;
+	int			wall_offset;
 
-		// Draw 3d rays
+	p = self->player;
+	ray_angle = trim(p->a - (DR * WIDTH / 2));
+	i = 0;
+	while (i < WIDTH)
+	{
+		length = get_ray_length(self, ray_angle);
+		length = fish_bowl(length, p->a - ray_angle);
 
-		// fish bowl
-		float	ca;
-		ca = trim(p->a - ra);
-		distT = distT * cos(ca);
+		wall_height = (int)((SIZE * HEIGHT) / length); // line height
+		if (wall_height > HEIGHT)
+			wall_height = HEIGHT;
+		wall_offset = (int)((HEIGHT / 2) - (wall_height / 2)); // line offset
 
-		int	lineH = (int)((SIZE * HEIGHT) / distT); // line height
-		if (lineH > HEIGHT)
-			lineH = HEIGHT;
-		int	lineO = (int)((HEIGHT / 2) - (lineH / 2)); // line offset
+		draw_line(self, i, wall_height, wall_offset);
 
-		draw_line(self, r, lineH, lineO);
-
-		ra = trim(ra + DR);
-		r++;
+		// increment
+		ray_angle = trim(ray_angle + DR);
+		i++;
 	}
 }
