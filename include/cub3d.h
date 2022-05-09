@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:10:42 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 17:19:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ t_bool		set_player(t_app *self, int i, int j);
 /* mlx */
 void	draw(t_app *self);
 void	set_hooks(t_app *self);
-void	draw_rays(t_app *self);
+void	raycast(t_app *self);
 void	draw_line(t_app *self, int ray, int line_height, int line_offset);
 
 /* angle */

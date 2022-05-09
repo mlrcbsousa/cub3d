@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:10:16 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 17:31:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,46 @@ float	trim(float a)
 	return (a);
 }
 
-void	draw_rays(t_app *self)
+// void	raycasting3d(t_config *conf)
+// {
+// 	t_ray	ray;
+// 	int		column;
+
+// 	ray.angle = r_angle(30);
+// 	column = 0;
+// 	while (ray.angle > -r_angle(30) && column < WIN_W)
+// 	{
+// 		ray.dist_wall = magic_distance(conf, ray.angle);
+// 		ray.end = add_vec(conf->pov->p,
+// 				vec((ray.angle + conf->pov->angle), ray.dist_wall));
+// 		ray.color = set_wall_color(ray.dist_wall,
+// 				conf->pov->angle + ray.angle, conf);
+// 		ray.height = ray.dist_wall * fcos(abs(ray.angle));
+// 		ray.height = ((double)TILE_SIZE / ray.height) * conf->pov->dtp;
+// 		draw_line(conf, ray, column);
+// 		column++;
+// 		ray.angle--;
+// 	}
+// }
+
+// struct	s_ray
+// {
+// 	double	distance;
+// 	t_point	end;
+// 	t_wall	wall;
+// 	int		height;
+// 	double	angle;
+// };
+
+// sudo
+// - vertical distance
+// - horizontal distance
+// - pick
+// - pick wall
+// - fish bowl
+// - draw line
+
+void	raycast(t_app *self)
 {
 	int r, mx, my, dof; // depth of field
 	// mx: map x, my: map y

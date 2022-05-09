@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:05:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/09 17:19:11 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	create_trgb(int t, int r, int g, int b)
 
 void	draw(t_app *self)
 {
-	draw_rays(self);
+	raycast(self);
 	mlx_put_image_to_window(self->mlx, self->mlx_window, self->img->img, 0, 0);
 }
 
