@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 01:13:34 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:06:12 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	print_map(t_settings *settings)
 	{
 		i = 0;
 		while (i < settings->width)
-			printf("%c, ", settings->map[i++][j]);
+			printf("%c ", settings->map[i++][j]);
 		printf("\n");
 		j++;
 	}
