@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 14:48:45 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 20:30:14 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static double	get_initial_angle(char direction)
 {
 	printf("direction: %c\n", direction);
 	if (direction == MAP_NORTH)
-		return (PI / 2);
+		return (ANGLE90);
 	else if (direction == MAP_SOUTH)
-		return (3 * PI / 2);
+		return (ANGLE270);
 	else if (direction == MAP_EAST)
-		return (0);
+		return (ANGLE0);
 	else if (direction == MAP_WEST)
-		return (PI);
+		return (ANGLE180);
 	return (-1);
 }
 

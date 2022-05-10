@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:08:07 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:55:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 21:23:02 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ enum {
 #  define KEY_DOWN	65364
 #  define KEY_LEFT	65361
 #  define KEY_RIGHT	65363
+#  define KEY_W		1
+#  define KEY_A		1
+#  define KEY_S		1
+#  define KEY_D		1
+#  define KEY_SPACE	1
+#  define KEY_ENTER	1
 #  define KEY_ESC	65307
 # endif
 

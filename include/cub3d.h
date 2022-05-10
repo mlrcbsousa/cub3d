@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 20:14:26 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 21:20:49 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ struct s_settings
 
 struct s_player
 {
-	double		angle;
+	int			angle;
 	t_point		p;
 };
 
@@ -173,8 +173,7 @@ struct	s_ray
 	double	length;
 	t_point	p;
 	t_wall	wall;
-	// int		height;
-	double	angle;
+	int		angle;
 };
 
 /* Functions */

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:52:17 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 20:40:14 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int	main(int argc, char *argv[])
 	set_image(&self);
 	mlx_hook(self.mlx_window, ON_KEYDOWN, 1, key_hook, &self);
 	mlx_hook(self.mlx_window, ON_DESTROY, 0, close_app, &self);
+	// draw_background(&self); TODO:
 	draw(&self);
 	mlx_loop(self.mlx);
 	return (0);
