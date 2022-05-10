@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:19:10 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:33:00 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,18 @@
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
 
-// static final int TILE_SIZE = 64;
-//   static final int WALL_HEIGHT = 64;
-//   static final int PROJECTIONPLANEWIDTH = 320;
-//   static final int PROJECTIONPLANEHEIGHT = 200;
-//   static final int ANGLE60 = PROJECTIONPLANEWIDTH;
-//   static final int ANGLE30 = (ANGLE60/2);
-//   static final int ANGLE15 = (ANGLE30/2);
-//   static final int ANGLE90 = (ANGLE30*3);
-//   static final int ANGLE180 = (ANGLE90*2);
-//   static final int ANGLE270 = (ANGLE90*3);
-//   static final int ANGLE360 = (ANGLE60*6);
-//   static final int ANGLE0 = 0;
-//   static final int ANGLE5 = (ANGLE30/6);
-//   static final int ANGLE10 = (ANGLE5*2);
+/* Angles in Width Pixel units */
+# define WALL_HEIGHT SIZE
+# define ANGLE60	WIDTH
+# define ANGLE30	600
+# define ANGLE15	300
+# define ANGLE90 	1800
+# define ANGLE180	3600
+# define ANGLE270	5400
+# define ANGLE360	7200
+# define ANGLE0		0
+# define ANGLE5		100
+# define ANGLE10	200
 
 /* Types */
 typedef struct s_app		t_app;
@@ -90,6 +88,13 @@ enum e_wall {
 	WALL_EAST,
 	WALL_WEST,
 	WALL_NULL = -1,
+};
+
+// TODO: reduce settings and parser structs using enums and arrays
+enum e_color {
+	COLOR_FLOOR,
+	COLOR_CEILING,
+	COLOR_NULL = -1,
 };
 
 /* Structs */
