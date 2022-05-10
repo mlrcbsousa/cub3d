@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 21:32:29 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:13:48 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	close_app(t_app *self)
+int	close_app(t_app *self)
 {
 	settings_destroy(self->settings);
 	if (self->player)
@@ -28,44 +28,18 @@ static void	rotate(int key, t_app *self)
 	p = self->player;
 	if (key == KEY_LEFT)
 	{
-		p->a = trim(p->a - 0.1);
-		p->dx = cos(p->a) * 5;
-		p->dy = sin(p->a) * 5;
+		p->angle = trim(p->angle + 0.1);
+		// p->delta = point_multiply(MOVE, point(cos(p->angle), sin(p->angle)));
 	}
 	if (key == KEY_RIGHT)
 	{
-		p->a = trim(p->a + 0.1);
-		p->dx = cos(p->a) * 5;
-		p->dy = sin(p->a) * 5;
+		p->angle = trim(p->angle - 0.1);
+		// p->delta = point_multiply(MOVE, point(cos(p->angle), sin(p->angle)));
 	}
-
 	draw(self);
 }
 
-static void	move(int key, t_app *self)
-{
-	t_player	*player;
-	t_point		p;
-
-	player = self->player;
-	p = player->p;
-	// 5 to change for useful constant
-	// if (key == KEY_A)
-	// 	p->x -= 5;
-	// if (key == KEY_D)
-	// {
-	// 	p->x = p->y + p->dy;
-	// 	p->y = -(p->x + p->dx);
-	// }
-	if (key == KEY_W)
-		player->p = point(p.x + player->dx, p.y + player->dy);
-	if (key == KEY_S)
-		player->p = point(p.x - player->dx, p.y - player->dy);
-
-	draw(self);
-}
-
-static int	key_hook(int key, t_app *self)
+int	key_hook(int key, t_app *self)
 {
 	if (key == KEY_ESC)
 		close_app(self);
@@ -76,10 +50,4 @@ static int	key_hook(int key, t_app *self)
 		|| key == KEY_DOWN)
 		rotate(key, self);
 	return (0);
-}
-
-void	set_hooks(t_app *self)
-{
-	mlx_hook(self->mlx_window, ON_KEYDOWN, 1, key_hook, self);
-	mlx_hook(self->mlx_window, ON_DESTROY, 0, close_app, self);
 }

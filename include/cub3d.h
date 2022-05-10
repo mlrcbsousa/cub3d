@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:20:00 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:57:50 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "libft.h"
 # include "ft_mlx.h"
 # include "ft_point.h"
+# include "ft_vector.h"
 
 /* Constants */
 # define SPACE ' '
@@ -40,6 +41,7 @@
 # define HEIGHT2 400
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
+# define MOVE 5
 # define PI 3.14159265359
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
@@ -118,18 +120,9 @@ struct s_settings
 
 struct s_player
 {
-	double	a;
-	t_point	p;
-	double	dx;
-	double	dy;
-	// t_vector	v;
+	double		angle;
+	t_point		p;
 };
-
-// struct s_vector
-// {
-// 	double	angle;
-// 	double	size;
-// };
 
 /* Functions */
 
@@ -137,7 +130,6 @@ struct s_player
 t_bool	is_empty_line(char *line);
 t_bool	is_valid_rgb(char **colors);
 int g_wall_color;
-
 // TODO: move to libft.h
 
 /* parse */
@@ -148,8 +140,6 @@ void		parser_destroy(t_parser *parser);
 t_bool		could_be_game_color(char *line);
 t_bool		could_be_game_wall(char *line);
 t_bool		could_be_game_mapline(char *line);
-
-// t_bool		is_valid_game_map(char **map);
 void		set_game_mapline(char* line, t_parser *parser);
 void		set_game_wall(char* line, t_parser *parser);
 void		set_game_color(char* line, t_parser *parser);
@@ -160,13 +150,15 @@ void		elements_addback(t_element **elements, t_element *new);
 void		elements_convert_tab(t_element **elements);
 t_element	*elements_create(char *line);
 int			elements_size(t_element *elements);
+t_bool		is_element_bounded_and_wall(t_settings *s, t_point p);
+t_bool		is_element_bounded_and_not_wall(t_settings *s, t_point p);
 
 /* maplines */
-t_line	*mapline_create(char *line);
-void	maplines_destroy(t_line **maplines);
-t_line	*mapline_last(t_line *mapline);
-void	mapline_addback(t_parser *parser, t_line *mapline);
-int		maplines_size(t_line *mapline);
+t_line		*mapline_create(char *line);
+void		maplines_destroy(t_line **maplines);
+t_line		*mapline_last(t_line *mapline);
+void		mapline_addback(t_parser *parser, t_line *mapline);
+int			maplines_size(t_line *mapline);
 
 /* settings */
 void		settings_init(t_app *self);
@@ -175,6 +167,7 @@ void		settings_destroy(t_settings *settings);
 
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);
+void		map_destroy(t_settings *s);
 t_bool		is_map_closed(t_settings *settings);
 void		map_loop(t_app *self, t_bool (*f)(t_app *, int, int));
 
@@ -185,9 +178,11 @@ t_bool		set_player(t_app *self, int i, int j);
 
 /* mlx */
 void	draw(t_app *self);
-void	set_hooks(t_app *self);
 void	raycast(t_app *self);
 void	draw_line(t_app *self, int ray, double length);
+int		key_hook(int key, t_app *self);
+void	move(int key, t_app *self);
+int		close_app(t_app *self);
 
 /* angle */
 double	trim(double a);

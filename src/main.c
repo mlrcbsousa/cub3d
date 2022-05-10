@@ -6,16 +6,54 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 20:52:58 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:03:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* TODO: move to libft.h via the libft repo and then use the update script */
+t_point	point(double x, double y)
+{
+	return ((t_point) {x, y});
+}
+
 t_point	point_add(t_point a, t_point b)
 {
 	return (point(a.x + b.x, a.y + b.y));
+}
+
+t_point	point_subtract(t_point a, t_point b)
+{
+	return (point(a.x - b.x, a.y - b.y));
+}
+
+t_point	point_multiply(int multiplier, t_point p)
+{
+	return (point(multiplier * p.x, multiplier * p.y));
+}
+
+t_vector	vector(double angle, double size)
+{
+	return ((t_vector) { trim(angle), size });
+}
+
+// t_point	add_vec(t_point p, t_vector v)
+// {
+// 	t_point	res;
+
+// 	res.x = p.x + (fcos(v.angle) * v.mag);
+// 	res.y = p.y - (fsin(v.angle) * v.mag);
+// 	return (res);
+// }
+
+t_point	point_move(t_point p, t_vector v)
+{
+	t_point	delta;
+
+	delta = point(cos(v.angle), -sin(v.angle));
+	delta = point_multiply(v.size, delta);
+	return (point_add(p, delta));
 }
 
 t_bool	is_empty_line(char *line)
@@ -38,11 +76,6 @@ t_bool	is_valid_rgb(char **colors)
 			return (FALSE);
 	}
 	return (TRUE);
-}
-
-t_point	point(double x, double y)
-{
-	return ((t_point) {x, y});
 }
 
 /* TODO *********** */
@@ -111,7 +144,8 @@ int	main(int argc, char *argv[])
 			HEIGHT,
 			"cub3d!");
 	set_image(&self);
-	set_hooks(&self);
+	mlx_hook(self.mlx_window, ON_KEYDOWN, 1, key_hook, &self);
+	mlx_hook(self.mlx_window, ON_DESTROY, 0, close_app, &self);
 	draw(&self);
 	mlx_loop(self.mlx);
 

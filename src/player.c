@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:13:47 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:40:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static double	get_initial_angle(char direction)
 {
 	printf("direction: %c\n", direction);
 	if (direction == MAP_NORTH)
-		return (3 * PI / 2);
-	else if (direction == MAP_SOUTH)
 		return (PI / 2);
+	else if (direction == MAP_SOUTH)
+		return (3 * PI / 2);
 	else if (direction == MAP_EAST)
 		return (0);
 	else if (direction == MAP_WEST)
@@ -36,9 +36,7 @@ t_bool	set_player(t_app *self, int i, int j)
 	if (ft_strchr(ELEMENTS_PLAYER, map[i][j]))
 	{
 		player->p = point((i << BITS) + SIZE / 2, (j << BITS) + SIZE / 2);
-		player->a = get_initial_angle(map[i][j]);
-		player->dx = cos(player->a) * 5;
-		player->dy = sin(player->a) * 5;
+		player->angle = get_initial_angle(map[i][j]);
 		map[i][j] = MAP_FLOOR;
 		return (TRUE);
 	}
@@ -52,10 +50,8 @@ t_player	*player_create(void)
 	player = (t_player *)malloc(sizeof(t_player));
 	if (!player)
 		return (NULL);
-	player->a = -1;
+	player->angle = -1;
 	player->p = point(-1, -1);
-	player->dx = -1;
-	player->dy = -1;
 	return (player);
 }
 
@@ -78,10 +74,9 @@ void	player_init(t_app *self)
 	if (!player)
 		settings_exit(settings, strerror(errno));
 
+	// TODO: remove
+	print_map(settings);
+
 	self->player = player;
 	map_loop(self, set_player);
-
-	// TODO: remove
-	print_player(player);
-	print_map(settings);
 }

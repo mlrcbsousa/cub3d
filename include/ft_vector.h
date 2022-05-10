@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_point.h                                         :+:      :+:    :+:   */
+/*   ft_vector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:29:05 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:41:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:11:06 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_POINT_H
-# define FT_POINT_H
+#ifndef FT_VECTOR_H
+# define FT_VECTOR_H
 
-struct	s_point
+# include "ft_point.h"
+
+struct	s_vector
 {
-	double	x;
-	double	y;
+	double	angle;
+	double	size;
 };
 
-typedef struct s_point	t_point;
+typedef struct s_vector	t_vector;
 
-t_point	point(double x, double y);
-t_point	point_add(t_point a, t_point b);
-t_point	point_subtract(t_point a, t_point b);
-t_point	point_multiply(int multiplier, t_point p);
+double		trim(double a);
+t_vector	vector(double angle, double size);
+t_point		point_move(t_point p, t_vector v);
 
 #endif
