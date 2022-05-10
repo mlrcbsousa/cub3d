@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 13:03:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:18:30 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,14 +174,14 @@ void	raycast(t_app *self)
 	t_player	*player;
 
 	player = self->player;
-	ray_angle = trim(player->angle + (DR * WIDTH2));
+	ray_angle = trim(player->angle - (DR * WIDTH2));
 	i = 0;
 	while (i < WIDTH)
 	{
 		length = get_ray_length(self, ray_angle);
 		length = fish_bowl(length, player->angle - ray_angle);
 		draw_line(self, i, length);
-		ray_angle = trim(ray_angle - DR);
+		ray_angle = trim(ray_angle + DR);
 		i++;
 	}
 }
