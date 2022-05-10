@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 14:58:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:19:10 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@
 //   static final int ANGLE5 = (ANGLE30/6);
 //   static final int ANGLE10 = (ANGLE5*2);
 
+/* Types */
+typedef struct s_app		t_app;
+typedef struct s_parser		t_parser;
+typedef struct s_line		t_line;
+typedef struct s_element	t_element;
+typedef struct s_settings	t_settings;
+typedef struct s_player		t_player;
+typedef struct s_ray		t_ray;
+typedef enum e_wall			t_wall;
+
 /* Enums */
 enum e_map {
 	MAP_NORTH = 'N',
@@ -79,16 +89,10 @@ enum e_wall {
 	WALL_SOUTH,
 	WALL_EAST,
 	WALL_WEST,
+	WALL_NULL = -1,
 };
 
-/* Structs & Types */
-typedef struct s_app		t_app;
-typedef struct s_parser		t_parser;
-typedef struct s_line		t_line;
-typedef struct s_element	t_element;
-typedef struct s_settings	t_settings;
-typedef struct s_player		t_player;
-
+/* Structs */
 struct	s_app
 {
 	t_image		*img;
@@ -142,6 +146,15 @@ struct s_player
 {
 	double		angle;
 	t_point		p;
+};
+
+struct	s_ray
+{
+	double	length;
+	t_point	p;
+	t_wall	wall;
+	// int		height;
+	double	angle;
 };
 
 /* Functions */
