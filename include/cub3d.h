@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 23:09:38 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:39:44 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_player		t_player;
 struct	s_app
 {
 	t_image		*img;
+	t_image		*background;
 	void		*mlx_window;
 	void		*mlx;
 	t_parser	*parser;
@@ -186,6 +187,7 @@ t_bool		set_player(t_app *self, int i, int j);
 
 /* mlx */
 void	draw(t_app *self);
+void	draw_background(t_app *self);
 void	raycast(t_app *self);
 void	draw_line(t_app *self, int ray, double length);
 int		key_hook(int key, t_app *self);
