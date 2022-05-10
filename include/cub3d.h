@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 14:44:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 14:58:52 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,14 @@ int g_wall_color;
 /* parse */
 void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
-void    	parse_exit(t_parser *parser, char *error);
-void		parser_destroy(t_parser *parser);
+void    	parse_exit(t_app *self, char *error);
+void		parser_destroy(t_app *self);
 t_bool		could_be_game_color(char *line);
 t_bool		could_be_game_wall(char *line);
 t_bool		could_be_game_mapline(char *line);
-void		set_game_mapline(char* line, t_parser *parser);
-void		set_game_wall(char* line, t_parser *parser);
-void		set_game_color(char* line, t_parser *parser);
+void		set_game_mapline(char* line, t_app *self);
+void		set_game_wall(char* line, t_app *self);
+void		set_game_color(char* line, t_app *self);
 
 /* elements */
 t_element	*elements_new(char type);
@@ -184,6 +184,7 @@ int			maplines_size(t_line *mapline);
 void		settings_init(t_app *self);
 t_settings	*settings_create(void);
 void		settings_destroy(t_settings *settings);
+void		settings_exit(t_settings *settings, char *error);
 
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);

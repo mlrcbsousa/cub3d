@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:40:07 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 14:48:45 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ t_player	*player_create(void)
 	player->angle = -1;
 	player->p = point(-1, -1);
 	return (player);
-}
-
-void	settings_exit(t_settings *settings, char *error)
-{
-	if (error)
-		print_error(NULL, error);
-	if (settings)
-		settings_destroy(settings);
-	exit(EXIT_FAILURE);
 }
 
 void	player_init(t_app *self)
