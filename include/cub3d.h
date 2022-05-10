@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:57:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 14:44:13 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,25 @@
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define MOVE 5
+# define WALLS 4
 # define PI 3.14159265359
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
+
+// static final int TILE_SIZE = 64;
+//   static final int WALL_HEIGHT = 64;
+//   static final int PROJECTIONPLANEWIDTH = 320;
+//   static final int PROJECTIONPLANEHEIGHT = 200;
+//   static final int ANGLE60 = PROJECTIONPLANEWIDTH;
+//   static final int ANGLE30 = (ANGLE60/2);
+//   static final int ANGLE15 = (ANGLE30/2);
+//   static final int ANGLE90 = (ANGLE30*3);
+//   static final int ANGLE180 = (ANGLE90*2);
+//   static final int ANGLE270 = (ANGLE90*3);
+//   static final int ANGLE360 = (ANGLE60*6);
+//   static final int ANGLE0 = 0;
+//   static final int ANGLE5 = (ANGLE30/6);
+//   static final int ANGLE10 = (ANGLE5*2);
 
 /* Enums */
 enum e_map {
@@ -56,6 +72,13 @@ enum e_map {
 	MAP_SPACE = ' ',
 	MAP_TAB = '\t',
 	MAP_FLOOR = '0',
+};
+
+enum e_wall {
+	WALL_NORTH,
+	WALL_SOUTH,
+	WALL_EAST,
+	WALL_WEST,
 };
 
 /* Structs & Types */
@@ -107,10 +130,7 @@ struct s_line
 
 struct s_settings
 {
-	t_image	*wall_north;
-	t_image	*wall_south;
-	t_image	*wall_east;
-	t_image	*wall_west;
+	t_image	**walls;
 	int		color_floor;
 	int		color_ceiling;
 	int		width;
