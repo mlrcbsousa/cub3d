@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 00:13:00 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:24:10 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:33:38 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 static void	move_up(t_app *self)
 {
-	t_player	*player;
 	t_point		p;
+	t_player	*player;
+	t_settings	*s;
+	int			map_x;
+	int			map_y;
 
 	player = self->player;
 	p = player->p;
-	player->p = point_add(p, player->delta);
+	s = self->settings;
+	p = point_move(p, vector(player->angle, MOVE));
 
-// 	p.x = conf->pov->p.x;
-// 	p.y = conf->pov->p.y;
-// 	p = add_vec(p, vec(conf->pov->angle, conf->pov->mag));
-// 	if (p.x > conf->pov->width || p.x < 0 || p.y > conf->pov->height || p.y < 0)
-// 		return ;
-// 	if (conf->map[(int)(p.y / TILE_SIZE)][(int)(p.x / TILE_SIZE)] != '1')
-// 	{
-// 		conf->pov->p.y = round(p.y);
-// 		conf->pov->p.x = round(p.x);
-// 	}
+	map_x = (int)(p.y) >> SIZE;
+	map_y = (int)(p.x) >> SIZE;
+	if (p.x < 0 || p.y < 0 || map_x > s->width || map_y > s->height)
+		return ;
+	if (s->map[map_x][map_y] != MAP_WALL)
+		player->p = p;
 }
 
 static void	move_down(t_app *self)
@@ -44,7 +44,7 @@ static void	move_down(t_app *self)
 
 // 	p.x = conf->pov->p.x;
 // 	p.y = conf->pov->p.y;
-// 	p = add_vec(p, vec(conf->pov->angle, conf->pov->mag * -1));
+// 	p = add_vec(p, vec(conf->pov->angle, MOVE * -1));
 // 	if (p.x > conf->pov->width || p.x < 0 || p.y > conf->pov->height || p.y < 0)
 // 		return ;
 // 	if (conf->map[(int)(p.y / TILE_SIZE)][(int)(p.x / TILE_SIZE)] != '1')
@@ -61,7 +61,7 @@ static void	move_left(t_app *self)
 
 // 	p.x = conf->pov->p.x;
 // 	p.y = conf->pov->p.y;
-// 	p = add_vec(p, vec(conf->pov->angle + r_angle(90), conf->pov->mag));
+// 	p = add_vec(p, vec(conf->pov->angle + r_angle(90), MOVE));
 // 	if (p.x > conf->pov->width || p.x < 0 || p.y > conf->pov->height || p.y < 0)
 // 		return ;
 // 	if (conf->map[(int)(p.y / TILE_SIZE)][(int)(p.x / TILE_SIZE)] != '1')
@@ -78,7 +78,7 @@ static void	move_right(t_app *self)
 
 // 	p.x = conf->pov->p.x;
 // 	p.y = conf->pov->p.y;
-// 	p = add_vec(p, vec(conf->pov->angle - r_angle(90), conf->pov->mag));
+// 	p = add_vec(p, vec(conf->pov->angle - r_angle(90), MOVE));
 // 	if (p.x > conf->pov->width || p.x < 0 || p.y > conf->pov->height || p.y < 0)
 // 		return ;
 // 	if (conf->map[(int)(p.y / TILE_SIZE)][(int)(p.x / TILE_SIZE)] != '1')

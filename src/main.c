@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:23:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 00:56:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ t_point	point_subtract(t_point a, t_point b)
 t_point	point_multiply(int multiplier, t_point p)
 {
 	return (point(multiplier * p.x, multiplier * p.y));
+}
+
+t_vector	vector(double angle, double size)
+{
+	return ((t_vector) { trim(angle), size });
+}
+
+t_point	point_move(t_point p, t_vector v)
+{
+	t_point	delta;
+
+	delta = point(cos(v.angle), -sin(v.angle));
+	delta = point_multiply(v.size, delta);
+	return (point_add(p, delta));
 }
 
 t_bool	is_empty_line(char *line)

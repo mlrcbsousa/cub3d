@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:56:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:13:34 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	print_player(t_player *player)
 	printf("\n--PLAYER--\n");
 	printf("x: %f\n", player->p.x);
 	printf("y: %f\n", player->p.y);
-	printf("dx: %f\n", player->delta.x);
-	printf("dy: %f\n", player->delta.y);
 	printf("a: %f\n", player->angle);
 }
 

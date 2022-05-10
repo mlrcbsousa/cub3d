@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:58:42 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:13:15 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_bool	set_player(t_app *self, int i, int j)
 	{
 		player->p = point((i << BITS) + SIZE / 2, (j << BITS) + SIZE / 2);
 		player->angle = get_initial_angle(map[i][j]);
-		player->delta = point_multiply(5,
-			point(cos(player->angle), sin(player->angle)));
 		map[i][j] = MAP_FLOOR;
 		return (TRUE);
 	}
@@ -54,7 +52,6 @@ t_player	*player_create(void)
 		return (NULL);
 	player->angle = -1;
 	player->p = point(-1, -1);
-	player->delta = point(-1, -1);
 	return (player);
 }
 

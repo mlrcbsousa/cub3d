@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:12:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:11:51 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static void	rotate(int key, t_app *self)
 	if (key == KEY_LEFT)
 	{
 		p->angle = trim(p->angle - 0.1);
-		p->delta = point_multiply(5, point(cos(p->angle), sin(p->angle)));
+		// p->delta = point_multiply(MOVE, point(cos(p->angle), sin(p->angle)));
 	}
 	if (key == KEY_RIGHT)
 	{
 		p->angle = trim(p->angle + 0.1);
-		p->delta = point_multiply(5, point(cos(p->angle), sin(p->angle)));
+		// p->delta = point_multiply(MOVE, point(cos(p->angle), sin(p->angle)));
 	}
 	draw(self);
 }

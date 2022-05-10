@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:11:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 01:10:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "libft.h"
 # include "ft_mlx.h"
 # include "ft_point.h"
+# include "ft_vector.h"
 
 /* Constants */
 # define SPACE ' '
@@ -40,6 +41,7 @@
 # define HEIGHT2 400
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
+# define MOVE 5
 # define PI 3.14159265359
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
@@ -118,17 +120,9 @@ struct s_settings
 
 struct s_player
 {
-	double	angle;
-	t_point	p;
-	t_point	delta;
-	// t_vector	v;
+	double		angle;
+	t_point		p;
 };
-
-// struct s_vector
-// {
-// 	double	angle;
-// 	double	size;
-// };
 
 /* Functions */
 
@@ -136,7 +130,6 @@ struct s_player
 t_bool	is_empty_line(char *line);
 t_bool	is_valid_rgb(char **colors);
 int g_wall_color;
-
 // TODO: move to libft.h
 
 /* parse */
