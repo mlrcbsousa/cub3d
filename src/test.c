@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 20:48:22 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:04:20 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 21:41:20 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_player(t_player *player)
 	printf("\n--PLAYER--\n");
 	printf("x: %f\n", player->p.x);
 	printf("y: %f\n", player->p.y);
-	printf("a: %f\n", player->angle);
+	printf("a: %d\n", player->angle);
 }
 
 void	print_elements(t_element *elements)

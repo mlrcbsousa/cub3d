@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 21:20:49 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 22:00:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@
 # define HEIGHT2 400
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
-# define MOVE 5
+# define MOVE 5 // TODO: increase?
 # define WALLS 4
 # define PI 3.14159265359
 # define DR 0.00087266666
-# define BIG_LENGTH 1000000
+# define BIG_LENGTH 1000000000.0
 
 /* Angles in Width Pixel units */
 # define WALL_HEIGHT SIZE

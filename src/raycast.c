@@ -6,16 +6,16 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 20:13:36 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 22:45:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // length to wall
-double	point_distance(t_point p, t_point q, double a)
+double	point_distance(t_app *self, t_point p, t_point q, int a)
 {
-	return ((q.x - p.x) / cos(a));
+	return ((q.x - p.x) / self->tables.cos[a]);
 }
 
 int	nearest_tile(double	pixel)
@@ -38,16 +38,46 @@ double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 		if (is_element_bounded_and_wall(s, ray))
 		{
 			// TODO: add ray x,y to ray struct with length
-			return (point_distance(player, ray, ray_angle));
+			return (point_distance(self, player, ray, ray_angle));
 		}
 		ray = point_add(ray, offset);
 		i++;
 	}
-
 	return (BIG_LENGTH);
 }
 
-double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
+//    // ray is facing down
+//       if (ray_angle > ANGLE0 && ray_angle < ANGLE180)
+//       {
+//                 // truncuate then add to get the coordinate of the FIRST grid (horizontal
+//                 // wall) that is in front of the player (this is in pixel unit)
+//                 // ROUND DOWN
+//         horizontalGrid = (fPlayerY/TILE_SIZE)*TILE_SIZE  + TILE_SIZE;
+
+//         // compute distance to the next horizontal wall
+//         distToNextHorizontalGrid = TILE_SIZE;
+
+//         float xtemp = fITanTable[ray_angle]*(horizontalGrid-fPlayerY);
+//                 // we can get the vertical distance to that wall by
+//                 // (horizontalGrid-GLplayerY)
+//                 // we can get the horizontal distance to that wall by
+//                 // 1/tan(arc)*verticalDistance
+//                 // find the x interception to that wall
+//         xIntersection = xtemp + fPlayerX;
+//       }
+//       // else, the ray is facing up
+//       else
+//       {
+//         horizontalGrid = (fPlayerY/TILE_SIZE)*TILE_SIZE;
+//         distToNextHorizontalGrid = -TILE_SIZE;
+
+//         float xtemp = fITanTable[ray_angle]*(horizontalGrid - fPlayerY);
+//         xIntersection = xtemp + fPlayerX;
+
+//         horizontalGrid--;
+//       }
+
+double	get_ray_length_to_horizontal(t_app *self, int ray_angle)
 {
 	double		aTan;
 	t_point		offset;
@@ -55,15 +85,15 @@ double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 	t_point		player;
 
 	player = self->player->p;
-	aTan = -1 / tan(ray_angle);
+	aTan = -self->tables.tan_i[ray_angle];
 
-	if (ray_angle == 0 || ray_angle == PI)
+	if (ray_angle == ANGLE0 || ray_angle == ANGLE180)
 		return (BIG_LENGTH);
 
-	if (ray_angle > PI) // looking up   TODO: should be less than
+	if (ray_angle > ANGLE0 && ray_angle < ANGLE180)
 	{
 		// First intersection
-		ray.y = nearest_tile(player.y) - 0.0001;
+		ray.y = nearest_tile(player.y) + SIZE;
 		ray.x = (player.y - ray.y) * aTan + player.x;
 		// TODO: set south wall texture
 		offset = point(SIZE * aTan, -SIZE);
@@ -71,7 +101,7 @@ double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 	else // if (ray_angle < PI) // looking down
 	{
 		// First intersection
-		ray.y = nearest_tile(player.y) + SIZE;
+		ray.y = nearest_tile(player.y) - 0.0001;
 		ray.x = (player.y - ray.y) * aTan + player.x;
 		// TODO: set north wall texture
 		offset = point(-SIZE * aTan, SIZE);
@@ -82,7 +112,7 @@ double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 }
 
 
-double	get_ray_length_to_vertical(t_app *self, double ray_angle)
+double	get_ray_length_to_vertical(t_app *self, int ray_angle)
 {
 	t_point		offset;
 	t_point		ray;
@@ -90,12 +120,12 @@ double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 	double		nTan;
 
 	player = self->player->p;
-	nTan = -tan(ray_angle);
+	nTan = -self->tables.tan[ray_angle];
 
-	if (ray_angle == PI / 2 || ray_angle == 3 * PI / 2)
+	if (ray_angle == ANGLE90 || ray_angle == ANGLE270)
 		return (BIG_LENGTH);
 
-	if (ray_angle > PI / 2 && ray_angle < 3 * PI / 2) // looking left
+	if (ray_angle > ANGLE90 && ray_angle < ANGLE270) // looking left
 	{
 		// First intersection
 		ray.x = nearest_tile(player.x) - 0.0001;
@@ -103,7 +133,7 @@ double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 		// TODO: set east wall texture
 		offset = point(-SIZE, SIZE * nTan);
 	}
-	else // if (ray_angle < PI / 2 || ray_angle > 3 * PI / 2) // looking right
+	else // if (ray_angle < ANGLE90 || ray_angle > ANGLE270) // looking right
 	{
 		// First intersection
 		ray.x = nearest_tile(player.x) + SIZE;
@@ -116,7 +146,7 @@ double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 		ray_angle));
 }
 
-double	get_ray_length(t_app *self, double ray_angle)
+double	get_ray_length(t_app *self, int ray_angle)
 {
 	double	length_v;
 	double	length_h;
@@ -152,18 +182,28 @@ void	raycast(t_app *self)
 {
 	double		length;
 	int			i;
-	double		ray_angle;
+	int			ray_angle;
 	t_player	*player;
 
 	player = self->player;
-	ray_angle = trim(player->angle + (DR * WIDTH2));
+	// field of view is 60 degree with the point of view (player's direction in
+	// the middle)
+	// 30  30
+	//    ^
+	//  \ | /
+	//   \|/
+	//    v
+	// we will trace the rays starting from the leftmost ray
+	ray_angle = trim(player->angle - ANGLE30);
 	i = 0;
 	while (i < WIDTH)
 	{
 		length = get_ray_length(self, ray_angle);
-		length = fish_bowl(length, player->angle - ray_angle);
+		length /= self->tables.fish[i];
+		// 1.0 / cos(radian)
+		// length = fish_bowl(length, player->angle - ray_angle);
 		draw_line(self, i, length);
-		ray_angle = trim(ray_angle - DR);
+		ray_angle = trim(ray_angle++);
 		i++;
 	}
 }
