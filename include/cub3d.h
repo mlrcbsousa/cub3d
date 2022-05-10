@@ -6,7 +6,7 @@
 /*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 23:33:39 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/11 00:23:21 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int			g_wall_color;
 /* parse */
 void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
+void		set_elements(char *line, t_parser *parser);
 void		parse_exit(t_parser *parser, char *error);
 void		parser_destroy(t_parser *parser);
 t_bool		could_be_game_color(char *line);
@@ -212,7 +213,8 @@ void		print_errno(char *input);
 void		print_error(char *input, char *msg);
 int			file_open(char *filename, t_app *self,
 				int (*file_read)(int, t_app*));
-t_bool		invalid(int argc, char *argv[]);
+void		usage(void);
+
 
 /* test */
 void		print_parser(t_parser *parser);
