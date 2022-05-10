@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:33:00 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:53:44 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_element	t_element;
 typedef struct s_settings	t_settings;
 typedef struct s_player		t_player;
 typedef struct s_ray		t_ray;
+typedef struct s_tables		t_tables;
 typedef enum e_wall			t_wall;
 
 /* Enums */
@@ -98,6 +99,19 @@ enum e_color {
 };
 
 /* Structs */
+struct	s_tables
+{
+	double	sin[ANGLE360 + 1];
+	double	sin_i[ANGLE360 + 1];
+	double	cos[ANGLE360 + 1];
+	double	cos_i[ANGLE360 + 1];
+	double	tan[ANGLE360 + 1];
+	double	tan_i[ANGLE360 + 1];
+	double	fish[ANGLE360 + 1];
+	double	step_x[ANGLE360 + 1];
+	double	step_y[ANGLE360 + 1];
+};
+
 struct	s_app
 {
 	t_image		*img;
@@ -106,6 +120,7 @@ struct	s_app
 	t_parser	*parser;
 	t_settings	*settings;
 	t_player	*player;
+	t_tables	tables;
 };
 
 // Following the single responsibility principle SRP
@@ -169,6 +184,9 @@ t_bool	is_empty_line(char *line);
 t_bool	is_valid_rgb(char **colors);
 int g_wall_color;
 // TODO: move to libft.h
+
+/* tables */
+void	tables_init(t_app *self);
 
 /* parse */
 void		parse(t_app *self, char *cubfile);
