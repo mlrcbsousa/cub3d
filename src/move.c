@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 00:13:00 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:15:36 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 00:23:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ static void	move_up(t_app *self)
 	t_player	*player;
 
 	player = self->player;
-
 	delta = point(cos(player->angle), sin(player->angle));
 	delta = point_multiply(MOVE, delta);
 	delta = point_add(player->p, delta);
-
 	if (is_element_bounded_and_not_wall(self->settings, delta))
 		player->p = delta;
 }
@@ -43,11 +41,9 @@ static void	move_down(t_app *self)
 	t_player	*player;
 
 	player = self->player;
-
 	delta = point(cos(player->angle), sin(player->angle));
 	delta = point_multiply(-MOVE, delta); // or point_subtract with +MOVE
 	delta = point_add(player->p, delta);
-
 	if (is_element_bounded_and_not_wall(self->settings, delta))
 		player->p = delta;
 }
@@ -60,11 +56,9 @@ static void	move_left(t_app *self)
 
 	player = self->player;
 	angle = trim(player->angle - PI / 2);
-
 	delta = point(cos(angle), sin(angle));
 	delta = point_multiply(MOVE, delta);
 	delta = point_add(player->p, delta);
-
 	if (is_element_bounded_and_not_wall(self->settings, delta))
 		player->p = delta;
 }
@@ -77,11 +71,9 @@ static void	move_right(t_app *self)
 
 	player = self->player;
 	angle = trim(player->angle + PI / 2);
-
 	delta = point(cos(angle), sin(angle));
 	delta = point_multiply(MOVE, delta);
 	delta = point_add(player->p, delta);
-
 	if (is_element_bounded_and_not_wall(self->settings, delta))
 		player->p = delta;
 }
