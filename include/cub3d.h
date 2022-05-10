@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:53:44 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 20:14:26 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ int		close_app(t_app *self);
 
 /* angle */
 double	trim(double a);
+double	arc_to_rad(double arc_angle);
 
 /* color */
 int		create_trgb(int t, int r, int g, int b);

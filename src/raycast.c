@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 15:12:52 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 20:13:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 double	point_distance(t_point p, t_point q, double a)
 {
 	return ((q.x - p.x) / cos(a));
-}
-
-double	trim(double a)
-{
-	if (a < 0)
-		a += 2 * PI;
-	if (a > 2 * PI)
-		a -= 2 * PI;
-	return (a);
 }
 
 int	nearest_tile(double	pixel)
