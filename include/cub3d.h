@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 01:10:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 11:32:15 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ void		elements_addback(t_element **elements, t_element *new);
 void		elements_convert_tab(t_element **elements);
 t_element	*elements_create(char *line);
 int			elements_size(t_element *elements);
+t_bool		is_element_bounded_and_wall(t_settings *s, t_point p);
+t_bool		is_element_bounded_and_not_wall(t_settings *s, t_point p);
 
 /* maplines */
 t_line	*mapline_create(char *line);

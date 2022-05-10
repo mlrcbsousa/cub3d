@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 01:13:15 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:40:07 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static double	get_initial_angle(char direction)
 {
 	printf("direction: %c\n", direction);
 	if (direction == MAP_NORTH)
-		return (3 * PI / 2);
-	else if (direction == MAP_SOUTH)
 		return (PI / 2);
+	else if (direction == MAP_SOUTH)
+		return (3 * PI / 2);
 	else if (direction == MAP_EAST)
 		return (0);
 	else if (direction == MAP_WEST)
@@ -74,10 +74,9 @@ void	player_init(t_app *self)
 	if (!player)
 		settings_exit(settings, strerror(errno));
 
+	// TODO: remove
+	print_map(settings);
+
 	self->player = player;
 	map_loop(self, set_player);
-
-	// TODO: remove
-	print_player(player);
-	print_map(settings);
 }

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 00:56:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:03:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ t_vector	vector(double angle, double size)
 {
 	return ((t_vector) { trim(angle), size });
 }
+
+// t_point	add_vec(t_point p, t_vector v)
+// {
+// 	t_point	res;
+
+// 	res.x = p.x + (fcos(v.angle) * v.mag);
+// 	res.y = p.y - (fsin(v.angle) * v.mag);
+// 	return (res);
+// }
 
 t_point	point_move(t_point p, t_vector v)
 {
