@@ -6,7 +6,7 @@
 /*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:30:13 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/11 00:32:52 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ t_bool		is_empty_line(char *line);
 t_bool		is_valid_rgb(char **colors);
 int			g_wall_color;
 // TODO: move to libft.h
+void		usage(void);
 
 /* parse */
 void		parse(t_app *self, char *cubfile);
