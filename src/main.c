@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:03:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:42:44 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,24 @@ static void	set_image(t_app *self)
 	self->img = img;
 }
 
+static void	set_background(t_app *self)
+{
+	t_image	*img;
+
+	img = (t_image *)malloc(sizeof(t_image));
+	if (!img)
+	{
+		ft_putendl_fd("Failed to allocate image memory!", STDERR_FILENO);
+		exit(1);
+	}
+	img->img = mlx_new_image(self->mlx, WIDTH, HEIGHT);
+	img->addr = mlx_get_data_addr(img->img,
+			&(img->bits_per_pixel),
+			&(img->line_length),
+			&(img->endian));
+	self->background = img;
+}
+
 static t_bool	invalid(int argc, char *argv[])
 {
 	if (argc != 2)
@@ -144,8 +162,10 @@ int	main(int argc, char *argv[])
 			HEIGHT,
 			"cub3d!");
 	set_image(&self);
+	set_background(&self);
 	mlx_hook(self.mlx_window, ON_KEYDOWN, 1, key_hook, &self);
 	mlx_hook(self.mlx_window, ON_DESTROY, 0, close_app, &self);
+	draw_background(&self);
 	draw(&self);
 	mlx_loop(self.mlx);
 

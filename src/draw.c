@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:20:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:40:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,35 @@ void	draw(t_app *self)
 	mlx_put_image_to_window(self->mlx, self->mlx_window, self->img->img, 0, 0);
 }
 
+void	draw_background(t_app *self)
+{
+	int	i;
+	int	j;
+	int	color;
+
+	i = 0;
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			if (j < HEIGHT2)
+				color = self->settings->color_ceiling;
+			else
+				color = self->settings->color_floor;
+			my_mlx_pixel_put(self->background, i, j, color);
+			j++;
+		}
+		i++;
+	}
+	mlx_put_image_to_window(self->mlx, self->mlx_window, self->background->img,
+		0, 0);
+}
+
 void	draw_line(t_app *self, int ray, double length)
 {
 	int	j;
-	int	color;
+	// int	color;
 	int line_height;
 	int line_offset;
 
@@ -43,23 +68,11 @@ void	draw_line(t_app *self, int ray, double length)
 		line_height = HEIGHT;
 	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
 
-	j = 0;
-	while (j < line_offset)
-	{
-		color = self->settings->color_ceiling;
-		my_mlx_pixel_put(self->img, ray, j, color);
-		j++;
-	}
+	j = line_offset;
 	while (j < line_offset + line_height)
 	{
 		// TODO: decide which wall to paint
 		my_mlx_pixel_put(self->img, ray, j, g_wall_color);
-		j++;
-	}
-	while (j < HEIGHT)
-	{
-		color = self->settings->color_floor;
-		my_mlx_pixel_put(self->img, ray, j, color);
 		j++;
 	}
 }
