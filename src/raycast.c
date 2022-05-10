@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:38:45 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 13:03:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 	t_point offset, double ray_angle)
 {
 	int			i;
-	int			map_x;
-	int			map_y;
 	t_point		player;
 	t_settings	*s;
 
@@ -55,10 +53,7 @@ double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 	i = 0;
 	while (i < max)
 	{
-		map_x = (int)(ray.x) >> BITS;
-		map_y = (int)(ray.y) >> BITS;
-		if (map_x >= 0 && map_y >= 0 && map_x < s->width && map_y < s->height
-			&& s->map[map_x][map_y] == MAP_WALL)
+		if (is_element_bounded_and_wall(s, ray))
 		{
 			// TODO: add ray x,y to ray struct with length
 			return (point_distance(player, ray, ray_angle));
