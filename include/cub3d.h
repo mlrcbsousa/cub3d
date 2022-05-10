@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 23:33:39 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/11 00:16:15 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define MOVE 5
+# define WALLS 4
 # define PI 3.14159265359
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
@@ -56,6 +57,13 @@ enum e_map {
 	MAP_SPACE = ' ',
 	MAP_TAB = '\t',
 	MAP_FLOOR = '0',
+};
+
+enum e_wall {
+	WALL_NORTH,
+	WALL_SOUTH,
+	WALL_EAST,
+	WALL_WEST,
 };
 
 /* Structs & Types */
