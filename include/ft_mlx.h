@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mlx.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:08:07 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 16:55:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:02:58 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MLX_H
 # define FT_MLX_H
+
+# include <mlx.h>
 
 enum {
 	ON_KEYDOWN = 2,
@@ -46,8 +48,6 @@ enum {
 #  define KEY_RIGHT	65363
 #  define KEY_ESC	65307
 # endif
-
-# include <mlx.h>
 
 struct s_image
 {

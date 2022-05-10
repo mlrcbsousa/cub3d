@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 17:34:01 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:31:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:21:51 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,34 @@ int	file_open(char *filename, t_app *self, int (*file_read)(int, t_app*))
 	return (status);
 }
 
-void    print_errno(char* input)
+void	print_errno(char *input)
 {
-    ft_putendl_fd("Error", STDERR_FILENO);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	if (input)
 	{
 		ft_putstr_fd(input, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-    perror("");
+	perror("");
 }
 
-void    print_error(char* input, char *msg)
+void	print_error(char *input, char *msg)
 {
-    ft_putendl_fd("Error", STDERR_FILENO);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	if (input)
 	{
 		ft_putstr_fd(input, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-    ft_putendl_fd(msg, STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+}
+
+void	usage(void)
+{
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	ft_putendl_fd("Usage: ./cub3d <map>", STDOUT_FILENO);
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	ft_putendl_fd("   - map		Path to *.cub file", STDOUT_FILENO);
+	ft_putendl_fd(NULL, STDOUT_FILENO);
+	exit(0);
 }

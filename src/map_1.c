@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 14:24:04 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 11:24:37 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:07:04 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_bool	check_all_sides(char **map, int x, int y)
 			if (i == x && j == y)
 			{
 				i++;
-				continue;
+				continue ;
 			}
 			if (!(i >= 0 && j >= 0) || !map[i] || !map[i][j]
 				|| map[i][j] == MAP_SPACE)

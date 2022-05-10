@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 23:20:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:50:56 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ void	draw_line(t_app *self, int ray, double length)
 {
 	int	j;
 	int	color;
-	int line_height;
-	int line_offset;
+	int	line_height;
+	int	line_offset;
 
 	line_height = (int)((SIZE * HEIGHT) / length); // line height
 	if (line_height > HEIGHT)
 		line_height = HEIGHT;
 	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
-
 	j = 0;
 	while (j < line_offset)
 	{
@@ -62,4 +61,22 @@ void	draw_line(t_app *self, int ray, double length)
 		my_mlx_pixel_put(self->img, ray, j, color);
 		j++;
 	}
+}
+
+void	set_image(t_app *self)
+{
+	t_image	*img;
+
+	img = (t_image *)malloc(sizeof(t_image));
+	if (!img)
+	{
+		ft_putendl_fd("Failed to allocate image memory!", STDERR_FILENO);
+		exit(1);
+	}
+	img->img = mlx_new_image(self->mlx, WIDTH, HEIGHT);
+	img->addr = mlx_get_data_addr(img->img,
+			&(img->bits_per_pixel),
+			&(img->line_length),
+			&(img->endian));
+	self->img = img;
 }

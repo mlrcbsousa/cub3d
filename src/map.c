@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:56:48 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:50:05 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,9 @@ void	map_create(t_line *maplines, t_settings *settings)
 
 	width = get_map_width(maplines);
 	height = maplines_size(maplines);
-
 	map = map_init(width, height);
 	if (!map)
 		return ;
-
 	map_from_maplines(map, maplines, width, height);
 
 	// TODO: remove

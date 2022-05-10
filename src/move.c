@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 00:13:00 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:42:33 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:35:16 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	move_up(t_app *self)
 	player = self->player;
 	p = player->p;
 	p = point_move(p, vector(player->angle, MOVE));
-
 	if (is_element_bounded_and_not_wall(self->settings, p))
 		player->p = p;
 }
@@ -33,7 +32,6 @@ static void	move_down(t_app *self)
 	player = self->player;
 	p = player->p;
 	p = point_move(p, vector(player->angle, -MOVE));
-
 	if (is_element_bounded_and_not_wall(self->settings, p))
 		player->p = p;
 }
@@ -52,7 +50,6 @@ static void	move_left(t_app *self)
 	player = self->player;
 	p = player->p;
 	p = point_move(p, vector(player->angle + PI / 2, MOVE));
-
 	if (is_element_bounded_and_not_wall(self->settings, p))
 		player->p = p;
 }
@@ -65,7 +62,6 @@ static void	move_right(t_app *self)
 	player = self->player;
 	p = player->p;
 	p = point_move(p, vector(player->angle - PI / 2, MOVE));
-
 	if (is_element_bounded_and_not_wall(self->settings, p))
 		player->p = p;
 }

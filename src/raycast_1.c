@@ -1,45 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   raycast_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 13:03:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:46:18 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// length to wall
-double	point_distance(t_point p, t_point q, double a)
-{
-	return ((q.x - p.x) / cos(a));
-}
-
-double	trim(double a)
-{
-	if (a < 0)
-		a += 2 * PI;
-	if (a > 2 * PI)
-		a -= 2 * PI;
-	return (a);
-}
-
-// struct	s_ray
-// {
-// 	double	length;
-// 	t_point	p;
-// 	t_wall	wall;
-// 	int		height;
-// 	double	angle;
-// };
-
-int	nearest_tile(double	pixel)
-{
-	return (((int)pixel >> BITS) << BITS);
-}
 
 double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 	t_point offset, double ray_angle)
@@ -61,44 +32,39 @@ double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 		ray = point_add(ray, offset);
 		i++;
 	}
-
 	return (BIG_LENGTH);
 }
 
 double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 {
-	double		aTan;
+	double		a_tan;
 	t_point		offset;
 	t_point		ray;
 	t_point		player;
 
 	player = self->player->p;
-	aTan = -1 / tan(ray_angle);
-
+	a_tan = -1 / tan(ray_angle);
 	if (ray_angle == 0 || ray_angle == PI)
 		return (BIG_LENGTH);
-
 	if (ray_angle > PI) // looking up   TODO: should be less than
 	{
 		// First intersection
 		ray.y = nearest_tile(player.y) - 0.0001;
-		ray.x = (player.y - ray.y) * aTan + player.x;
+		ray.x = (player.y - ray.y) * a_tan + player.x;
 		// TODO: set south wall texture
-		offset = point(SIZE * aTan, -SIZE);
+		offset = point(SIZE * a_tan, -SIZE);
 	}
 	else // if (ray_angle < PI) // looking down
 	{
 		// First intersection
 		ray.y = nearest_tile(player.y) + SIZE;
-		ray.x = (player.y - ray.y) * aTan + player.x;
+		ray.x = (player.y - ray.y) * a_tan + player.x;
 		// TODO: set north wall texture
-		offset = point(-SIZE * aTan, SIZE);
+		offset = point(-SIZE * a_tan, SIZE);
 	}
-
 	return (get_ray_length_to_wall(self, self->settings->height, ray, offset,
-		ray_angle));
+			ray_angle));
 }
-
 
 double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 {
@@ -159,11 +125,6 @@ double	get_ray_length(t_app *self, double ray_angle)
 	}
 	else
 		return (length_v);
-}
-
-double	fish_bowl(double length, double angle)
-{
-	return (length * cos(angle));
 }
 
 void	raycast(t_app *self)
