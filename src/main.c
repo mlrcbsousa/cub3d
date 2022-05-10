@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:09:14 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:03:54 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:52:17 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,19 +135,17 @@ int	main(int argc, char *argv[])
 	if (invalid(argc, argv))
 		usage();
 	parse(&self, argv[1]);
+
+	tables_init(&self);
 	settings_init(&self);
 	player_init(&self);
 
 	self.mlx = mlx_init();
-	self.mlx_window = mlx_new_window(self.mlx,
-			WIDTH,
-			HEIGHT,
-			"cub3d!");
+	self.mlx_window = mlx_new_window(self.mlx, WIDTH, HEIGHT, "cub3d!");
 	set_image(&self);
 	mlx_hook(self.mlx_window, ON_KEYDOWN, 1, key_hook, &self);
 	mlx_hook(self.mlx_window, ON_DESTROY, 0, close_app, &self);
 	draw(&self);
 	mlx_loop(self.mlx);
-
 	return (0);
 }

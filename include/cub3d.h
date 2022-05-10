@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:57:50 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:53:44 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,34 @@
 # define SIZE 64
 # define BITS 6 // x 64 same as << BITS, / 64 same as >> BITS
 # define MOVE 5
+# define WALLS 4
 # define PI 3.14159265359
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
+
+/* Angles in Width Pixel units */
+# define WALL_HEIGHT SIZE
+# define ANGLE60	WIDTH
+# define ANGLE30	600
+# define ANGLE15	300
+# define ANGLE90 	1800
+# define ANGLE180	3600
+# define ANGLE270	5400
+# define ANGLE360	7200
+# define ANGLE0		0
+# define ANGLE5		100
+# define ANGLE10	200
+
+/* Types */
+typedef struct s_app		t_app;
+typedef struct s_parser		t_parser;
+typedef struct s_line		t_line;
+typedef struct s_element	t_element;
+typedef struct s_settings	t_settings;
+typedef struct s_player		t_player;
+typedef struct s_ray		t_ray;
+typedef struct s_tables		t_tables;
+typedef enum e_wall			t_wall;
 
 /* Enums */
 enum e_map {
@@ -58,13 +83,34 @@ enum e_map {
 	MAP_FLOOR = '0',
 };
 
-/* Structs & Types */
-typedef struct s_app		t_app;
-typedef struct s_parser		t_parser;
-typedef struct s_line		t_line;
-typedef struct s_element	t_element;
-typedef struct s_settings	t_settings;
-typedef struct s_player		t_player;
+enum e_wall {
+	WALL_NORTH,
+	WALL_SOUTH,
+	WALL_EAST,
+	WALL_WEST,
+	WALL_NULL = -1,
+};
+
+// TODO: reduce settings and parser structs using enums and arrays
+enum e_color {
+	COLOR_FLOOR,
+	COLOR_CEILING,
+	COLOR_NULL = -1,
+};
+
+/* Structs */
+struct	s_tables
+{
+	double	sin[ANGLE360 + 1];
+	double	sin_i[ANGLE360 + 1];
+	double	cos[ANGLE360 + 1];
+	double	cos_i[ANGLE360 + 1];
+	double	tan[ANGLE360 + 1];
+	double	tan_i[ANGLE360 + 1];
+	double	fish[ANGLE360 + 1];
+	double	step_x[ANGLE360 + 1];
+	double	step_y[ANGLE360 + 1];
+};
 
 struct	s_app
 {
@@ -74,6 +120,7 @@ struct	s_app
 	t_parser	*parser;
 	t_settings	*settings;
 	t_player	*player;
+	t_tables	tables;
 };
 
 // Following the single responsibility principle SRP
@@ -107,10 +154,7 @@ struct s_line
 
 struct s_settings
 {
-	t_image	*wall_north;
-	t_image	*wall_south;
-	t_image	*wall_east;
-	t_image	*wall_west;
+	t_image	**walls;
 	int		color_floor;
 	int		color_ceiling;
 	int		width;
@@ -124,6 +168,15 @@ struct s_player
 	t_point		p;
 };
 
+struct	s_ray
+{
+	double	length;
+	t_point	p;
+	t_wall	wall;
+	// int		height;
+	double	angle;
+};
+
 /* Functions */
 
 // TODO: move to libft.h
@@ -132,17 +185,20 @@ t_bool	is_valid_rgb(char **colors);
 int g_wall_color;
 // TODO: move to libft.h
 
+/* tables */
+void	tables_init(t_app *self);
+
 /* parse */
 void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
-void    	parse_exit(t_parser *parser, char *error);
-void		parser_destroy(t_parser *parser);
+void    	parse_exit(t_app *self, char *error);
+void		parser_destroy(t_app *self);
 t_bool		could_be_game_color(char *line);
 t_bool		could_be_game_wall(char *line);
 t_bool		could_be_game_mapline(char *line);
-void		set_game_mapline(char* line, t_parser *parser);
-void		set_game_wall(char* line, t_parser *parser);
-void		set_game_color(char* line, t_parser *parser);
+void		set_game_mapline(char* line, t_app *self);
+void		set_game_wall(char* line, t_app *self);
+void		set_game_color(char* line, t_app *self);
 
 /* elements */
 t_element	*elements_new(char type);
@@ -164,6 +220,7 @@ int			maplines_size(t_line *mapline);
 void		settings_init(t_app *self);
 t_settings	*settings_create(void);
 void		settings_destroy(t_settings *settings);
+void		settings_exit(t_settings *settings, char *error);
 
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);

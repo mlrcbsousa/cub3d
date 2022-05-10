@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:58:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:00:58 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ t_settings	*settings_create(void)
 		return (NULL);
 	settings->color_floor = -1;
 	settings->color_ceiling = -1;
-	settings->wall_north = NULL;
-	settings->wall_south = NULL;
-	settings->wall_east = NULL;
-	settings->wall_west = NULL;
+	settings->walls = NULL;
 	settings->map = NULL;
 	settings->width = -1;
 	settings->height = -1;
@@ -33,16 +30,23 @@ t_settings	*settings_create(void)
 
 void	settings_destroy(t_settings *settings)
 {
+	t_image	**walls;
+
 	if (!settings)
 		return ;
-	if (settings->wall_north)
-		free(settings->wall_north); // TODO: proper mlx image destroy
-	if (settings->wall_south)
-		free(settings->wall_south);
-	if (settings->wall_east)
-		free(settings->wall_east);
-	if (settings->wall_west)
-		free(settings->wall_west);
+	walls = settings->walls;
+	if (settings->walls)
+	{
+		if (walls[WALL_NORTH])
+			free(walls[WALL_NORTH]); // TODO: proper mlx image destroy
+		if (walls[WALL_SOUTH])
+			free(walls[WALL_SOUTH]);
+		if (walls[WALL_EAST])
+			free(walls[WALL_EAST]);
+		if (walls[WALL_WEST])
+			free(walls[WALL_WEST]);
+		free(walls);
+	}
 	if (settings->map)
 		map_destroy(settings);
 	free(settings);
@@ -68,22 +72,31 @@ void	settings_init(t_app *self)
 	parser = self->parser;
 	settings = settings_create();
 	if (!settings)
-		parse_exit(parser, strerror(errno));
+		parse_exit(self, strerror(errno));
 
 	self->settings = settings;
 	map_create(parser->maplines, settings);
 	if (!settings->map)
 	{
 		settings_destroy(settings);
-		parse_exit(parser, strerror(errno));
+		parse_exit(self, strerror(errno));
 	}
 
 	if (!is_map_closed(settings))
 	{
 		settings_destroy(settings);
-		parse_exit(parser, "Map not closed");
+		parse_exit(self, "Map not closed");
 	}
 
 	settings_from_parser(settings, parser);
-	parser_destroy(parser); // the one
+	parser_destroy(self); // the one
+}
+
+void	settings_exit(t_settings *settings, char *error)
+{
+	if (error)
+		print_error(NULL, error);
+	if (settings)
+		settings_destroy(settings);
+	exit(EXIT_FAILURE);
 }

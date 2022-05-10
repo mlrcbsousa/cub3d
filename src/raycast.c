@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 13:03:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 15:12:52 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ double	trim(double a)
 		a -= 2 * PI;
 	return (a);
 }
-
-// struct	s_ray
-// {
-// 	double	length;
-// 	t_point	p;
-// 	t_wall	wall;
-// 	int		height;
-// 	double	angle;
-// };
 
 int	nearest_tile(double	pixel)
 {
