@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 13:17:36 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 18:34:57 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,10 @@ void		set_image(t_app *self);
 void		raycast(t_app *self);
 int			nearest_tile(double pixel);
 double		fish_bowl(double length, double angle);
+double		get_ray_length_to_wall(t_app *self, int max, t_ray ray,
+	t_point offset);
+
+/* wall */
 
 /* angle */
 double		trim(double a);
