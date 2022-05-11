@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 11:52:13 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 12:00:14 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	draw_line(t_app *self, int i, t_ray ray)
 	}
 	while (j < line_offset + line_height)
 	{
+		// create_trgb(0, 100, 100, 100);
+		// create_trgb(0, 120, 100, 100);
+
 		// TODO: decide which wall to paint
 		my_mlx_pixel_put(self->img, i, j, g_wall_color);
 		j++;

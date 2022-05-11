@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 11:55:51 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 12:00:35 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
+static double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 	t_point offset, double ray_angle)
 {
 	int			i;
@@ -35,7 +35,7 @@ double	get_ray_length_to_wall(t_app *self, int max, t_point ray,
 	return (BIG_LENGTH);
 }
 
-double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
+static double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 {
 	double		a_tan;
 	t_point		offset;
@@ -66,7 +66,7 @@ double	get_ray_length_to_horizontal(t_app *self, double ray_angle)
 			ray_angle));
 }
 
-double	get_ray_length_to_vertical(t_app *self, double ray_angle)
+static double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 {
 	t_point		offset;
 	t_point		ray;
@@ -100,13 +100,13 @@ double	get_ray_length_to_vertical(t_app *self, double ray_angle)
 		ray_angle));
 }
 
-double	get_ray_length(t_app *self, double ray_angle)
+static double	get_ray_length(t_app *self, t_ray ray)
 {
 	double	length_v;
 	double	length_h;
 
-	length_h = get_ray_length_to_horizontal(self, ray_angle);
-	length_v = get_ray_length_to_vertical(self, ray_angle);
+	length_h = get_ray_length_to_horizontal(self, ray);
+	length_v = get_ray_length_to_vertical(self, ray);
 
 	if (length_v < length_h)
 	{
@@ -129,15 +129,9 @@ double	get_ray_length(t_app *self, double ray_angle)
 
 void	raycast(t_app *self)
 {
-	// double		length;
 	int			i;
-	// double		ray_angle;
 	t_player	*player;
 	t_ray		ray;
-
-// double		angle;
-// 	double		length;
-// 	t_wall		wall;
 
 	player = self->player;
 	ray.wall = WALL_NULL;
@@ -145,7 +139,7 @@ void	raycast(t_app *self)
 	i = 0;
 	while (i < WIDTH)
 	{
-		ray.length = get_ray_length(self, ray.angle);
+		ray.length = get_ray_length(self, ray);
 		ray.length = fish_bowl(ray.length, player->angle - ray.angle);
 		draw_line(self, i, ray);
 		ray.angle = trim(ray.angle + DR);
