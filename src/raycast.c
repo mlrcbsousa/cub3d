@@ -6,13 +6,11 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 18:36:09 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 18:38:21 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
 
 static double	get_ray_length_to_horizontal(t_app *self, t_ray ray)
 {
