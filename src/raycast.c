@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 13:19:59 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 17:44:29 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static double	get_ray_length_to_wall(t_app *self, int max, t_ray ray,
 	return (BIG_LENGTH);
 }
 
-static double	get_ray_length_to_horizontal(t_app *self, t_ray *ray)
+static double	get_ray_length_to_horizontal(t_app *self, t_ray ray)
 {
 	double		a_tan;
 	t_point		offset;
@@ -43,29 +43,25 @@ static double	get_ray_length_to_horizontal(t_app *self, t_ray *ray)
 	t_point		player;
 
 	player = self->player->p;
-	a_tan = -1 / tan(ray->angle);
-	if (ray->angle == 0 || ray->angle == PI)
+	a_tan = -1 / tan(ray.angle);
+	if (ray.angle == 0 || ray.angle == PI)
 		return (BIG_LENGTH);
-	if (ray->angle > PI) // looking up   TODO: should be less than
+	if (ray.angle > PI) // looking up   TODO: should be less than
 	{
-		// First intersection
-		ray->p.y = nearest_tile(player.y) - 0.0001;
-		ray->p.x = (player.y - ray->p.y) * a_tan + player.x;
-		ray->wall = WALL_SOUTH;
+		ray.p.y = nearest_tile(player.y) - 0.0001;
+		ray.p.x = (player.y - ray.p.y) * a_tan + player.x;
 		offset = point(SIZE * a_tan, -SIZE);
 	}
-	else // if (ray->angle < PI) // looking down
+	else
 	{
-		// First intersection
-		ray->p.y = nearest_tile(player.y) + SIZE;
-		ray->p.x = (player.y - ray->p.y) * a_tan + player.x;
-		ray->wall = WALL_NORTH;
+		ray.p.y = nearest_tile(player.y) + SIZE;
+		ray.p.x = (player.y - ray.p.y) * a_tan + player.x;
 		offset = point(-SIZE * a_tan, SIZE);
 	}
-	return (get_ray_length_to_wall(self, self->settings->height, *ray, offset));
+	return (get_ray_length_to_wall(self, self->settings->height, ray, offset));
 }
 
-static double	get_ray_length_to_vertical(t_app *self, t_ray *ray)
+static double	get_ray_length_to_vertical(t_app *self, t_ray ray)
 {
 	t_point		offset;
 	// t_point		ray;
@@ -73,30 +69,28 @@ static double	get_ray_length_to_vertical(t_app *self, t_ray *ray)
 	double		n_tan;
 
 	player = self->player->p;
-	n_tan = -tan(ray->angle);
+	n_tan = -tan(ray.angle);
 
-	if (ray->angle == PI / 2 || ray->angle == 3 * PI / 2)
+	if (ray.angle == PI / 2 || ray.angle == 3 * PI / 2)
 		return (BIG_LENGTH);
 
-	if (ray->angle > PI / 2 && ray->angle < 3 * PI / 2)
+	if (ray.angle > PI / 2 && ray.angle < 3 * PI / 2)
 	{
-		ray->p.x = nearest_tile(player.x) - 0.0001;
-		ray->p.y = (player.x - ray->p.x) * n_tan + player.y;
-		ray->wall = WALL_EAST;
+		ray.p.x = nearest_tile(player.x) - 0.0001;
+		ray.p.y = (player.x - ray.p.x) * n_tan + player.y;
 		offset = point(-SIZE, SIZE * n_tan);
 	}
 	else
 	{
-		ray->p.x = nearest_tile(player.x) + SIZE;
-		ray->p.y = (player.x - ray->p.x) * n_tan + player.y;
-		ray->wall = WALL_WEST;
+		ray.p.x = nearest_tile(player.x) + SIZE;
+		ray.p.y = (player.x - ray.p.x) * n_tan + player.y;
 		offset = point(SIZE, -SIZE * n_tan);
 	}
 
-	return (get_ray_length_to_wall(self, self->settings->width, *ray, offset));
+	return (get_ray_length_to_wall(self, self->settings->width, ray, offset));
 }
 
-static double	get_ray_length(t_app *self, t_ray *ray)
+static double	get_ray_length(t_app *self, t_ray ray)
 {
 	double	length_v;
 	double	length_h;
@@ -106,10 +100,26 @@ static double	get_ray_length(t_app *self, t_ray *ray)
 
 	if (length_v < length_h)
 		return (length_v);
-	else if (length_v > length_h)
-		return (length_h);
 	else
-		return (length_v);
+		return (length_h);
+}
+
+t_wall	get_ray_wall(t_app *self, t_ray ray)
+{
+	if (ray.length == get_ray_length_to_vertical(self, ray))
+	{
+		if (ray.angle > PI / 2 && ray.angle < 3 * PI / 2)
+			return (WALL_EAST);
+		else
+			return (WALL_WEST);
+	}
+	else
+	{
+		if (ray.angle > PI)
+			return (WALL_SOUTH);
+		else
+			return (WALL_NORTH);
+	}
 }
 
 void	raycast(t_app *self)
@@ -124,7 +134,8 @@ void	raycast(t_app *self)
 	i = 0;
 	while (i < WIDTH)
 	{
-		ray.length = get_ray_length(self, &ray);
+		ray.length = get_ray_length(self, ray);
+		ray.wall = get_ray_wall(self, ray);
 		ray.length = fish_bowl(ray.length, player->angle - ray.angle);
 		draw_line(self, i, ray);
 		ray.angle = trim(ray.angle + DR);
