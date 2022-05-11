@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:32:52 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:07:47 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,13 +193,16 @@ t_bool		set_player(t_app *self, int i, int j);
 
 /* mlx */
 void		draw(t_app *self);
-void		raycast(t_app *self);
 void		draw_line(t_app *self, int ray, double length);
 int			key_hook(int key, t_app *self);
 void		move(int key, t_app *self);
 int			close_app(t_app *self);
 void		set_image(t_app *self);
 
+/* raycast */
+void		raycast(t_app *self);
+int			nearest_tile(double pixel);
+double		fish_bowl(double length, double angle);
 
 /* angle */
 double		trim(double a);
@@ -213,6 +216,7 @@ t_point		point_add(t_point a, t_point b);
 t_point		point_subtract(t_point a, t_point b);
 t_point		point_multiply(int multiplier, t_point p);
 t_point		point_move(t_point p, t_vector v);
+double		point_distance(t_point p, t_point q, double a);
 
 /* color */
 int			create_trgb(int t, int r, int g, int b);
