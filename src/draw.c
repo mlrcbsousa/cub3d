@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 17:34:06 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 17:47:56 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,14 @@ void	draw_line(t_app *self, int i, t_ray ray)
 	}
 	while (j < line_offset + line_height)
 	{
-		if (ray.wall == WALL_NORTH || ray.wall == WALL_SOUTH)
-			color = create_trgb(0, 100, 100, 100);
-		else
-			color = create_trgb(0, 120, 100, 100);
+		if (ray.wall == WALL_NORTH )
+			color = create_trgb(0, 255, 0, 0); // red
+		else if (ray.wall == WALL_SOUTH)
+			color = create_trgb(0, 0, 255, 0); // green
+		else if (ray.wall == WALL_EAST)
+			color = create_trgb(0, 0, 0, 255); // blue
+		else if (ray.wall == WALL_WEST)
+			color = create_trgb(0, 255, 255, 0); // yellow
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}

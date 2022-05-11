@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 17:44:29 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 18:05:05 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static double	get_ray_length_to_horizontal(t_app *self, t_ray ray)
 static double	get_ray_length_to_vertical(t_app *self, t_ray ray)
 {
 	t_point		offset;
-	// t_point		ray;
 	t_point		player;
 	double		n_tan;
 
