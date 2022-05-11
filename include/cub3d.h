@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 18:34:57 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 22:39:03 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,8 @@ struct s_line
 
 struct s_settings
 {
-	t_image	*wall_north;
-	t_image	*wall_south;
-	t_image	*wall_east;
-	t_image	*wall_west;
+	char	*paths[WALLS];
+	t_image	*walls[WALLS];
 	int		color_floor;
 	int		color_ceiling;
 	int		width;
@@ -188,7 +186,7 @@ int			maplines_size(t_line *mapline);
 /* settings */
 void		settings_init(t_app *self);
 t_settings	*settings_create(void);
-void		settings_destroy(t_settings *settings);
+void		settings_destroy(t_app *self);
 
 /* map */
 void		map_create(t_line *maplines, t_settings *settings);
@@ -208,6 +206,7 @@ int			key_hook(int key, t_app *self);
 void		move(int key, t_app *self);
 int			close_app(t_app *self);
 void		set_image(t_app *self);
+void		walls_create(t_app *self);
 
 /* raycast */
 void		raycast(t_app *self);

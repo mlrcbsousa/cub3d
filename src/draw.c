@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 17:47:56 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 22:53:57 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ void	draw(t_app *self)
 	mlx_put_image_to_window(self->mlx, self->mlx_window, self->img->img, 0, 0);
 }
 
+unsigned int	get_texture_color(t_image *wall, int x, int y)
+{
+	return (*(unsigned int *)((wall->addr
+			+ (x * wall->line_length) + (y * wall->bits_per_pixel / 8))));
+}
+
+int	get_wall_color(t_app *self, t_wall wall, int i, int j)
+{
+	t_settings	*settings;
+
+	settings = self->settings;
+	// settings->walls[wall];
+
+	// decide i j from texture
+	return (get_texture_color(settings->walls[wall], i, j));
+}
+
 void	draw_line(t_app *self, int i, t_ray ray)
 {
 	int	j;
@@ -51,14 +68,7 @@ void	draw_line(t_app *self, int i, t_ray ray)
 	}
 	while (j < line_offset + line_height)
 	{
-		if (ray.wall == WALL_NORTH )
-			color = create_trgb(0, 255, 0, 0); // red
-		else if (ray.wall == WALL_SOUTH)
-			color = create_trgb(0, 0, 255, 0); // green
-		else if (ray.wall == WALL_EAST)
-			color = create_trgb(0, 0, 0, 255); // blue
-		else if (ray.wall == WALL_WEST)
-			color = create_trgb(0, 255, 255, 0); // yellow
+		color = get_wall_color(self, ray.wall, i, j);
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}

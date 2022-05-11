@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 18:03:23 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 22:41:54 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,15 @@ t_player	*player_create(void)
 	return (player);
 }
 
-void	settings_exit(t_settings *settings, char *error)
+void	settings_exit(t_app *self, char *error)
 {
+	t_settings *settings;
+
+	settings = self->settings;
 	if (error)
 		print_error(NULL, error);
 	if (settings)
-		settings_destroy(settings);
+		settings_destroy(self);
 	exit(EXIT_FAILURE);
 }
 
@@ -72,7 +75,7 @@ void	player_init(t_app *self)
 	settings = self->settings;
 	player = player_create();
 	if (!player)
-		settings_exit(settings, strerror(errno));
+		settings_exit(self, strerror(errno));
 
 	// TODO: remove
 	print_map(settings);
