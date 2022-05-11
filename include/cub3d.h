@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 23:09:38 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 11:07:47 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ struct s_parser
 	char	*wall_west;
 	int		color_floor;
 	int		color_ceiling;
-	t_line 	*maplines;
-	char 	**parts;
-	char 	*line;
-	t_bool 	has_player;
+	t_line	*maplines;
+	char	**parts;
+	char	*line;
+	t_bool	has_player;
 };
 
 struct s_element
@@ -109,7 +109,7 @@ struct s_element
 struct s_line
 {
 	t_element	*head;
-	int 		n_elements;
+	int			n_elements;
 	t_line		*next;
 };
 
@@ -123,7 +123,7 @@ struct s_settings
 	int		color_ceiling;
 	int		width;
 	int		height;
-	char 	**map;
+	char	**map;
 };
 
 struct s_player
@@ -135,22 +135,24 @@ struct s_player
 /* Functions */
 
 // TODO: move to libft.h
-t_bool	is_empty_line(char *line);
-t_bool	is_valid_rgb(char **colors);
-int g_wall_color;
+t_bool		is_empty_line(char *line);
+t_bool		is_valid_rgb(char **colors);
+int			g_wall_color;
 // TODO: move to libft.h
+void		usage(void);
 
 /* parse */
 void		parse(t_app *self, char *cubfile);
 t_parser	*parser_create(void);
-void    	parse_exit(t_parser *parser, char *error);
+void		set_elements(char *line, t_parser *parser);
+void		parse_exit(t_parser *parser, char *error);
 void		parser_destroy(t_parser *parser);
 t_bool		could_be_game_color(char *line);
 t_bool		could_be_game_wall(char *line);
 t_bool		could_be_game_mapline(char *line);
-void		set_game_mapline(char* line, t_parser *parser);
-void		set_game_wall(char* line, t_parser *parser);
-void		set_game_color(char* line, t_parser *parser);
+void		set_game_mapline(char *line, t_parser *parser);
+void		set_game_wall(char *line, t_parser *parser);
+void		set_game_color(char *line, t_parser *parser);
 
 /* elements */
 t_element	*elements_new(char type);
@@ -160,6 +162,11 @@ t_element	*elements_create(char *line);
 int			elements_size(t_element *elements);
 t_bool		is_element_bounded_and_wall(t_settings *s, t_point p);
 t_bool		is_element_bounded_and_not_wall(t_settings *s, t_point p);
+
+/* validation */
+t_bool		is_empty_line(char *line);
+t_bool		is_valid_rgb(char **colors);
+t_bool		invalid(int argc, char *argv[]);
 
 /* maplines */
 t_line		*mapline_create(char *line);
@@ -185,28 +192,47 @@ t_player	*player_create(void);
 t_bool		set_player(t_app *self, int i, int j);
 
 /* mlx */
-void	draw(t_app *self);
-void	raycast(t_app *self);
-void	draw_line(t_app *self, int ray, double length);
-int		key_hook(int key, t_app *self);
-void	move(int key, t_app *self);
-int		close_app(t_app *self);
+void		draw(t_app *self);
+void		draw_line(t_app *self, int ray, double length);
+int			key_hook(int key, t_app *self);
+void		move(int key, t_app *self);
+int			close_app(t_app *self);
+void		set_image(t_app *self);
+
+/* raycast */
+void		raycast(t_app *self);
+int			nearest_tile(double pixel);
+double		fish_bowl(double length, double angle);
 
 /* angle */
-double	trim(double a);
+double		trim(double a);
+
+/* vector */
+t_vector	vector(double angle, double size);
+
+/* point */
+t_point		point(double x, double y);
+t_point		point_add(t_point a, t_point b);
+t_point		point_subtract(t_point a, t_point b);
+t_point		point_multiply(int multiplier, t_point p);
+t_point		point_move(t_point p, t_vector v);
+double		point_distance(t_point p, t_point q, double a);
 
 /* color */
-int		create_trgb(int t, int r, int g, int b);
+int			create_trgb(int t, int r, int g, int b);
 
 /* helpers */
-void    print_errno(char* input);
-void    print_error(char* input, char *msg);
-int		file_open(char *filename, t_app *self, int (*file_read)(int, t_app*));
+void		print_errno(char *input);
+void		print_error(char *input, char *msg);
+int			file_open(char *filename, t_app *self,
+				int (*file_read)(int, t_app*));
+void		usage(void);
+
 
 /* test */
-void	print_parser(t_parser *parser);
-void	print_maplines(t_line *maplines);
-void	print_map(t_settings *settings);
-void	print_player(t_player *player);
+void		print_parser(t_parser *parser);
+void		print_maplines(t_line *maplines);
+void		print_map(t_settings *settings);
+void		print_player(t_player *player);
 
 #endif

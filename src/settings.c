@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 12:58:19 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/10 23:07:50 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	settings_from_parser(t_settings *settings, t_parser *parser)
 {
 	settings->color_floor = parser->color_floor;
 	settings->color_ceiling = parser->color_ceiling;
-
 	// TODO: leave for later, use basic colors for now
 	// settings->wall_north = image_create(parser->wall_north);
 	// settings->wall_south = image_create(parser->wall_south);
@@ -69,7 +68,6 @@ void	settings_init(t_app *self)
 	settings = settings_create();
 	if (!settings)
 		parse_exit(parser, strerror(errno));
-
 	self->settings = settings;
 	map_create(parser->maplines, settings);
 	if (!settings->map)
@@ -77,13 +75,11 @@ void	settings_init(t_app *self)
 		settings_destroy(settings);
 		parse_exit(parser, strerror(errno));
 	}
-
 	if (!is_map_closed(settings))
 	{
 		settings_destroy(settings);
 		parse_exit(parser, "Map not closed");
 	}
-
 	settings_from_parser(settings, parser);
 	parser_destroy(parser); // the one
 }

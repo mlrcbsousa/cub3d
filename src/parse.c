@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:10:41 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/09 00:38:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 00:07:31 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ void	parse_exit(t_parser *parser, char *error)
 	exit(EXIT_FAILURE);
 }
 
+void	set_elements(char *line, t_parser *parser)
+{
+	parser->line = line;
+	if (could_be_game_color(line))
+		set_game_color(line, parser);
+	else if (could_be_game_wall(line))
+		set_game_wall(line, parser);
+	else if (has_colors_and_walls(parser)
+		&& could_be_game_mapline(line))
+		set_game_mapline(line, parser);
+	else
+		parse_exit(parser, "invalid game element");
+	free(parser->line);
+	parser->line = NULL;
+}
+
 static int	parse_elements(int fd, t_app *self)
 {
 	int			status;
@@ -45,18 +61,19 @@ static int	parse_elements(int fd, t_app *self)
 		status = get_next_line(fd, &line);
 		if (line && !is_empty_line(line))
 		{
-			parser->line = line;
-			if (could_be_game_color(line))
-				set_game_color(line, parser);
-			else if (could_be_game_wall(line))
-				set_game_wall(line, parser);
-			else if (has_colors_and_walls(parser)
-				&& could_be_game_mapline(line))
-				set_game_mapline(line, parser);
-			else
-				parse_exit(parser, "invalid game element");
-			free(parser->line);
-			parser->line = NULL;
+			set_elements(line, parser);
+			// parser->line = line;
+			// if (could_be_game_color(line))
+			// 	set_game_color(line, parser);
+			// else if (could_be_game_wall(line))
+			// 	set_game_wall(line, parser);
+			// else if (has_colors_and_walls(parser)
+			// 	&& could_be_game_mapline(line))
+			// 	set_game_mapline(line, parser);
+			// else
+			// 	parse_exit(parser, "invalid game element");
+			// free(parser->line);
+			// parser->line = NULL;
 		}
 	}
 	if (status < 0)
