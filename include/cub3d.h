@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 22:39:03 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 23:47:39 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ struct s_ray
 {
 	double		angle;
 	double		length;
+	int			height;
 	t_point		p;
 	t_wall		wall;
 };

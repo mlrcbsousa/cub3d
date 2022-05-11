@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 22:53:57 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 00:35:42 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,59 @@ void	draw(t_app *self)
 unsigned int	get_texture_color(t_image *wall, int x, int y)
 {
 	return (*(unsigned int *)((wall->addr
-			+ (x * wall->line_length) + (y * wall->bits_per_pixel / 8))));
+			+ (y * wall->line_length) + (x * wall->bits_per_pixel / 8))));
 }
 
-int	get_wall_color(t_app *self, t_wall wall, int i, int j)
+int	get_wall_color(t_app *self, t_ray ray, int j, int wall_offset)
 {
 	t_settings	*settings;
+	t_point		delta;
+	int			x;
+	double			y;
 
 	settings = self->settings;
-	// settings->walls[wall];
+	delta = point(cos(ray.angle), sin(ray.angle));
+	delta = point_multiply(ray.length, delta);
+	delta = point_add(self->player->p, delta);
 
-	// decide i j from texture
-	return (get_texture_color(settings->walls[wall], i, j));
+	if (ray.wall == WALL_EAST || ray.wall == WALL_WEST)
+		x = (int)(floor(delta.y + 1)) % SIZE;
+	else
+		x = (int)(floor(delta.x + 1)) % SIZE;
+
+	// printf("%d, %d, %d\n", j, wall_offset, ray.height);
+	y = (((j - wall_offset) * SIZE) / ray.height);
+	// y = y * SIZE;
+
+	// printf("(%d, %f)\n", x, y);
+	// printf("(%d, %d)\n", x, y);
+	return (get_texture_color(settings->walls[ray.wall], x, y));
 }
 
 void	draw_line(t_app *self, int i, t_ray ray)
 {
 	int	j;
 	int	color;
-	int	line_height;
-	int	line_offset;
+	int	wall_offset;
+	double	length;
+	// int	height;
 
-	line_height = (int)((SIZE * HEIGHT) / ray.length); // line height
-	if (line_height > HEIGHT)
-		line_height = HEIGHT;
-	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
+	// length needed before fishbowl to calculate texture map
+	length = fish_bowl(ray.length, self->player->angle - ray.angle);
+	ray.height = (int)((SIZE * HEIGHT) / length); // line height
+	if (ray.height > HEIGHT)
+		ray.height = HEIGHT;
+	wall_offset = (int)(HEIGHT2 - (ray.height / 2)); // line offset
 	j = 0;
-	while (j < line_offset)
+	while (j < wall_offset)
 	{
 		color = self->settings->color_ceiling;
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
-	while (j < line_offset + line_height)
+	while (j < wall_offset + ray.height)
 	{
-		color = get_wall_color(self, ray.wall, i, j);
+		color = get_wall_color(self, ray, j, wall_offset);
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
