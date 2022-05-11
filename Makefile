@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/11 22:12:44 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/12 00:55:28 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ test:			${NAME}
 					./test main.sh
 
 check:
-					-cat ${NAME}.c src/*/* | grep TODO
+					-cat ./src/* | grep TODO
 
 clean:
 					${MAKE} clean -C libft
