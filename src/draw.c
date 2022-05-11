@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:25:02 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 17:47:56 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	draw(t_app *self)
 	mlx_put_image_to_window(self->mlx, self->mlx_window, self->img->img, 0, 0);
 }
 
-void	draw_line(t_app *self, int ray, double length)
+void	draw_line(t_app *self, int i, t_ray ray)
 {
 	int	j;
 	int	color;
 	int	line_height;
 	int	line_offset;
 
-	line_height = (int)((SIZE * HEIGHT) / length); // line height
+	line_height = (int)((SIZE * HEIGHT) / ray.length); // line height
 	if (line_height > HEIGHT)
 		line_height = HEIGHT;
 	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
@@ -46,19 +46,26 @@ void	draw_line(t_app *self, int ray, double length)
 	while (j < line_offset)
 	{
 		color = self->settings->color_ceiling;
-		my_mlx_pixel_put(self->img, ray, j, color);
+		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
 	while (j < line_offset + line_height)
 	{
-		// TODO: decide which wall to paint
-		my_mlx_pixel_put(self->img, ray, j, g_wall_color);
+		if (ray.wall == WALL_NORTH )
+			color = create_trgb(0, 255, 0, 0); // red
+		else if (ray.wall == WALL_SOUTH)
+			color = create_trgb(0, 0, 255, 0); // green
+		else if (ray.wall == WALL_EAST)
+			color = create_trgb(0, 0, 0, 255); // blue
+		else if (ray.wall == WALL_WEST)
+			color = create_trgb(0, 255, 255, 0); // yellow
+		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
 	while (j < HEIGHT)
 	{
 		color = self->settings->color_floor;
-		my_mlx_pixel_put(self->img, ray, j, color);
+		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
 }
