@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_1.c                                        :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:16:40 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 11:55:51 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,20 +129,26 @@ double	get_ray_length(t_app *self, double ray_angle)
 
 void	raycast(t_app *self)
 {
-	double		length;
+	// double		length;
 	int			i;
-	double		ray_angle;
+	// double		ray_angle;
 	t_player	*player;
+	t_ray		ray;
+
+// double		angle;
+// 	double		length;
+// 	t_wall		wall;
 
 	player = self->player;
-	ray_angle = trim(player->angle - (DR * WIDTH2));
+	ray.wall = WALL_NULL;
+	ray.angle = trim(player->angle - (DR * WIDTH2));
 	i = 0;
 	while (i < WIDTH)
 	{
-		length = get_ray_length(self, ray_angle);
-		length = fish_bowl(length, player->angle - ray_angle);
-		draw_line(self, i, length);
-		ray_angle = trim(ray_angle + DR);
+		ray.length = get_ray_length(self, ray.angle);
+		ray.length = fish_bowl(ray.length, player->angle - ray.angle);
+		draw_line(self, i, ray);
+		ray.angle = trim(ray.angle + DR);
 		i++;
 	}
 }

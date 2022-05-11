@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 11:07:47 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 11:54:40 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@
 # define DR 0.00087266666
 # define BIG_LENGTH 1000000
 
+/* Types */
+typedef struct s_app		t_app;
+typedef struct s_parser		t_parser;
+typedef struct s_line		t_line;
+typedef struct s_element	t_element;
+typedef struct s_settings	t_settings;
+typedef struct s_player		t_player;
+typedef struct s_ray		t_ray;
+typedef enum e_wall			t_wall;
+
 /* Enums */
 enum e_map {
 	MAP_NORTH = 'N',
@@ -60,20 +70,14 @@ enum e_map {
 };
 
 enum e_wall {
+	WALL_NULL = -1,
 	WALL_NORTH,
 	WALL_SOUTH,
 	WALL_EAST,
 	WALL_WEST,
 };
 
-/* Structs & Types */
-typedef struct s_app		t_app;
-typedef struct s_parser		t_parser;
-typedef struct s_line		t_line;
-typedef struct s_element	t_element;
-typedef struct s_settings	t_settings;
-typedef struct s_player		t_player;
-
+/* Structs */
 struct	s_app
 {
 	t_image		*img;
@@ -130,6 +134,13 @@ struct s_player
 {
 	double		angle;
 	t_point		p;
+};
+
+struct s_ray
+{
+	double		angle;
+	double		length;
+	t_wall		wall;
 };
 
 /* Functions */
@@ -193,7 +204,7 @@ t_bool		set_player(t_app *self, int i, int j);
 
 /* mlx */
 void		draw(t_app *self);
-void		draw_line(t_app *self, int ray, double length);
+void		draw_line(t_app *self, int i, t_ray ray);
 int			key_hook(int key, t_app *self);
 void		move(int key, t_app *self);
 int			close_app(t_app *self);
