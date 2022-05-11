@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 11:54:40 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/11 13:17:36 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,16 +140,15 @@ struct s_ray
 {
 	double		angle;
 	double		length;
+	t_point		p;
 	t_wall		wall;
 };
 
 /* Functions */
 
-// TODO: move to libft.h
+/* validation */
 t_bool		is_empty_line(char *line);
 t_bool		is_valid_rgb(char **colors);
-int			g_wall_color;
-// TODO: move to libft.h
 void		usage(void);
 
 /* parse */
