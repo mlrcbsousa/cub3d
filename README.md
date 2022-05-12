@@ -4,6 +4,9 @@
 ## Resources
 
 - [Ray Casting Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-2/)
+- [Make Your Own Raycaster Part 1](https://www.youtube.com/watch?v=gYRrGTC7GtA)
+- https://github.com/terry-yes/mlx_example
+- https://harm-smits.github.io/42docs/libs/minilibx.html
 
 ## Development Workflow
 
