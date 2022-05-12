@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
+/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:53:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 10:58:23 by josantos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	settings_exit(t_app *self, char *error)
 void	player_init(t_app *self)
 {
 	t_player	*player;
-	t_settings	*settings;
 
-	settings = self->settings;
 	player = player_create();
 	if (!player)
 		settings_exit(self, strerror(errno));
