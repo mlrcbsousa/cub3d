@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:57:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 22:42:11 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:06:04 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,3 @@ void	walls_create(t_app *self)
 	settings->walls[WALL_EAST] = wall_create(self, settings->paths[WALL_EAST]);
 	settings->walls[WALL_WEST] = wall_create(self, settings->paths[WALL_WEST]);
 }
-
-
-// unsigned int	get_texture_color(t_image *wall, int i, int j)
-// {
-// 	return (*(unsigned int *)((wall->addr
-// 			+ (j * wall->line_length) + (i * wall->bits_per_pixel / 8))));
-// }
-
-// unsigned int	texture_pixel_color(t_app *self, t_point p, t_ray ray,
-// 		t_image *wall)
-// {
-// 	double	i;
-// 	double	j;
-// 	int		top;
-
-// }
-
