@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 17:47:56 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 00:57:20 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,57 @@ void	draw(t_app *self)
 	mlx_put_image_to_window(self->mlx, self->mlx_window, self->img->img, 0, 0);
 }
 
+unsigned int	get_texture_color(t_image *wall, int x, int y)
+{
+	return (*(unsigned int *)((wall->addr
+			+ (y * wall->line_length) + (x * wall->bits_per_pixel / 8))));
+}
+
+int	get_wall_color(t_app *self, t_ray ray, int j)
+{
+	t_settings	*settings;
+	t_point		delta;
+	int			x;
+	int			y;
+	int 		offset;
+
+	settings = self->settings;
+	delta = point(cos(ray.angle), sin(ray.angle));
+	delta = point_multiply(ray.length, delta);
+	delta = point_add(self->player->p, delta);
+	if (ray.wall == WALL_EAST || ray.wall == WALL_WEST)
+		x = (int)(floor(delta.y + 1)) % SIZE;
+	else
+		x = (int)(floor(delta.x + 1)) % SIZE;
+	offset = (int)(HEIGHT2 - (ray.height / 2)); // line offset
+	y = (((j - offset) * SIZE) / ray.height);
+	return (get_texture_color(settings->walls[ray.wall], x, y));
+}
+
 void	draw_line(t_app *self, int i, t_ray ray)
 {
-	int	j;
-	int	color;
-	int	line_height;
-	int	line_offset;
+	int		j;
+	int		color;
+	double	length;
+	int		wall_offset;
+	int		wall_height;
 
-	line_height = (int)((SIZE * HEIGHT) / ray.length); // line height
-	if (line_height > HEIGHT)
-		line_height = HEIGHT;
-	line_offset = (int)(HEIGHT2 - (line_height / 2)); // line offset
+	length = fish_bowl(ray.length, self->player->angle - ray.angle);
+	ray.height = (int)((SIZE * HEIGHT) / length);
+	wall_height = ray.height;
+	if (ray.height > HEIGHT)
+		wall_height = HEIGHT;
+	wall_offset = (int)(HEIGHT2 - (wall_height / 2));
 	j = 0;
-	while (j < line_offset)
+	while (j < wall_offset)
 	{
 		color = self->settings->color_ceiling;
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}
-	while (j < line_offset + line_height)
+	while (j < wall_offset + wall_height)
 	{
-		if (ray.wall == WALL_NORTH )
-			color = create_trgb(0, 255, 0, 0); // red
-		else if (ray.wall == WALL_SOUTH)
-			color = create_trgb(0, 0, 255, 0); // green
-		else if (ray.wall == WALL_EAST)
-			color = create_trgb(0, 0, 0, 255); // blue
-		else if (ray.wall == WALL_WEST)
-			color = create_trgb(0, 255, 255, 0); // yellow
+		color = get_wall_color(self, ray, j);
 		my_mlx_pixel_put(self->img, i, j, color);
 		j++;
 	}

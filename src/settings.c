@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josantos <josantos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/10 23:07:50 by josantos         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:41:23 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,57 @@ t_settings	*settings_create(void)
 		return (NULL);
 	settings->color_floor = -1;
 	settings->color_ceiling = -1;
-	settings->wall_north = NULL;
-	settings->wall_south = NULL;
-	settings->wall_east = NULL;
-	settings->wall_west = NULL;
+	settings->paths[WALL_NORTH] = NULL;
+	settings->paths[WALL_SOUTH] = NULL;
+	settings->paths[WALL_EAST] = NULL;
+	settings->paths[WALL_WEST] = NULL;
 	settings->map = NULL;
 	settings->width = -1;
 	settings->height = -1;
 	return (settings);
 }
 
-void	settings_destroy(t_settings *settings)
+void	settings_destroy(t_app *self)
 {
+	t_settings	*settings;
+
+	settings = self->settings;
 	if (!settings)
 		return ;
-	if (settings->wall_north)
-		free(settings->wall_north); // TODO: proper mlx image destroy
-	if (settings->wall_south)
-		free(settings->wall_south);
-	if (settings->wall_east)
-		free(settings->wall_east);
-	if (settings->wall_west)
-		free(settings->wall_west);
+	if (settings->paths[WALL_NORTH])
+		free(settings->paths[WALL_NORTH]);
+	if (settings->paths[WALL_SOUTH])
+		free(settings->paths[WALL_SOUTH]);
+	if (settings->paths[WALL_EAST])
+		free(settings->paths[WALL_EAST]);
+	if (settings->paths[WALL_WEST])
+		free(settings->paths[WALL_WEST]);
+	if (settings->walls[WALL_NORTH])
+		mlx_destroy_image(self->mlx, settings->walls[WALL_NORTH]->img);
+	if (settings->walls[WALL_SOUTH])
+		mlx_destroy_image(self->mlx, settings->walls[WALL_SOUTH]->img);
+	if (settings->walls[WALL_EAST])
+		mlx_destroy_image(self->mlx, settings->walls[WALL_EAST]->img);
+	if (settings->walls[WALL_WEST])
+		mlx_destroy_image(self->mlx, settings->walls[WALL_WEST]->img);
 	if (settings->map)
 		map_destroy(settings);
 	free(settings);
+	self->settings = NULL;
 }
 
 void	settings_from_parser(t_settings *settings, t_parser *parser)
 {
 	settings->color_floor = parser->color_floor;
 	settings->color_ceiling = parser->color_ceiling;
-	// TODO: leave for later, use basic colors for now
-	// settings->wall_north = image_create(parser->wall_north);
-	// settings->wall_south = image_create(parser->wall_south);
-	// settings->wall_east = image_create(parser->wall_east);
-	// settings->wall_west = image_create(parser->wall_west);
+	settings->paths[WALL_NORTH] = parser->wall_north;
+	settings->paths[WALL_SOUTH] = parser->wall_south;
+	settings->paths[WALL_EAST] = parser->wall_east;
+	settings->paths[WALL_WEST] = parser->wall_west;
+	parser->wall_north = NULL;
+	parser->wall_south = NULL;
+	parser->wall_east = NULL;
+	parser->wall_west = NULL;
 }
 
 void	settings_init(t_app *self)
@@ -72,12 +87,12 @@ void	settings_init(t_app *self)
 	map_create(parser->maplines, settings);
 	if (!settings->map)
 	{
-		settings_destroy(settings);
+		settings_destroy(self);
 		parse_exit(parser, strerror(errno));
 	}
 	if (!is_map_closed(settings))
 	{
-		settings_destroy(settings);
+		settings_destroy(self);
 		parse_exit(parser, "Map not closed");
 	}
 	settings_from_parser(settings, parser);
