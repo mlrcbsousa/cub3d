@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/12 01:30:15 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/12 02:19:45 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c src/test.c \
 					src/parse.c src/parse_1.c src/parse_2.c src/maplines.c src/map.c \
 					src/map_1.c src/settings.c src/elements.c src/elements_1.c \
 					src/maplines_1.c src/player.c src/raycast.c src/raycast_1.c \
-					src/move.c src/point.c src/validation.c src/vector.c src/wall.c \
-					src/image.c
+					src/move.c src/point.c src/validation.c src/vector.c src/image.c \
+					src/draw_1.c
 
 NAME		= cub3D
 

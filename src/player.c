@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:06:33 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:31:22 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:53:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_player	*player_create(void)
 
 void	settings_exit(t_app *self, char *error)
 {
-	t_settings *settings;
+	t_settings	*settings;
 
 	settings = self->settings;
 	if (error)

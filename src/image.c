@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:57:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:30:58 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 02:34:09 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_image *wall_create(t_app *self, char *path)
+t_image	*wall_create(t_app *self, char *path)
 {
 	t_image	*img;
 
@@ -40,11 +40,11 @@ t_image *wall_create(t_app *self, char *path)
 
 void	walls_create(t_app *self)
 {
-	t_settings *settings;
+	t_settings	*s;
 
-	settings = self->settings;
-	settings->walls[WALL_NORTH] = wall_create(self, settings->paths[WALL_NORTH]);
-	settings->walls[WALL_SOUTH] = wall_create(self, settings->paths[WALL_SOUTH]);
-	settings->walls[WALL_EAST] = wall_create(self, settings->paths[WALL_EAST]);
-	settings->walls[WALL_WEST] = wall_create(self, settings->paths[WALL_WEST]);
+	s = self->settings;
+	s->walls[WALL_NORTH] = wall_create(self, s->paths[WALL_NORTH]);
+	s->walls[WALL_SOUTH] = wall_create(self, s->paths[WALL_SOUTH]);
+	s->walls[WALL_EAST] = wall_create(self, s->paths[WALL_EAST]);
+	s->walls[WALL_WEST] = wall_create(self, s->paths[WALL_WEST]);
 }

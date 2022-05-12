@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:19:56 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 23:13:12 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:52:19 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static double	get_ray_length(t_app *self, t_ray ray)
 
 	length_h = get_ray_length_to_horizontal(self, ray);
 	length_v = get_ray_length_to_vertical(self, ray);
-
 	if (length_v < length_h)
 		return (length_v);
 	else

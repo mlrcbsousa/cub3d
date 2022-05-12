@@ -6,11 +6,17 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:01:19 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 00:27:31 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 02:17:30 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static t_bool	is_color_element(char *element)
+{
+	return (ft_streq(element, ELEMENT_FLOOR)
+		|| ft_streq(element, ELEMENT_CEILING));
+}
 
 t_bool	could_be_game_color(char *line)
 {
@@ -19,10 +25,17 @@ t_bool	could_be_game_color(char *line)
 
 	result = FALSE;
 	parts = ft_split(line, ' ');
-	result = (ft_strslen(parts) > 1 && (ft_streq(parts[0], ELEMENT_FLOOR)
-		|| ft_streq(parts[0], ELEMENT_CEILING)));
+	result = (ft_strslen(parts) > 1 && is_color_element(parts[0]));
 	ft_strsfree(parts);
 	return (result);
+}
+
+static t_bool	is_wall_element(char *element)
+{
+	return (ft_streq(element, ELEMENT_NORTH)
+		|| ft_streq(element, ELEMENT_SOUTH)
+		|| ft_streq(element, ELEMENT_EAST)
+		|| ft_streq(element, ELEMENT_WEST));
 }
 
 t_bool	could_be_game_wall(char *line)
@@ -32,10 +45,9 @@ t_bool	could_be_game_wall(char *line)
 
 	result = FALSE;
 	parts = ft_split(line, ' ');
-	result = ft_strslen(parts) > 1 && (ft_streq(parts[0], ELEMENT_NORTH)
-		|| ft_streq(parts[0], ELEMENT_SOUTH)
-		|| ft_streq(parts[0], ELEMENT_EAST)
-		|| ft_streq(parts[0], ELEMENT_WEST));
+	if (ft_strslen(parts) > 1)
+		if (is_wall_element(parts[0]))
+			result = TRUE;
 	ft_strsfree(parts);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:16:34 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 23:47:39 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 02:21:24 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,15 +208,15 @@ void		move(int key, t_app *self);
 int			close_app(t_app *self);
 void		set_image(t_app *self);
 void		walls_create(t_app *self);
+void		my_mlx_pixel_put(t_image *data, int x, int y, int color);
 
 /* raycast */
 void		raycast(t_app *self);
 int			nearest_tile(double pixel);
 double		fish_bowl(double length, double angle);
 double		get_ray_length_to_wall(t_app *self, int max, t_ray ray,
-	t_point offset);
-
-/* wall */
+				t_point offset);
+int			get_wall_color(t_app *self, t_ray ray, int j);
 
 /* angle */
 double		trim(double a);
@@ -241,7 +241,6 @@ void		print_error(char *input, char *msg);
 int			file_open(char *filename, t_app *self,
 				int (*file_read)(int, t_app*));
 void		usage(void);
-
 
 /* test */
 void		print_parser(t_parser *parser);

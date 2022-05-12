@@ -6,13 +6,13 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:06:29 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 00:57:20 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 02:20:52 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -43,7 +43,7 @@ int	get_wall_color(t_app *self, t_ray ray, int j)
 	t_point		delta;
 	int			x;
 	int			y;
-	int 		offset;
+	int			offset;
 
 	settings = self->settings;
 	delta = point(cos(ray.angle), sin(ray.angle));
@@ -53,60 +53,7 @@ int	get_wall_color(t_app *self, t_ray ray, int j)
 		x = (int)(floor(delta.y + 1)) % SIZE;
 	else
 		x = (int)(floor(delta.x + 1)) % SIZE;
-	offset = (int)(HEIGHT2 - (ray.height / 2)); // line offset
+	offset = (int)(HEIGHT2 - (ray.height / 2));
 	y = (((j - offset) * SIZE) / ray.height);
 	return (get_texture_color(settings->walls[ray.wall], x, y));
-}
-
-void	draw_line(t_app *self, int i, t_ray ray)
-{
-	int		j;
-	int		color;
-	double	length;
-	int		wall_offset;
-	int		wall_height;
-
-	length = fish_bowl(ray.length, self->player->angle - ray.angle);
-	ray.height = (int)((SIZE * HEIGHT) / length);
-	wall_height = ray.height;
-	if (ray.height > HEIGHT)
-		wall_height = HEIGHT;
-	wall_offset = (int)(HEIGHT2 - (wall_height / 2));
-	j = 0;
-	while (j < wall_offset)
-	{
-		color = self->settings->color_ceiling;
-		my_mlx_pixel_put(self->img, i, j, color);
-		j++;
-	}
-	while (j < wall_offset + wall_height)
-	{
-		color = get_wall_color(self, ray, j);
-		my_mlx_pixel_put(self->img, i, j, color);
-		j++;
-	}
-	while (j < HEIGHT)
-	{
-		color = self->settings->color_floor;
-		my_mlx_pixel_put(self->img, i, j, color);
-		j++;
-	}
-}
-
-void	set_image(t_app *self)
-{
-	t_image	*img;
-
-	img = (t_image *)malloc(sizeof(t_image));
-	if (!img)
-	{
-		ft_putendl_fd("Failed to allocate image memory!", STDERR_FILENO);
-		exit(1);
-	}
-	img->img = mlx_new_image(self->mlx, WIDTH, HEIGHT);
-	img->addr = mlx_get_data_addr(img->img,
-			&(img->bits_per_pixel),
-			&(img->line_length),
-			&(img->endian));
-	self->img = img;
 }

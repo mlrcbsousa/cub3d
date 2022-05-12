@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:24:53 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:54:37 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_settings	*settings_create(void)
 void	settings_destroy(t_app *self)
 {
 	t_settings	*settings;
-	int 		i;
+	int			i;
 
 	settings = self->settings;
 	if (!settings)
@@ -93,5 +93,5 @@ void	settings_init(t_app *self)
 		parse_exit(parser, "Map not closed");
 	}
 	settings_from_parser(settings, parser);
-	parser_destroy(parser); // the one
+	parser_destroy(parser);
 }

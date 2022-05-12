@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 01:01:08 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:22:07 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:51:55 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static char	**map_init(int width, int height)
 	map = (char **)malloc(sizeof(char *) * (width + 1));
 	if (!map)
 		return (NULL);
-
 	i = 0;
 	while (i < width)
 	{
