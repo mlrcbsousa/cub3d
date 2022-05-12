@@ -7,6 +7,7 @@
 - [Make Your Own Raycaster Part 1](https://www.youtube.com/watch?v=gYRrGTC7GtA)
 - https://github.com/terry-yes/mlx_example
 - https://harm-smits.github.io/42docs/libs/minilibx.html
+- [The Epic](https://github.com/gleal42/cub3d)
 
 ## Development Workflow
 
