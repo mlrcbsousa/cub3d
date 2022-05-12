@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:57:42 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/12 01:06:04 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:30:58 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_image *wall_create(t_app *self, char *path)
 		ft_putendl_fd("Failed to allocate image memory!", STDERR_FILENO);
 		close_app(self);
 	}
-	printf("%s\n", path);
 	img->img = mlx_xpm_file_to_image(self->mlx,
 			path,
 			&(img->width),

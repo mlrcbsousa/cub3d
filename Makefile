@@ -6,7 +6,7 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/12 01:23:03 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/12 01:30:15 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC			= src/main.c src/draw.c src/hooks.c src/helpers.c src/test.c \
 					src/move.c src/point.c src/validation.c src/vector.c src/wall.c \
 					src/image.c
 
-NAME		= cub3d
+NAME		= cub3D
 
 ifeq (${UNAME}, Linux)
 LINKS 	+= -lbsd -lXext -lX11
