@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:01:20 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 22:39:08 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:13:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	close_app(t_app *self)
 	settings_destroy(self);
 	if (self->player)
 		free(self->player);
-	// TODO: destroy wall images
-	// TODO: destroy main image
+	mlx_destroy_image(self->mlx, self->img->img);
+	if (self->img)
+		free(self->img);
 	mlx_destroy_window(self->mlx, self->mlx_window);
 	exit(0);
 }

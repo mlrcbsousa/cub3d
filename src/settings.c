@@ -6,7 +6,7 @@
 /*   By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 00:57:45 by msousa            #+#    #+#             */
-/*   Updated: 2022/05/11 22:41:23 by msousa           ###   ########.fr       */
+/*   Updated: 2022/05/12 01:24:53 by msousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,23 @@ t_settings	*settings_create(void)
 void	settings_destroy(t_app *self)
 {
 	t_settings	*settings;
+	int 		i;
 
 	settings = self->settings;
 	if (!settings)
 		return ;
-	if (settings->paths[WALL_NORTH])
-		free(settings->paths[WALL_NORTH]);
-	if (settings->paths[WALL_SOUTH])
-		free(settings->paths[WALL_SOUTH]);
-	if (settings->paths[WALL_EAST])
-		free(settings->paths[WALL_EAST]);
-	if (settings->paths[WALL_WEST])
-		free(settings->paths[WALL_WEST]);
-	if (settings->walls[WALL_NORTH])
-		mlx_destroy_image(self->mlx, settings->walls[WALL_NORTH]->img);
-	if (settings->walls[WALL_SOUTH])
-		mlx_destroy_image(self->mlx, settings->walls[WALL_SOUTH]->img);
-	if (settings->walls[WALL_EAST])
-		mlx_destroy_image(self->mlx, settings->walls[WALL_EAST]->img);
-	if (settings->walls[WALL_WEST])
-		mlx_destroy_image(self->mlx, settings->walls[WALL_WEST]->img);
+	i = 0;
+	while (i < WALLS)
+	{
+		if (settings->paths[i])
+			free(settings->paths[i]);
+		if (settings->walls[i])
+		{
+			mlx_destroy_image(self->mlx, settings->walls[i]->img);
+			free(settings->walls[i]);
+		}
+		i++;
+	}
 	if (settings->map)
 		map_destroy(settings);
 	free(settings);

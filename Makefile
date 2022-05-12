@@ -6,11 +6,11 @@
 #    By: msousa <mlrcbsousa@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 15:00:20 by msousa            #+#    #+#              #
-#    Updated: 2022/05/12 00:55:28 by msousa           ###   ########.fr        #
+#    Updated: 2022/05/12 01:23:03 by msousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -O3
 LINKS		= -lmlx -lm -Llibft -lft
 CC			= gcc
 RM			= rm -f
