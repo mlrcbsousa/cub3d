@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install X11 and MiniLibX dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libx11-dev libxext-dev libbsd-dev
+
+      - name: Build
+        run: make
+
+      - name: Check for relink (second make should be silent)
+        run: |
+          OUTPUT=$(make 2>&1)
+          if echo "$OUTPUT" | grep -qE "gcc|cc "; then
+            echo "FAIL: relink detected on second make"
+            echo "$OUTPUT"
+            exit 1
+          fi
+          echo "OK: no relink"
+
+      - name: Clean
+        run: make fclean
